@@ -27,7 +27,7 @@ namespace Core.DataAccess.EntityFramework
             using (var context = new TContext())
             {
                 var deletedentity = context.Entry(entity);
-                deletedentity.State = EntityState.Added;
+                deletedentity.State = EntityState.Deleted;
                 context.SaveChanges();
             }
         }
@@ -37,7 +37,7 @@ namespace Core.DataAccess.EntityFramework
             using (var context = new TContext())
             {
                 var updatedentity = context.Entry(entity);
-                updatedentity.State = EntityState.Added;
+                updatedentity.State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

@@ -1,5 +1,7 @@
-﻿using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,8 +12,16 @@ namespace DataAccess.EntityFramework.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=AHMET\SQL2017;Database=AsGozdeWebSiteDB;Trusted_Connection=true", b => b.MigrationsAssembly("DataAccess"));
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("AsGozdeDatabase"), b => b.MigrationsAssembly("DataAccess"));
+
         }
         public DbSet<Office> Offices { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<Branch> Branches { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<DriverInformation> DriverInformations { get; set; }
     }
 }

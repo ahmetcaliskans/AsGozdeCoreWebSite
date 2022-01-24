@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -21,7 +22,7 @@ namespace Business.Concrete
 
         public IDataResult<Office> GetById(int officeId)
         {
-            return new SuccessDataResult<Office>(_officeDal.Get(p => p.OfficeId == officeId));
+            return new SuccessDataResult<Office>(_officeDal.Get(p => p.Id == officeId));
         }
 
         public IDataResult<List<Office>> GetList()
@@ -31,34 +32,36 @@ namespace Business.Concrete
 
         public IResult Add(Office office)
         {
-            IResult result = BusinessRules.Run(CheckIfOfficeNameExists(office.Name));
+            IResult result = BusinessRules.Run(CheckIfOfficeNameExists(office.Id, office.Name));
             if (result!=null)
-            {
                 return result;
-            }
 
             _officeDal.Add(office);
-            return new SuccessResult("Başarı ile Eklendi !");
+            return new SuccessResult(Messages.Added);
         }
 
         public IResult Delete(Office office)
         {
             _officeDal.Delete(office);
-            return new SuccessResult("Başarı ile Silindi.");
+            return new SuccessResult(Messages.Deleted);
         }        
 
         public IResult Update(Office office)
         {
+            IResult result = BusinessRules.Run(CheckIfOfficeNameExists(office.Id, office.Name));
+            if (result != null)
+                return result;
+
             _officeDal.Update(office);
-            return new SuccessResult("Başarı ile Güncellendi");
+            return new SuccessResult(Messages.Updated);
         }
 
-        private IResult CheckIfOfficeNameExists(string officeName)
+        private IResult CheckIfOfficeNameExists(int Id, string officeName)
         {
-            var result = _officeDal.GetList(x => x.Name == officeName).Any();
+            var result = _officeDal.GetList(x => x.Id != Id && x.Name == officeName).Any();
             if (result)
             {
-                return new ErrorResult("Bu Şube Zaten Mevcut !");
+                return new ErrorResult(Messages.AlreadyExists);
             }
 
             return new SuccessResult();

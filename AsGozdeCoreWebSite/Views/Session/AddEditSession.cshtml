@@ -1,0 +1,44 @@
+﻿@model Entities.Concrete.Session
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div style="margin:5px 5px  5px 5px">
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Id</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtId" type="number" disabled="disabled" value="@if (Model != null) @Model.Id">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Dönem Adı</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtName" type="text" placeholder="Dönem Adı" value="@if (Model != null) @Model.Name">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Açıklama</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtDescription" type="text" placeholder="Açıklama" value="@if (Model != null) @Model.Description">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Yıl</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtYear" type="number" placeholder="Yıl" value="@if (Model != null) @Model.Year">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Dönem</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtSequence" type="number" placeholder="Dönem" value="@if (Model != null) @Model.Sequence">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
