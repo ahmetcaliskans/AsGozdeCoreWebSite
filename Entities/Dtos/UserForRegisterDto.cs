@@ -13,5 +13,10 @@ namespace Entities.Dtos
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool Active { get; set; }
+        public int OfficeId { get; set; }
+        public string OfficeName { get; set; }
+        public int RoleId { get; set; }
+        public string RoleName { get; set; }
+        public string Title { get; set; }
     }
 }

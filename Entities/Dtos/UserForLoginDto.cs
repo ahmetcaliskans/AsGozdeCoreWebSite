@@ -9,6 +9,6 @@ namespace Entities.Dtos
     {
         public string UserName { get; set; }
         public string Password { get; set; }
-        public string OfficeName { get; set; }
+        public int OfficeId { get; set; }
     }
 }

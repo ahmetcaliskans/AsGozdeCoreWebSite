@@ -1,0 +1,30 @@
+﻿@model dynamic
+
+
+<div class="form-group row fv-plugins-icon-container">
+    <label class="col-xl-3 col-lg-3 col-form-label">Şube</label>
+    <div class="col-lg-9 col-xl-9">
+        <select class="form-control is-valid" name="selectOffice" id="selectOffice">
+            <option value="0"></option>
+            @if (Model.Office != null)
+            {
+
+                @foreach (var office in Model.Office as List<Entities.Concrete.Office>)
+                {
+                    if (office.Name == (string)Model.UserOfficeName)
+                    {
+                        <option selected="" value="@office.Id">@office.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@office.Id">@office.Name</option>
+                    }
+                }
+
+            }
+        </select>
+
+        <!--<span class="form-text text-muted">Lütfen Bir Şube Seçiniz !</span>-->
+        <div class="fv-plugins-message-container"></div>
+    </div>
+</div>

@@ -43,6 +43,7 @@ var KTInputmask = function () {
             numericInput: true
         }); //123456  =>  € ___.__1.234,56
 
+
         //ip address
         $("#kt_inputmask_8").inputmask({
             "mask": "999.999.999.999"
@@ -63,7 +64,31 @@ var KTInputmask = function () {
                     casing: "lower"
                 }
             }
-        });        
+        });
+
+        $(".phone").inputmask("mask", {
+            "mask": "0999 999 99 99"
+        });
+
+        $(".numeric2").inputmask({
+            'alias': 'decimal',
+            'radixPoint': ",",
+            'groupSeparator': '.',
+            'autoGroup': true,
+            'digits': 2,
+            'digitsOptional': false,
+            'placeholder': '0,00'
+        });
+
+        $(".numeric4").inputmask({
+            'alias': 'decimal',
+            'radixPoint': ",",
+            'groupSeparator': '.',
+            'autoGroup': true,
+            'digits': 4,
+            'digitsOptional': false,
+            'placeholder': '0,00'
+        });
     }
 
     return {

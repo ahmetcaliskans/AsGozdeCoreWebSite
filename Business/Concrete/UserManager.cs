@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,11 +37,19 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetList().ToList());
         }
 
+        public IDataResult<List<UserForRegisterDto>> GetListWithDetails()
+        {
+            return new SuccessDataResult<List<UserForRegisterDto>>(_userDal.GetListWithDetails().ToList());
+        }
+
+
         public IResult Add(User User)
         {
             IResult result = BusinessRules.Run(CheckIfSessionNameExists(User.UserId, User.UserName));
             if (result != null)
                 return result;
+
+            User.PasswordHash = SecuredOperation.EncryptAES("*", Messages.SecurityKey);
 
             _userDal.Add(User);
             return new SuccessResult("Başarı ile Eklendi !");

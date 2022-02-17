@@ -29,6 +29,18 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<AuthManager>().As<IAuthService>();
             //builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
+            builder.RegisterType<BranchManager>().As<IBranchService>();
+            builder.RegisterType<EfBranchDal>().As<IBranchDal>();
+
+            builder.RegisterType<PaymentTypeManager>().As<IPaymentTypeService>();
+            builder.RegisterType<EfPaymentTypeDal>().As<IPaymentTypeDal>();
+
+            builder.RegisterType<CollectionDefinitionManager>().As<ICollectionDefinitionService>();
+            builder.RegisterType<EfCollectionDefinitionDal>().As<ICollectionDefinitionDal>();
+
+            builder.RegisterType<DriverInformationManager>().As<IDriverInformationService>();
+            builder.RegisterType<EfDriverInformationDal>().As<IDriverInformationDal>();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

@@ -51,18 +51,17 @@ function js_deleteUserById(Id) {
 
 }
 
-/** Şube tanımı ekleme yada güncelleme işlemi yapılır. */
+/** Kullanıcı tanımı ekleme yada güncelleme işlemi yapılır. */
 function js_addUser() {
-
-	var a = $('#chkActive:checked').val();
-	var b = a;
 
 	let User = {
 		UserId: $('#txtUserId').val(),
 		UserName: $('#txtUserName').val(),
 		FirstName: $('#txtFirstName').val(),
 		LastName: $('#txtLastName').val(),
-		Active: chkKontrol('chkActive')
+		Title: $('#txtUnvan').val(),
+		Active: chkKontrol('chkActive'),
+		OfficeId: $('#selectOffice option:selected').val()
 	};
 
 	if (User.UserName != null && User.UserName != "") {

@@ -55,14 +55,15 @@ var KTLogin = function() {
 				//	KTUtil.btnRelease(formSubmitButton);
 				//}, 500);
 
-				// Form Validation & Ajax Submission: https://formvalidation.io/guide/examples/using-ajax-to-submit-the-form				
+				// Form Validation & Ajax Submission: https://formvalidation.io/guide/examples/using-ajax-to-submit-the-form
 
 				FormValidation.utils.fetch(formSubmitUrl, {
 					method: 'POST',
 					dataType: 'json',
 					params: {
 		                username: form.querySelector('[name="username"]').value,
-		                password: form.querySelector('[name="password"]').value,						
+						password: form.querySelector('[name="password"]').value,
+						officeId: form.querySelectorAll('option:checked')[0].value,
 		            },
 		        }).then(function(response) { // Return valid JSON
 					// Release button

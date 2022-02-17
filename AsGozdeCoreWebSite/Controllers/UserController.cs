@@ -21,10 +21,9 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var result = _userService.GetList();
+            var result = _userService.GetListWithDetails();
             return View(result.Data);
         }
-
 
         [HttpGet]
         public IActionResult GetUserById(int id)
@@ -35,7 +34,7 @@ namespace AsGozdeCoreWebSite.Controllers
                 return PartialView("AddEditUser", result.Data);
             }
 
-            return PartialView("AddEditUser", null);
+            return PartialView("AddEditUser", result.Data);
 
         }
 

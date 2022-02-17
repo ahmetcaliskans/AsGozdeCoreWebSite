@@ -11,6 +11,9 @@ namespace Core.Entities.Concrete
         public string PasswordHash { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Title { get; set; }
         public bool Active { get; set; }
+        public int OfficeId { get; set; }
+        public int RoleId { get; set; }
     }
 }

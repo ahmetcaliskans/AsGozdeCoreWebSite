@@ -16,6 +16,13 @@ namespace Entities.Concrete
         public byte[] Image { get; set; }
         public Branch Branch { get; set; }
         public decimal CourseFee { get; set; }
+        public string Email { get; set; }
+        public string Phone1 { get; set; }
+        public string Phone2 { get; set; }
+        public string City { get; set; }
+        public string County { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
 
     }
 }

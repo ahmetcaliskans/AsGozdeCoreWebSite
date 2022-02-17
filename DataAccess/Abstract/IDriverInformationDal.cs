@@ -8,6 +8,7 @@ namespace DataAccess.Abstract
 {
     public interface IDriverInformationDal : IEntityRepository<DriverInformation>
     {
-
+        List<DriverInformation> GetListWithDetails(int officeId);
+        DriverInformation GetByIdWithDetails(int driverInformationId);
     }
 }

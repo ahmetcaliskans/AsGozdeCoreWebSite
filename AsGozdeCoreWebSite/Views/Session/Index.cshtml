@@ -162,6 +162,7 @@
                                 <th title="Açıklama">Açıklama</th>
                                 <th title="Yıl">Yıl</th>
                                 <th title="Dönem">Dönem</th>
+                                <th title="Aktif">Aktif</th>
                                 <th title="İşlem" colspan="2">İşlem</th>
                             </tr>
                         </thead>
@@ -174,6 +175,7 @@
                                 <td>@dr.Description</td>
                                 <td>@dr.Year</td>
                                 <td>@dr.Sequence</td>
+                                <td>@dr.Active</td>
                                 <td colspan="2">
                                     <div with="50">
                                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#NewSession" title="Düzenle" onclick="js_getSessionById(@dr.Id)">

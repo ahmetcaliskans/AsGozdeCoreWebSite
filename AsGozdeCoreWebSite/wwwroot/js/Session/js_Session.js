@@ -59,7 +59,8 @@ function js_addSession() {
 		Name: $('#txtName').val(),
 		Description: $('#txtDescription').val(),
 		Year: $('#txtYear').val(),
-		Sequence: $('#txtSequence').val()
+		Sequence: $('#txtSequence').val(),
+		Active: chkKontrol('chkActive')
 	};
 
 	if (Session.Name != null && Session.Name != "") {

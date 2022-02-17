@@ -45,7 +45,14 @@ namespace Business.Concrete
             return new SuccessResult("Başarı ile Güncellendi !");
         }
 
+        public IDataResult<List<DriverInformation>> GetListWithDetails(int officeId)
+        {
+            return new SuccessDataResult<List<DriverInformation>>(_driverInformationDal.GetListWithDetails(officeId));            
+        }
 
-        
+        public IDataResult<DriverInformation> GetByIdWithDetails(int driverInformationId)
+        {
+            return new SuccessDataResult<DriverInformation>(_driverInformationDal.GetByIdWithDetails(driverInformationId));
+        }
     }
 }

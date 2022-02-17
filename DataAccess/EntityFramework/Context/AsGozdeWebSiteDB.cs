@@ -23,5 +23,7 @@ namespace DataAccess.EntityFramework.Context
         public DbSet<Branch> Branches { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<DriverInformation> DriverInformations { get; set; }
+        public DbSet<PaymentType> PaymentTypes { get; set; }
+        public DbSet<CollectionDefinition> CollectionDefinitions { get; set; }
     }
 }

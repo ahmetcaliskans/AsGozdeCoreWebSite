@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
+    <PackageReference Include="DevExpress.Xpo" Version="20.1.8-pre-20246" />
   </ItemGroup>
 
   <ItemGroup>

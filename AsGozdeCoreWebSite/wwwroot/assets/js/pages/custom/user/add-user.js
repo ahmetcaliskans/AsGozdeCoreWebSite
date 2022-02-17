@@ -30,10 +30,10 @@ var KTAddUser = function () {
 					KTUtil.scrollTop();
 				} else {
 					Swal.fire({
-		                text: "Sorry, looks like there are some errors detected, please try again.",
+		                text: "Uzgunuz, bir yada birkac hata ile karsilasildi, lutfen tekrar deneyin.",
 		                icon: "error",
 		                buttonsStyling: false,
-		                confirmButtonText: "Ok, got it!",
+		                confirmButtonText: "Tamam, anladim!",
 						customClass: {
 							confirmButton: "btn font-weight-bold btn-light"
 						}
@@ -58,52 +58,24 @@ var KTAddUser = function () {
 			_formEl,
 			{
 				fields: {
-					firstname: {
+					txtName: {
 						validators: {
 							notEmpty: {
-								message: 'First Name is required'
+								message: 'Adi Bos Olamaz !'
 							}
 						}
 					},
-					lastname: {
+					txtSurname: {
 						validators: {
 							notEmpty: {
-								message: 'Last Name is required'
+								message: 'Soyadi Bos Olamaz !'
 							}
 						}
 					},
-					companyname: {
+					txtPhone1: {
 						validators: {
 							notEmpty: {
-								message: 'Company Name is required'
-							}
-						}
-					},
-					phone: {
-						validators: {
-							notEmpty: {
-								message: 'Phone is required'
-							},
-							phone: {
-								country: 'US',
-								message: 'The value is not a valid US phone number. (e.g 5554443333)'
-							}
-						}
-					},
-					email: {
-						validators: {
-							notEmpty: {
-								message: 'Email is required'
-							},
-							emailAddress: {
-								message: 'The value is not a valid email address'
-							}
-						}
-					},
-					companywebsite: {
-						validators: {
-							notEmpty: {
-								message: 'Website URL is required'
+								message: 'Telefon 1 Bilgisi Bos Olamaz !'
 							}
 						}
 					}
@@ -119,26 +91,24 @@ var KTAddUser = function () {
 			_formEl,
 			{
 				fields: {
-					// Step 2
-					communication: {
+					txtAddress1: {
 						validators: {
-							choice: {
-								min: 1,
-								message: 'Please select at least 1 option'
+							notEmpty: {
+								message: 'Adres Satiri Bos Olamaz !'
 							}
 						}
 					},
-					language: {
+					txtCity: {
 						validators: {
 							notEmpty: {
-								message: 'Please select a language'
+								message: 'Il Bos Olamaz !'
 							}
 						}
 					},
-					timezone: {
+					txtCounty: {
 						validators: {
 							notEmpty: {
-								message: 'Please select a timezone'
+								message: 'Ilce Bos Olamaz !'
 							}
 						}
 					}
@@ -153,42 +123,33 @@ var KTAddUser = function () {
 		_validations.push(FormValidation.formValidation(
 			_formEl,
 			{
+				//fields: {
+				//	// Step 2
+				//	communication: {
+				//		validators: {
+				//			choice: {
+				//				min: 1,
+				//				message: 'Please select at least 1 option'
+				//			}
+				//		}
+				//	},
+				//	language: {
+				//		validators: {
+				//			notEmpty: {
+				//				message: 'Please select a language'
+				//			}
+				//		}
+				//	}
+				//},
+
 				fields: {
-					address1: {
+					txtCourseFee: {
 						validators: {
 							notEmpty: {
-								message: 'Address is required'
+								message: 'Kurs Ucreti Bos Olamaz !'
 							}
 						}
-					},
-					postcode: {
-						validators: {
-							notEmpty: {
-								message: 'Postcode is required'
-							}
-						}
-					},
-					city: {
-						validators: {
-							notEmpty: {
-								message: 'City is required'
-							}
-						}
-					},
-					state: {
-						validators: {
-							notEmpty: {
-								message: 'state is required'
-							}
-						}
-					},
-					country: {
-						validators: {
-							notEmpty: {
-								message: 'Country is required'
-							}
-						}
-					},
+					}
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
@@ -196,6 +157,7 @@ var KTAddUser = function () {
 				}
 			}
 		));
+		
 	}
 
 	var _initAvatar = function () {

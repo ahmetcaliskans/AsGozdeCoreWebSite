@@ -12,7 +12,6 @@ namespace Business.Concrete
     public class AuthManager : IAuthService
     {
         private IUserService _userService;
-        string securityKey = "AsGozdeSurucuKursu2021ac*";
         public AuthManager(IUserService userService)
         {
             _userService = userService;
@@ -20,13 +19,14 @@ namespace Business.Concrete
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
-            var userToCheck = _userService.GetByUserName(userForLoginDto.UserName);
-            if (userToCheck == null)
+            var userToCheck = _userService.GetByUserName(userForLoginDto.UserName); 
+
+            if (userToCheck == null || userToCheck.Data == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
-            if (userForLoginDto.Password != SecuredOperation.DeEncryptAES(userToCheck.Data.PasswordHash,securityKey))
+            if (userForLoginDto.Password != SecuredOperation.DeEncryptAES(userToCheck.Data.PasswordHash,Messages.SecurityKey))
             {
                 return new ErrorDataResult<User>(Messages.PasswordError);
             }
@@ -36,13 +36,18 @@ namespace Business.Concrete
                 return new ErrorDataResult<User>(Messages.UserNotActive);
             }
 
+            if (userToCheck.Data.OfficeId != null && userToCheck.Data.OfficeId != 0 && userForLoginDto.OfficeId != userToCheck.Data.OfficeId)
+            {
+                return new ErrorDataResult<User>(Messages.UserDoesNotHavePermissionToThisOffice);
+            }
+
 
             return new SuccessDataResult<User>(userToCheck.Data, Messages.SuccessfulLogin);
         }
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
-            string passwordHash = SecuredOperation.EncryptAES(password, securityKey);
+            string passwordHash = SecuredOperation.EncryptAES(password, Messages.SecurityKey);
             var user = new User
             {
                 UserName= userForRegisterDto.UserName,

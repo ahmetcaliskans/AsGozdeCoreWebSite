@@ -93,12 +93,12 @@
                             <div class="form-group row fv-plugins-icon-container has-success">
                                 <label class="col-form-label text-right col-lg-3 col-sm-12">Şube</label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <select class="form-control is-valid" name="option">
+                                    <select class="form-control is-valid" id ="office" name="office">
                                         @if (Model != null)
                                         {
                                             @foreach (var office in Model)
                                             {
-                                                <option>@office.Name</option>
+                                                <option value="@office.Id">@office.Name</option>
                                             }
                                         }
                                     </select>
