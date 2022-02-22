@@ -42,7 +42,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<UserForRegisterDto>>(_userDal.GetListWithDetails().ToList());
         }
 
-
         public IResult Add(User User)
         {
             IResult result = BusinessRules.Run(CheckIfSessionNameExists(User.UserId, User.UserName));
@@ -52,7 +51,7 @@ namespace Business.Concrete
             User.PasswordHash = SecuredOperation.EncryptAES("*", Messages.SecurityKey);
 
             _userDal.Add(User);
-            return new SuccessResult("Başarı ile Eklendi !");
+            return new SuccessResult(Messages.Added);
         }
 
         public IResult Update(User User)
@@ -62,13 +61,13 @@ namespace Business.Concrete
                 return result;
 
             _userDal.Update(User);
-            return new SuccessResult("Başarı ile Güncellendi !");
+            return new SuccessResult(Messages.Updated);
         }
 
         public IResult Delete(User User)
         {
             _userDal.Delete(User);
-            return new SuccessResult("Başarı ile Silindi !");
+            return new SuccessResult(Messages.Deleted);
         }
 
         private IResult CheckIfSessionNameExists(int Id, string UserName)
@@ -76,7 +75,7 @@ namespace Business.Concrete
             var result = _userDal.GetList(x => x.UserId != Id && x.UserName == UserName).Any();
             if (result)
             {
-                return new ErrorResult("Bu Kullanıcı Adı Zaten Mevcut !");
+                return new ErrorResult(Messages.UserAlreadyExists);
             }
 
             return new SuccessResult();

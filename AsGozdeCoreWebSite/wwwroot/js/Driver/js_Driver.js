@@ -1,4 +1,4 @@
-﻿const { Alert } = require("bootstrap");
+﻿
 
 /***** Id ile şube tanımı getirilir *****/
 function js_getDriverByIdWithDetails(Id) {
@@ -25,7 +25,10 @@ function js_getDriverByIdWithDetails(Id) {
 
 /** Silme işlemi öncesi kullanıcıya son ikaz yapılır */
 function js_deleteDriverByIdQ(Id) {
-	mesajBox_confirm('Sil', 'Sil', 'Tanımı Silmek İstediğinize Emin misiniz ?', 'Sil', 'danger', 'js_deleteDriverById(' + Id + ')');
+    if (Id>0) {
+		mesajBox_confirm('Sil', 'Sil', 'Tanımı Silmek İstediğinize Emin misiniz ?', 'Sil', 'danger', 'js_deleteDriverById(' + Id + ')');
+    }
+	
 }
 
 /***** Id ile şube tanımı silme işlemi yapılır. *****/
@@ -52,36 +55,64 @@ function js_deleteDriverById(Id) {
 }
 
 /** Kullanıcı tanımı ekleme yada güncelleme işlemi yapılır. */
-function js_addDriver() {
+function js_addDriver(islem) {
 
-	let Driver = {
-		DriverId: $('#txtDriverId').val(),
-		DriverName: $('#txtDriverName').val(),
-		FirstName: $('#txtFirstName').val(),
-		LastName: $('#txtLastName').val(),
-		Title: $('#txtUnvan').val(),
-		Active: chkKontrol('chkActive'),
-		OfficeId: $('#selectOffice option:selected').val()
-	};
+	let driverInformation = {
+		Id: $('#txtId').val(),
+		SessionId: $('#selectSession option:selected').val(),
+		Name: $('#txtName').val(),
+		Surname: $('#txtSurname').val(),
+		IdentityNo: $('#txtIdentityNo').val(),
+		BranchId: $('#selectBranch option:selected').val(),
+		CourseFee: $('#txtCourseFee').val(),
+		Email: $('#txtEmail').val(),
+		Phone1: $('#txtPhone1').val(),
+		Phone2: $('#txtPhone2').val(),
+		City: $('#txtCity').val(),
+		County: $('#txtCounty').val(),
+		Address1: $('#txtAddress1').val(),
+		Address2: $('#txtAddress2').val()
+	};	
 
-	if (Driver.DriverName != null && Driver.DriverName != "") {
-		$.ajax({
-			async: true,
-			type: "POST",
-			url: "/Driver/AddDriver",
-			data: Driver,
-			success: function (data) {
-				var result = data;
-				mesajBox('mesaj', 'DURUM', result, 'success');
-				location.reload();
-			},
-			error: function (err) {
-				mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
-			}
-		});
+
+	if (driverInformation.Name == null || driverInformation.Name == "") {
+		mesajBox('mesaj', 'UYARI', 'Sürücü Adayı Adı Alanı Boş Olamaz !', 'warning');
+		return;
 	}
-	else
-		mesajBox('mesaj', 'UYARI', 'Kullanıcı Kodu Boş Olamaz !', 'warning');
+
+	if (driverInformation.Surname == null || driverInformation.Surname == "") {
+		mesajBox('mesaj', 'UYARI', 'Sürücü Adayı Soyadı Alanı Boş Olamaz !', 'warning');
+		return;
+	}		
+
+	$.ajax({
+		async: true,
+		type: "POST",
+		url: "/Driver/AddDriver",
+		data: driverInformation,
+		success: function (data) {
+			var result = data;
+			mesajBox('mesaj', 'DURUM', result, 'success');
+
+			setTimeout(function () {
+				if (islem == 0) {
+					location.replace(location.href.toString().replace('GetDriverByIdWithDetails/' + $('#txtId').val().toString(), 'Index'));
+				}
+				else {
+					location.replace(location.href.toString().replace('GetDriverByIdWithDetails/' + $('#txtId').val().toString(), 'GetDriverByIdWithDetails/0'));
+				}
+			}, 200);
+			
+			
+		},
+		error: function (err) {
+			mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
+		}
+	});
+
+
+	
+	
 
 
 }

@@ -12,10 +12,14 @@ namespace AsGozdeCoreWebSite.Controllers
     public class DriverController : Controller
     {
         private IDriverInformationService _driverInformationService;
+        private IBranchService _branchService;
+        private ISessionService _sessionService;
 
-        public DriverController (IDriverInformationService driverInformationService)
+        public DriverController (IDriverInformationService driverInformationService, IBranchService branchService, ISessionService sessionService)
         {
             _driverInformationService = driverInformationService;
+            _branchService = branchService;
+            _sessionService = sessionService;
         }
 
         public IActionResult Index()
@@ -47,10 +51,12 @@ namespace AsGozdeCoreWebSite.Controllers
         public IActionResult AddDriver(DriverInformation driverInformation)
         {
             IResult result;
+            driverInformation.OfficeId = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
             if (driverInformation.Id == null || driverInformation.Id <= 0)
                 result = _driverInformationService.Add(driverInformation);
             else
                 result = _driverInformationService.Update(driverInformation);
+
 
 
             if (result.Success)

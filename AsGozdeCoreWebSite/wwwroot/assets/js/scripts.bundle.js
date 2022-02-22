@@ -1,4 +1,4 @@
-"use strict";
+ "use strict";
 
 // Component Definition
 var KTApp = function() {
@@ -8803,23 +8803,23 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 		// By default the stirngs will be in the plugin source and here can override it
 		translate: {
 			records: {
-				processing: 'Please wait...',
-				noRecords: 'No records found',
+				processing: 'Lütfen Bekleyin...',
+				noRecords: 'Kayıt Bulunamadı !',
 			},
 			toolbar: {
 				pagination: {
 					items: {
 						default: {
-							first: 'First',
-							prev: 'Previous',
-							next: 'Next',
-							last: 'Last',
-							more: 'More pages',
-							input: 'Page number',
-							select: 'Select page size',
+							first: 'İlk',
+							prev: 'Geri',
+							next: 'İleri',
+							last: 'Son',
+							more: 'Daha Fazla Sayfa',
+							input: 'Sayfa Numarası',
+							select: 'Sayfa Seçiniz',
 							all: 'all',
 						},
-						info: 'Showing {{start}} - {{end}} of {{total}}',
+						info: 'Gösteriliyor {{start}} - {{end}}  Toplam Kayıt: {{total}}',
 					},
 				},
 			},

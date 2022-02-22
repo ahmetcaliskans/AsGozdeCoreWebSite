@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -30,19 +31,19 @@ namespace Business.Concrete
         public IResult Add(DriverInformation driverInformation)
         {
             _driverInformationDal.Add(driverInformation);
-            return new SuccessResult("Başarı ile Eklendi !");
+            return new SuccessResult(Messages.Added);
         }
 
         public IResult Delete(DriverInformation driverInformation)
         {
-            _driverInformationDal.Add(driverInformation);
-            return new SuccessResult("Başarı ile Silindi !");
+            _driverInformationDal.Delete(driverInformation);
+            return new SuccessResult(Messages.Deleted);
         }
 
         public IResult Update(DriverInformation driverInformation)
         {
-            _driverInformationDal.Add(driverInformation);
-            return new SuccessResult("Başarı ile Güncellendi !");
+            _driverInformationDal.Update(driverInformation);
+            return new SuccessResult(Messages.Updated);
         }
 
         public IDataResult<List<DriverInformation>> GetListWithDetails(int officeId)

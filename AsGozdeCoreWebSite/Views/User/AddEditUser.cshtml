@@ -49,7 +49,8 @@
                 </div>
             </div>
 
-            @await Component.InvokeAsync("OfficeList", new { officeId = ((Model== null || Model.OfficeId==null) ? (int)0 : (int)Model.OfficeId) })          
+            @await Component.InvokeAsync("OfficeList", new { officeId = ((Model == null || Model.OfficeId == null) ? (int)0 : (int)Model.OfficeId) })
+            
 
         </div>
     </div>

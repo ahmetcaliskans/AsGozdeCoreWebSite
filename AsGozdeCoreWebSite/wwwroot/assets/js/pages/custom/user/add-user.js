@@ -30,10 +30,10 @@ var KTAddUser = function () {
 					KTUtil.scrollTop();
 				} else {
 					Swal.fire({
-		                text: "Uzgunuz, bir yada birkac hata ile karsilasildi, lutfen tekrar deneyin.",
+						text: "Uzgunuz, bir yada birkac hata ile karsilasildi, lutfen tekrar deneyin.",
 		                icon: "error",
 		                buttonsStyling: false,
-		                confirmButtonText: "Tamam, anladim!",
+						confirmButtonText: "Tamam, anladim!",
 						customClass: {
 							confirmButton: "btn font-weight-bold btn-light"
 						}
@@ -142,15 +142,15 @@ var KTAddUser = function () {
 				//	}
 				//},
 
-				fields: {
-					txtCourseFee: {
-						validators: {
-							notEmpty: {
-								message: 'Kurs Ucreti Bos Olamaz !'
-							}
-						}
-					}
-				},
+				//fields: {
+				//	txtCourseFee: {
+				//		validators: {
+				//			notEmpty: {
+				//				message: 'Kurs Ucreti Bos Olamaz !'
+				//			}
+				//		}
+				//	}
+				//},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
 					bootstrap: new FormValidation.plugins.Bootstrap()

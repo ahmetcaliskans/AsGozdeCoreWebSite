@@ -1,0 +1,39 @@
+﻿@model dynamic
+
+
+<div class="form-group row fv-plugins-icon-container">
+    <label class="col-xl-3 col-lg-3 col-form-label">Dönem</label>
+    <div class="col-lg-9 col-xl-9">
+        <select class="form-control is-valid" name="selectSession" id="selectSession">
+            @if (Model.Session != null)
+            {
+
+                @foreach (var session in Model.Session as List<Entities.Concrete.Session>)
+                {
+
+                    if (session.Id == (int)Model.SelectedId)
+                    {
+                        <option selected="" value="@session.Id">@session.Name</option>
+                    }
+                    else
+                    {
+                        if ((int)Model.SelectedId == (int)0 && session.Active)
+                        {
+                            <option selected="" value="@session.Id">@session.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@session.Id">@session.Name</option>
+                        }
+
+                    }
+
+                }
+
+            }
+        </select>
+
+        <!--<span class="form-text text-muted">Lütfen Bir Dönem Seçiniz !</span>-->
+        <div class="fv-plugins-message-container"></div>
+    </div>
+</div>
