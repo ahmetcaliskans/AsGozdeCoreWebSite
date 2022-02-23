@@ -194,6 +194,11 @@
                     <div class="separator separator-dashed my-10"></div>
                     <div class="my-52">
                         <h3 class=" text-dark font-weight-bold mb-10">Sürücü Kurs Bilgileri:</h3>
+
+                        @await Component.InvokeAsync("SessionList", new { sessionId = ((Model == null || Model.Session == null) ? (int)0 : (int)Model.Session.Id) })
+
+                        @await Component.InvokeAsync("BranchList", new { branchId = ((Model == null || Model.Branch == null) ? (int)0 : (int)Model.Branch.Id) })
+
                         <!--begin::Group-->
                         <div class="form-group row">
                             <label class="col-xl-3 col-lg-3 col-form-label">Kurs Ücreti</label>
@@ -202,10 +207,6 @@
                             </div>
                         </div>
                         <!--end::Group-->
-
-                        @await Component.InvokeAsync("BranchList", new { branchId = ((Model == null || Model.Branch == null) ? (int)0 : (int)Model.Branch.Id) })
-
-                        @await Component.InvokeAsync("SessionList", new { sessionId = ((Model == null || Model.Session == null) ? (int)0 : (int)Model.Session.Id) })
 
                     </div>
                     <div class="separator separator-dashed my-10"></div>

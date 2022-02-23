@@ -13,5 +13,6 @@ namespace Entities.Concrete
         public int Year { get; set; }
         public int Sequence { get; set; }
         public bool Active { get; set; }
+        public virtual List<DriverInformation> DriverInformations { get; set; }
     }
 }

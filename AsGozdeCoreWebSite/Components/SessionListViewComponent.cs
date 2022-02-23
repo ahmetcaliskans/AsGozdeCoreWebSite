@@ -20,7 +20,7 @@ namespace AsGozdeCoreWebSite.Components
         {
             var result = _sessionService.GetList();
             dynamic mymodel = new System.Dynamic.ExpandoObject();
-            mymodel.Session = result.Data.OrderByDescending(x=>x.Year).OrderByDescending(x=>x.Sequence).ToList();
+            mymodel.Session = result.Data.OrderByDescending(x=>x.Year).ThenByDescending(x=>x.Sequence).ToList();
             mymodel.SelectedId = sessionId == null ? 0 : sessionId;
             //return await Task.FromResult((IViewComponentResult)View("GetSessionList", result.Data));
             return View("SessionList", mymodel);

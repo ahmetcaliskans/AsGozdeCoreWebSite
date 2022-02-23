@@ -4,14 +4,16 @@ using DataAccess.EntityFramework.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AsGozdeWebSiteDB))]
-    partial class AsGozdeWebSiteDBModelSnapshot : ModelSnapshot
+    [Migration("20220223101528_RelatedTables")]
+    partial class RelatedTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,9 +240,9 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("Entities.Concrete.Office", "Office")
-                        .WithMany("DriverInformations")
+                        .WithMany()
                         .HasForeignKey("OfficeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.Concrete.Session", "Session")
@@ -257,11 +259,6 @@ namespace DataAccess.Migrations
                 });
 
             modelBuilder.Entity("Entities.Concrete.Branch", b =>
-                {
-                    b.Navigation("DriverInformations");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Office", b =>
                 {
                     b.Navigation("DriverInformations");
                 });

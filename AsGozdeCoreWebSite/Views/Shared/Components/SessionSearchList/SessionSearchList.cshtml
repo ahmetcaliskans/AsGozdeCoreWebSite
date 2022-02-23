@@ -1,0 +1,30 @@
+﻿@model List<Entities.Concrete.Session>
+
+<div class="col-md-4 my-2 my-md-0">
+    <div class="d-flex align-items-center">
+        <label class="mr-3 mb-0 d-none d-md-block">Dönem:</label>
+        <select class="form-control" id="kt_datatable_search_donem">
+            <option value="">Hepsi</option>
+            @if (Model != null)
+            {
+
+                @foreach (var session in Model)
+                {
+
+                    @*if (session.Active)
+                    {
+                        <option selected="" value="@session.Name">@session.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@session.Name">@session.Name</option>
+                    }*@
+
+                    <option value="@session.Name">@session.Name</option>
+
+                }
+
+            }
+        </select>
+    </div>
+</div>

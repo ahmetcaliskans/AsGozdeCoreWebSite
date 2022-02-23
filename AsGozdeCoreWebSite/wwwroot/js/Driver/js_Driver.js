@@ -57,6 +57,8 @@ function js_deleteDriverById(Id) {
 /** Kullanıcı tanımı ekleme yada güncelleme işlemi yapılır. */
 function js_addDriver(islem) {
 
+	var id = $('#txtId').val();
+
 	let driverInformation = {
 		Id: $('#txtId').val(),
 		SessionId: $('#selectSession option:selected').val(),
@@ -94,12 +96,18 @@ function js_addDriver(islem) {
 			var result = data;
 			mesajBox('mesaj', 'DURUM', result, 'success');
 
+			var hrefSplit = location.href.split('/');
+			var href = '';
+			for (var i = 0; i < hrefSplit.length - 1; i++) {
+				href += hrefSplit[i] + '/';
+			}
+
 			setTimeout(function () {
-				if (islem == 0) {
-					location.replace(location.href.toString().replace('GetDriverByIdWithDetails/' + $('#txtId').val().toString(), 'Index'));
+				if (islem == 0) {					
+					location.replace(href.replace('GetDriverByIdWithDetails/', 'Index'));
 				}
 				else {
-					location.replace(location.href.toString().replace('GetDriverByIdWithDetails/' + $('#txtId').val().toString(), 'GetDriverByIdWithDetails/0'));
+					location.replace(href.replace('GetDriverByIdWithDetails/', 'GetDriverByIdWithDetails/0'));
 				}
 			}, 200);
 			

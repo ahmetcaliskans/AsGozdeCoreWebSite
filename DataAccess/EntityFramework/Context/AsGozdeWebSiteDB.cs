@@ -25,5 +25,38 @@ namespace DataAccess.EntityFramework.Context
         public DbSet<DriverInformation> DriverInformations { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<CollectionDefinition> CollectionDefinitions { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.Entity<Office>()
+            .HasKey(e => new { e.Id });
+
+            modelBuilder.Entity<Office>()
+                        .HasMany(e => e.DriverInformations)
+                        .WithOne(e => e.Office)
+                        .OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
+
+
+            modelBuilder.Entity<Branch>()
+            .HasKey(e => new { e.Id });
+
+            modelBuilder.Entity<Branch>()
+                        .HasMany(e => e.DriverInformations)
+                        .WithOne(e => e.Branch)
+                        .OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
+
+
+            modelBuilder.Entity<Session>()
+            .HasKey(e => new { e.Id });
+
+            modelBuilder.Entity<Session>()
+                        .HasMany(e => e.DriverInformations)
+                        .WithOne(e => e.Session)
+                        .OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
+        }
+
     }
 }

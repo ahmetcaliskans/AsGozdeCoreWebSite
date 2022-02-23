@@ -9,7 +9,7 @@ var KTDatatableHtmlTableDemo = function() {
 
 		var datatable = $('#kt_datatable').KTDatatable({
 			data: {
-				saveState: {cookie: false},
+				saveState: false
 			},
 			search: {
 				input: $('#kt_datatable_search_query'),
@@ -89,22 +89,22 @@ var KTDatatableHtmlTableDemo = function() {
 			columns: [
 				{
 					field: 'Islem',
-					autoHide: false
+					autoHide: false,
+					sortable: false
                 }
 			],
 		});
-
-
-
-        $('#kt_datatable_search_status').on('change', function() {
-            datatable.search($(this).val().toLowerCase(), 'Status');
-        });
+        
 
         $('#kt_datatable_search_type').on('change', function() {
             datatable.search($(this).val().toLowerCase(), 'Type');
-        });
+		});
 
-        $('#kt_datatable_search_status, #kt_datatable_search_type').selectpicker();
+		$('#kt_datatable_search_donem').on('change', function () {
+			datatable.search($(this).val().toLowerCase(), 'Donem');
+		});
+
+		$('#kt_datatable_search_type, #kt_datatable_search_donem').selectpicker();
 
     };
 

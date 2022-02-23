@@ -12,14 +12,10 @@ namespace AsGozdeCoreWebSite.Controllers
     public class DriverController : Controller
     {
         private IDriverInformationService _driverInformationService;
-        private IBranchService _branchService;
-        private ISessionService _sessionService;
 
         public DriverController (IDriverInformationService driverInformationService, IBranchService branchService, ISessionService sessionService)
         {
             _driverInformationService = driverInformationService;
-            _branchService = branchService;
-            _sessionService = sessionService;
         }
 
         public IActionResult Index()
@@ -27,7 +23,7 @@ namespace AsGozdeCoreWebSite.Controllers
             var result = _driverInformationService.GetListWithDetails(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
             if (result != null)
             {
-                return View(result.Data);
+                return View(result.Data.OrderByDescending(x=> x.Session.Year).ThenByDescending(x=>x.Session.Sequence).ThenByDescending(x=>x.Id).ToList());
             }
 
             return View();
