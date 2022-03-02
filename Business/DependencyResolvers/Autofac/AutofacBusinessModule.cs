@@ -41,6 +41,12 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<DriverInformationManager>().As<IDriverInformationService>();
             builder.RegisterType<EfDriverInformationDal>().As<IDriverInformationDal>();
 
+            builder.RegisterType<CollectionManager>().As<ICollectionService>();
+            builder.RegisterType<EfCollectionDal>().As<ICollectionDal>();
+
+            builder.RegisterType<CollectionDetailManager>().As<ICollectionDetailService>();
+            builder.RegisterType<EfCollectionDetailDal>().As<ICollectionDetailDal>();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

@@ -67,11 +67,11 @@ function chkKontrol(chkbox) {
 	return true;
 }
 
-/***** Numeric Alanlar İçin Decimal Değerler  Miktar ,  BirimFiyat , Tutar *****/
-$('.mynumeric4').numeric({ decimal: ",", negative: false, decimalPlaces: 4 });
+///***** Numeric Alanlar İçin Decimal Değerler  Miktar ,  BirimFiyat , Tutar *****/
+//$('.mynumeric4').numeric({ decimal: ",", negative: false, decimalPlaces: 4 });
 
-$('.mynumeric6').numeric({ decimal: ",", negative: false, decimalPlaces: 6 });
+//$('.mynumeric6').numeric({ decimal: ",", negative: false, decimalPlaces: 6 });
 
-$('.mynumeric2').numeric({ decimal: ",", negative: false, decimalPlaces: 2 });
+//$('.mynumeric2').numeric({ decimal: ",", negative: false, decimalPlaces: 2 });
 
-$(".mydate").inputmask({ mask: "99.99.9999" });
+//$(".mydate").inputmask({ mask: "99.99.9999" });

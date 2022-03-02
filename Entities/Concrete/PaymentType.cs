@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Entities.Concrete
 {
@@ -11,5 +12,6 @@ namespace Entities.Concrete
         public string Name { get; set; }
         public string Description { get; set; }
         public bool Active { get; set; }
+        public virtual List<CollectionDetail> CollectionDetails { get; set; }
     }
 }

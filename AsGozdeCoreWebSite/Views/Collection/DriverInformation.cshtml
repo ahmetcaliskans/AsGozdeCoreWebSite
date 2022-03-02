@@ -1,0 +1,31 @@
+﻿@model Entities.Concrete.DriverInformation
+
+<!--begin::Example-->
+<!--begin::Card-->
+<div class="card card-custom" id="kt_card_1">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Sürücü Adayı Bilgileri</h3>
+        </div>
+        <div class="card-toolbar">
+            <a href="#" class="btn btn-icon btn-sm btn-hover-light-primary mr-1" data-card-tool="toggle" title="Toggle Card">
+                <i class="ki ki-arrow-down icon-nm"></i>
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" >Sürücü Adayı</label>
+            <div class="input-icon input-icon-right">
+                <input type="text" class="form-control" readonly="" placeholder="Sürücü Adayı Seçimi" id="txtDriverNameSurname" value="@Model.Name @Model.Surname">                
+                <span data-toggle="modal" data-target="#NewDriverInformation" onclick="js_getDriverInformationsWithDetails()">
+                    <i class="flaticon2-search-1"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Card-->
+<!--end::Example-->
+
+<script charset="utf-8" type="text/javascript" src="~/assets/js/pages/features/cards/tools.js"></script>

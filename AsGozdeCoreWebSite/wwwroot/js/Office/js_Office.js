@@ -57,7 +57,19 @@ function js_addOffice() {
 	let office = {
 		Id: $('#txtId').val(),
 		Name: $('#txtName').val(),
-		Description: $('#txtDescription').val()
+		Description: $('#txtDescription').val(),
+		WebAddress: $('#txtWebAddress').val(),
+		Email: $('#txtEmail').val(),
+		Phone1: $('#txtPhone1').val(),
+		Phone2: $('#txtPhone2').val(),
+		Fax: $('#txtFax').val(),
+		City: $('#txtCity').val(),
+		County: $('#txtCounty').val(),
+		Address1: $('#txtAddress1').val(),
+		Address2: $('#txtAddress2').val(),
+		TradeRegisterNumber: $('#txtTradeRegisterNumber').val(),
+		TaxOfficeName: $('#txtTaxOfficeName').val(),
+		TaxOfficeNo: $('#txtTaxOfficeNo').val()
 	};
 
 	if (office.Name != null && office.Name!="") {

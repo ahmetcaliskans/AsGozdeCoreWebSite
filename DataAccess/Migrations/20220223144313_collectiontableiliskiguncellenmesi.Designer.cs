@@ -4,14 +4,16 @@ using DataAccess.EntityFramework.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AsGozdeWebSiteDB))]
-    partial class AsGozdeWebSiteDBModelSnapshot : ModelSnapshot
+    [Migration("20220223144313_collectiontableiliskiguncellenmesi")]
+    partial class collectiontableiliskiguncellenmesi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,8 +91,14 @@ namespace DataAccess.Migrations
                     b.Property<string>("AddedUserName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("CollectionDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CollectionDefinitionId")
+                        .HasColumnType("int");
 
                     b.Property<string>("DocumentNo")
                         .HasColumnType("nvarchar(max)");
@@ -101,8 +109,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("OfficeId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("PaymentTypeId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("datetime2");
@@ -112,9 +120,13 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CollectionDefinitionId");
+
                     b.HasIndex("DriverInformationId");
 
                     b.HasIndex("OfficeId");
+
+                    b.HasIndex("PaymentTypeId");
 
                     b.ToTable("Collections");
                 });
@@ -144,51 +156,6 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CollectionDefinitions");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.CollectionDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("AddedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("AddedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("AddedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("CollectionDefinitionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CollectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CollectionDefinitionId");
-
-                    b.HasIndex("CollectionId");
-
-                    b.HasIndex("PaymentTypeId");
-
-                    b.ToTable("CollectionDetails");
                 });
 
             modelBuilder.Entity("Entities.Concrete.DriverInformation", b =>
@@ -261,46 +228,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Address2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("County")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fax")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TaxOfficeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TaxOfficeNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TradeRegisterNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WebAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -358,10 +289,16 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.Collection", b =>
                 {
+                    b.HasOne("Entities.Concrete.CollectionDefinition", "CollectionDefinition")
+                        .WithMany("Collections")
+                        .HasForeignKey("CollectionDefinitionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Entities.Concrete.DriverInformation", "DriverInformation")
                         .WithMany("Collections")
                         .HasForeignKey("DriverInformationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.Concrete.Office", "Office")
@@ -370,34 +307,17 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("DriverInformation");
-
-                    b.Navigation("Office");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.CollectionDetail", b =>
-                {
-                    b.HasOne("Entities.Concrete.CollectionDefinition", "CollectionDefinition")
-                        .WithMany("CollectionDetails")
-                        .HasForeignKey("CollectionDefinitionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Concrete.Collection", "Collection")
-                        .WithMany("CollectionDetails")
-                        .HasForeignKey("CollectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Entities.Concrete.PaymentType", "PaymentType")
-                        .WithMany("CollectionDetails")
+                        .WithMany("Collections")
                         .HasForeignKey("PaymentTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Collection");
-
                     b.Navigation("CollectionDefinition");
+
+                    b.Navigation("DriverInformation");
+
+                    b.Navigation("Office");
 
                     b.Navigation("PaymentType");
                 });
@@ -434,14 +354,9 @@ namespace DataAccess.Migrations
                     b.Navigation("DriverInformations");
                 });
 
-            modelBuilder.Entity("Entities.Concrete.Collection", b =>
-                {
-                    b.Navigation("CollectionDetails");
-                });
-
             modelBuilder.Entity("Entities.Concrete.CollectionDefinition", b =>
                 {
-                    b.Navigation("CollectionDetails");
+                    b.Navigation("Collections");
                 });
 
             modelBuilder.Entity("Entities.Concrete.DriverInformation", b =>
@@ -458,7 +373,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.PaymentType", b =>
                 {
-                    b.Navigation("CollectionDetails");
+                    b.Navigation("Collections");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Session", b =>

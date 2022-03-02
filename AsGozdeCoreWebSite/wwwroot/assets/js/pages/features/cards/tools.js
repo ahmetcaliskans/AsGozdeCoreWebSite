@@ -11,43 +11,43 @@ var KTCardTools = function () {
         // This card is lazy initialized using data-card="true" attribute. You can access to the card object as shown below and override its behavior
         var card = new KTCard('kt_card_1');
 
-        // Toggle event handlers
-        card.on('beforeCollapse', function(card) {
-            setTimeout(function() {
-                toastr.info('Before collapse event fired!');
-            }, 100);
-        });
+        //// Toggle event handlers
+        //card.on('beforeCollapse', function(card) {
+        //    setTimeout(function() {
+        //        toastr.info('Before collapse event fired!');
+        //    }, 100);
+        //});
 
-        card.on('afterCollapse', function(card) {
-            setTimeout(function() {
-                toastr.warning('Before collapse event fired!');
-            }, 2000);
-        });
+        //card.on('afterCollapse', function(card) {
+        //    setTimeout(function() {
+        //        toastr.warning('Before collapse event fired!');
+        //    }, 2000);
+        //});
 
-        card.on('beforeExpand', function(card) {
-            setTimeout(function() {
-                toastr.info('Before expand event fired!');
-            }, 100);
-        });
+        //card.on('beforeExpand', function(card) {
+        //    setTimeout(function() {
+        //        toastr.info('Before expand event fired!');
+        //    }, 100);
+        //});
 
-        card.on('afterExpand', function(card) {
-            setTimeout(function() {
-                toastr.warning('After expand event fired!');
-            }, 2000);
-        });
+        //card.on('afterExpand', function(card) {
+        //    setTimeout(function() {
+        //        toastr.warning('After expand event fired!');
+        //    }, 2000);
+        //});
 
-        // Remove event handlers
-        card.on('beforeRemove', function(card) {
-            toastr.info('Before remove event fired!');
+        //// Remove event handlers
+        //card.on('beforeRemove', function(card) {
+        //    toastr.info('Before remove event fired!');
 
-            return confirm('Are you sure to remove this card ?');  // remove card after user confirmation
-        });
+        //    return confirm('Are you sure to remove this card ?');  // remove card after user confirmation
+        //});
 
-        card.on('afterRemove', function(card) {
-            setTimeout(function() {
-                toastr.warning('After remove event fired!');
-            }, 2000);
-        });
+        //card.on('afterRemove', function(card) {
+        //    setTimeout(function() {
+        //        toastr.warning('After remove event fired!');
+        //    }, 2000);
+        //});
 
         // Reload event handlers
         card.on('reload', function(card) {
@@ -74,43 +74,43 @@ var KTCardTools = function () {
         // This card is lazy initialized using data-card="true" attribute. You can access to the card object as shown below and override its behavior
         var card = new KTCard('kt_card_2');
 
-        // Toggle event handlers
-        card.on('beforeCollapse', function(card) {
-            setTimeout(function() {
-                toastr.info('Before collapse event fired!');
-            }, 100);
-        });
+        //// Toggle event handlers
+        //card.on('beforeCollapse', function(card) {
+        //    setTimeout(function() {
+        //        toastr.info('Before collapse event fired!');
+        //    }, 100);
+        //});
 
-        card.on('afterCollapse', function(card) {
-            setTimeout(function() {
-                toastr.warning('Before collapse event fired!');
-            }, 2000);
-        });
+        //card.on('afterCollapse', function(card) {
+        //    setTimeout(function() {
+        //        toastr.warning('Before collapse event fired!');
+        //    }, 2000);
+        //});
 
-        card.on('beforeExpand', function(card) {
-            setTimeout(function() {
-                toastr.info('Before expand event fired!');
-            }, 100);
-        });
+        //card.on('beforeExpand', function(card) {
+        //    setTimeout(function() {
+        //        toastr.info('Before expand event fired!');
+        //    }, 100);
+        //});
 
-        card.on('afterExpand', function(card) {
-            setTimeout(function() {
-                toastr.warning('After expand event fired!');
-            }, 2000);
-        });
+        //card.on('afterExpand', function(card) {
+        //    setTimeout(function() {
+        //        toastr.warning('After expand event fired!');
+        //    }, 2000);
+        //});
 
-        // Remove event handlers
-        card.on('beforeRemove', function(card) {
-            toastr.info('Before remove event fired!');
+        //// Remove event handlers
+        //card.on('beforeRemove', function(card) {
+        //    toastr.info('Before remove event fired!');
 
-            return confirm('Are you sure to remove this card ?');  // remove card after user confirmation
-        });
+        //    return confirm('Are you sure to remove this card ?');  // remove card after user confirmation
+        //});
 
-        card.on('afterRemove', function(card) {
-            setTimeout(function() {
-                toastr.warning('After remove event fired!');
-            }, 2000);
-        });
+        //card.on('afterRemove', function(card) {
+        //    setTimeout(function() {
+        //        toastr.warning('After remove event fired!');
+        //    }, 2000);
+        //});
 
         // Reload event handlers
         card.on('reload', function(card) {

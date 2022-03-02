@@ -4,15 +4,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AsGozdeCoreWebSite
 {
@@ -27,11 +25,17 @@ namespace AsGozdeCoreWebSite
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {      
+
             services.AddControllersWithViews();
             //services.AddDbContext<AsGozdeWebSiteDB>(options => options.UseSqlServer(Configuration.GetConnectionString("AsGozdeDatabase")));
 
-            services.AddSession();
+            services.AddSession();               
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("tr-TR");
+            });
 
             services.AddMvc(config =>
             {
@@ -45,7 +49,7 @@ namespace AsGozdeCoreWebSite
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>
             {
                 x.LoginPath = "/";
-            });
+            });            
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -71,7 +75,8 @@ namespace AsGozdeCoreWebSite
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }            
+            }
+            app.UseRequestLocalization();
 
             app.UseSession();
             app.UseHttpsRedirection();

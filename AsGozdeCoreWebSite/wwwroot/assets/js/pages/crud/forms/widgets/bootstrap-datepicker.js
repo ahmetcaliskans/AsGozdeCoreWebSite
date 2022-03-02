@@ -47,25 +47,34 @@ var KTBootstrapDatepicker = function () {
             todayHighlight: true,
             orientation: "bottom left",
             templates: arrows
-        });
+        });        
 
         // enable clear button 
         $('#kt_datepicker_3, #kt_datepicker_3_validate').datepicker({
-            rtl: KTUtil.isRTL(),
+            rtl: false,
             todayBtn: "linked",
             clearBtn: true,
             todayHighlight: true,
-            templates: arrows
+            templates: arrows,
+            format: 'dd.mm.yyyy',
+            weekStart: 1,
+            autoclose: true
         });
 
         // enable clear button for modal demo
         $('#kt_datepicker_3_modal').datepicker({
-            rtl: KTUtil.isRTL(),
+            rtl: false,
             todayBtn: "linked",
             clearBtn: true,
             todayHighlight: true,
-            templates: arrows
+            templates: arrows,
+            format: 'dd.mm.yyyy',
+            weekStart: 1,
+            autoclose: true
         });
+
+        $('#kt_datepicker_3').mask('00.00.0000', { placeholder: "dd.mm.yyyy" });
+
 
         // orientation 
         $('#kt_datepicker_4_1').datepicker({

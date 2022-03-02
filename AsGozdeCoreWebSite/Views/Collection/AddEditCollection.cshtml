@@ -1,0 +1,201 @@
+﻿
+@{
+    ViewData["Title"] = "Tahsilat Girişi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model dynamic
+
+@{
+    var _collection = Model.Collection as Entities.Concrete.Collection;
+    var _collectionDetails = Model.CollectionDetails as List<Entities.Concrete.CollectionDetail>;
+}
+
+<div class="card card-custom card-sticky" id="kt_page_sticky_card">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"] <i class="mr-2"></i>
+                <small class="">@ViewData["Title"] Ekleme - Düzenleme - Silme</small>
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            <a href="/Collection/Index" class="btn btn-light-primary font-weight-bolder mr-2">
+                <i class="ki ki-long-arrow-back icon-sm"></i>
+                Geri
+            </a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary font-weight-bolder">
+                    <i class="ki ki-check icon-sm"></i>
+                    Onayla
+                </button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </button>
+                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                    <ul class="nav nav-hover flex-column">
+                        <li class="nav-item">
+                            <a href="javascript:;" class="nav-link" onclick="js_addCollection(0)">
+                                <!--Öncesinde Kaydetme İşlemi Yapılacak-->
+                                <i class="nav-icon flaticon2-reload"></i>
+                                <span class="nav-text">Kaydet & Devam Et</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript:;" class="nav-link" onclick="js_addCollection(1)">
+                                <!--Öncesinde Kaydetme İşlemi Yapılacak-->
+                                <i class="nav-icon flaticon2-add-1"></i>
+                                <span class="nav-text">Kaydet & Yeni Kayıt</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript:;" class="nav-link" onclick="js_deleteCollectionByIdQ(@if (_collection != null) @_collection.Id)">
+                                <i class="nav-icon flaticon2-delete"></i>
+                                <span class="nav-text">Sil</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript:;" class="nav-link" onclick="js_printCollection(@if (_collection != null) @_collection.Id)">
+                                <i class="nav-icon flaticon2-print"></i>
+                                <span class="nav-text">Yazdır</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <!--begin::Row-->
+        <div class="row">
+            <div class="col-lg-6">
+                <div id="dataDriverInformation">
+                    @await Html.PartialAsync("/Views/Collection/DriverInformation.cshtml", _collection.DriverInformation)
+                </div>                
+            </div>
+            <div class="col-lg-6">
+                <!--begin::Example-->
+                <!--begin::Card-->
+                <div class="card card-custom" id="kt_card_2">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h3 class="card-label">Evrak Bilgileri</h3>
+                        </div>
+                        <div class="card-toolbar">
+                            <a href="#" class="btn btn-icon btn-sm btn-hover-light-primary mr-1" data-card-tool="toggle" title="Toggle Card">
+                                <i class="ki ki-arrow-down icon-nm"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Tahsilat Tarihi</label>
+                            <div class="input-icon input-icon-right date">
+                                <input type="text" class="form-control" value="@if (_collection.CollectionDate==null || _collection.CollectionDate <= Convert.ToDateTime("1900-01-01")) @DateTime.Now.ToShortDateString() else @_collection.CollectionDate.ToShortDateString()" id="kt_datepicker_3" name="txtCollectionDate" />
+                                <span class="input-group-text">
+                                    <i class="la la-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Evrak No</label>
+                            <div class="input-icon input-icon-right ">
+                                <input readonly="" type="text" class="form-control form-control-solid" placeholder="Evrak No" id="txtDocumentNo" value="@if (_collection.DocumentNo==null || string.IsNullOrEmpty(_collection.DocumentNo)) @string.Format("{0}","XXX") else @_collection.DocumentNo" />
+                                <span class="input-group-text">
+                                    <i class="flaticon-doc"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <!--end::Card-->
+                <!--end::Example-->
+            </div>
+        </div>
+        <!--end::Row-->
+    </div>
+
+
+    <div class="card custom-card">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        </div>
+        <div class="card-toolbar" style="margin-left:25px;">
+            <!--begin::Button-->
+            <a href="javascript:;" class="btn btn-success font-weight-bolder" data-toggle="modal" data-target="#NewCollectionDetail" onclick="js_getCollectionDetailByIdWithDetails(0)">
+                <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
+                <span class="svg-icon svg-icon-md">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24" />
+                            <circle fill="#000000" cx="9" cy="15" r="6" />
+                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>Yeni Tahsilat
+            </a>
+            <!--end::Button-->
+        </div>
+
+        <div id="dataListCollectionDetail">
+
+            @await Html.PartialAsync("/Views/Collection/ListCollectionDetail.cshtml", _collectionDetails, new ViewDataDictionary(ViewData) { { "GetCollectionByIdWithDetails", _collection == null ? 0 : _collection.Id } })
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<!--begin: Modal-->
+<div class="modal fade" id="NewCollectionDetail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tahsilat Bilgileri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div id="dataCollectionDetail"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="js_addCollectionDetail()">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+
+<!--begin::Modal-->
+<div class="modal fade" id="NewDriverInformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeXl" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sürücü Adayı Seçimi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="dataDriverInformations"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary font-weight-bold">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+<script src="~/js/Collection/js_Collection.js"></script>

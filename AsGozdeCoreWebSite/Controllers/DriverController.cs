@@ -13,7 +13,7 @@ namespace AsGozdeCoreWebSite.Controllers
     {
         private IDriverInformationService _driverInformationService;
 
-        public DriverController (IDriverInformationService driverInformationService, IBranchService branchService, ISessionService sessionService)
+        public DriverController (IDriverInformationService driverInformationService)
         {
             _driverInformationService = driverInformationService;
         }

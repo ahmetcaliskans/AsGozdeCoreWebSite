@@ -26,6 +26,7 @@ namespace Entities.Concrete
         public string County { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
+        public virtual List<Collection> Collections { get; set; }
 
     }
 }

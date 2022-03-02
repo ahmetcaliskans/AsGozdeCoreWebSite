@@ -20,7 +20,6 @@ function js_getDriverByIdWithDetails(Id) {
 			mesajBox('mesaj', 'UYARI', err.html, 'warning');
 		}
 	});
-
 }
 
 /** Silme işlemi öncesi kullanıcıya son ikaz yapılır */
