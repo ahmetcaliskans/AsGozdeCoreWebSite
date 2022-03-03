@@ -267,8 +267,12 @@ function js_print(data,baslik) {
 	mywindow.document.close(); // necessary for IE >= 10
 	mywindow.focus(); // necessary for IE >= 10
 
-	mywindow.print();
-	mywindow.close();
+	mywindow.resizeTo(screen.width, screen.height);
+	setTimeout(function () {
+		mywindow.print();
+		mywindow.close();
+	}, 100);
+
 
 	return true;
 

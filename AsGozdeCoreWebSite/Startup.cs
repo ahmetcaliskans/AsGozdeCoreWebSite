@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Globalization;
 
 namespace AsGozdeCoreWebSite
 {
@@ -34,6 +35,9 @@ namespace AsGozdeCoreWebSite
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
+                var cultures = new CultureInfo[] { new CultureInfo("tr-TR") };
+                options.SupportedCultures = cultures;
+                options.SupportedUICultures = cultures;
                 options.DefaultRequestCulture = new RequestCulture("tr-TR");
             });
 
