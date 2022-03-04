@@ -15,12 +15,31 @@
     </div>
     <div class="card-body">
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" >Sürücü Adayı</label>
+            <label class="col-sm-2 col-form-label">Sürücü Adayı</label>
             <div class="input-icon input-icon-right">
-                <input type="text" class="form-control" readonly="" placeholder="Sürücü Adayı Seçimi" id="txtDriverNameSurname" value="@Model.Name @Model.Surname">                
+                <input type="text" class="form-control" readonly="" placeholder="Sürücü Adayı Seçimi" id="txtDriverNameSurname" value="@Model.Name @Model.Surname">
                 <span data-toggle="modal" data-target="#NewDriverInformation" onclick="js_getDriverInformationsWithDetails()">
                     <i class="flaticon2-search-1"></i>
                 </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Bakiye</label>
+            <div class="input-icon input-icon-right">
+                <input type="text" class="form-control form-control-solid" readonly="" id="txtBalance" value="@string.Format("{0:n2}",@Model.Balance<0 ? Model.Balance*-1 : Model.Balance)">
+                @if (Model.Balance >= 0)
+                {
+                    <span style="color:red;">
+                        B
+                    </span>                    
+                }
+                else
+                {
+                    <span style="color:blue;">
+                        A
+                    </span>                    
+                }
+
             </div>
         </div>
     </div>

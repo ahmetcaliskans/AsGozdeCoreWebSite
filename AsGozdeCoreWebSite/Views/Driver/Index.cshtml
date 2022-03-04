@@ -155,7 +155,6 @@
         <table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable">
             <thead class="datatable-head">
                 <tr>
-                    <th title="Id">Id</th>
                     <th title="Adı">Adı</th>
                     <th title="Soyadı">Soyadı</th>
                     <th title="TC Kimlik No">TC Kimlik No</th>
@@ -164,14 +163,15 @@
                     <th title="Branş">Branş</th>
                     <th title="Telefon 1">Telefon 1</th>
                     <th title="Kurs Ücreti">Kurs Ücreti</th>
+                    <th title="Bakiye">Bakiye</th>
                     <th title="İşlem" colspan="2">Islem</th>
+                    <th title="Id">Id</th>
                 </tr>
             </thead>
             <tbody class="datatable-body">
                 @foreach (var dr in Model)
                 {
                 <tr>
-                    <td>@dr.Id</td>
                     <td>@dr.Name</td>
                     <td>@dr.Surname</td>
                     <td>@dr.IdentityNo</td>
@@ -180,6 +180,7 @@
                     <td>@dr.Branch.Name</td>
                     <td>@dr.Phone1</td>
                     <td>@string.Format("{0:n2}", @dr.CourseFee)</td>
+                    <td>@string.Format("{0:n2} {1}", @dr.Balance < 0 ? dr.Balance * -1 : dr.Balance, @dr.Balance < 0 ? "A" : "B")</td>
                     <td colspan="2">
                         <div width="50">
                             <a class="btn btn-sm btn-clean btn-icon mr-2" title="Düzenle" asp-controller="Driver" asp-action="GetDriverByIdWithDetails" asp-route-id="@dr.Id">
@@ -214,6 +215,7 @@
                             </a>
                         </div>
                     </td>
+                    <td>@dr.Id</td>
 
                 </tr>
                 }

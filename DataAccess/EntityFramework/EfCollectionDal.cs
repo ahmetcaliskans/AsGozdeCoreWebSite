@@ -13,10 +13,16 @@ namespace DataAccess.EntityFramework
     public class EfCollectionDal : EfEntityRepositoryBase<Collection, AsGozdeWebSiteDB>, ICollectionDal
     {
         public Collection GetByIdWithDetails(int collectionId)
-        {
+        {            
             using (AsGozdeWebSiteDB context = new AsGozdeWebSiteDB())
             {
                 var result = context.Collections.Include(x => x.Office).Include(x => x.DriverInformation).Where(x => x.Id == collectionId);
+                if (result.Count()>0)
+                {                    
+                    var result2 = from d in result
+                                  select new { Balance = context.fn_GetDriverBalance(d.DriverInformationId) };
+                    result.FirstOrDefault().DriverInformation.Balance = result2.FirstOrDefault().Balance;
+                }                
                 return result.FirstOrDefault();
             }
         }        

@@ -49,7 +49,7 @@ namespace AsGozdeCoreWebSite.Controllers
                 var officeResult = _officeService.GetById(officeId);
                 
                 var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, userToLogin.Data.UserName), }, "a", ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.Role, "guest"));
+                identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
                 identity.AddClaim(new Claim(ClaimTypes.GivenName, userToLogin.Data.FirstName==null ? "" : userToLogin.Data.FirstName));
                 identity.AddClaim(new Claim(ClaimTypes.Surname, userToLogin.Data.LastName==null ? "" : userToLogin.Data.LastName));
                 identity.AddClaim(new Claim(ClaimTypes.GroupSid, (officeResult!=null && officeResult.Data!=null) ? officeResult.Data.Name : ""));

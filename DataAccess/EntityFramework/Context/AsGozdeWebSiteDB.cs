@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataAccess.EntityFramework.Context
@@ -28,9 +29,20 @@ namespace DataAccess.EntityFramework.Context
         public DbSet<Collection> Collections { get; set; }
         public DbSet<CollectionDetail> CollectionDetails { get; set; }
 
+        //public IQueryable<Collection> SearchCustomers(string contactName)
+        //{
+        //    //SqlParameter pContactName = new SqlParameter("@ContactName", contactName);
+        //    return this.Collections.FromSql("EXECUTE Customers_SearchCustomers @ContactName", pContactName);
+        //}
+
+        [DbFunction("fn_GetDriverBalance", "dbo")]
+        public decimal fn_GetDriverBalance(int DriverId) => throw new NotSupportedException();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.HasDbFunction(() => fn_GetDriverBalance(default(int)));
 
 
             modelBuilder.Entity<Office>()
