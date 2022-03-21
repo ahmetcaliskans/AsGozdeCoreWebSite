@@ -64,25 +64,23 @@ function js_addUser() {
 		OfficeId: $('#selectOffice option:selected').val()
 	};
 
-	if (User.UserName != null && User.UserName != "") {
-		$.ajax({
-			async: true,
-			type: "POST",
-			url: "/User/AddUser",
-			data: User,
-			success: function (data) {
-				var result = data;
-				mesajBox('mesaj', 'DURUM', result, 'success');
-				location.reload();
-			},
-			error: function (err) {
-				mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
-			}
-		});
-	}
-	else
-		mesajBox('mesaj', 'UYARI', 'Kullanıcı Kodu Boş Olamaz !', 'warning');
+	$.ajax({
+		async: true,
+		type: "POST",
+		url: "/User/AddUser",
+		data: User,
+		success: function (data) {
+			var result = data;
+			mesajBox('mesaj', 'DURUM', result, 'success');
+			location.reload();
+		},
+		error: function (err) {
+			mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+		}
+	});
 
 
 }
+
+
 

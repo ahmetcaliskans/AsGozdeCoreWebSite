@@ -38,8 +38,14 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CollectionDefinitionManager>().As<ICollectionDefinitionService>();
             builder.RegisterType<EfCollectionDefinitionDal>().As<ICollectionDefinitionDal>();
 
+            builder.RegisterType<CollectionDefinitionAmountManager>().As<ICollectionDefinitionAmountService>();
+            builder.RegisterType<EfCollectionDefinitionAmountDal>().As<ICollectionDefinitionAmountDal>();
+
             builder.RegisterType<DriverInformationManager>().As<IDriverInformationService>();
             builder.RegisterType<EfDriverInformationDal>().As<IDriverInformationDal>();
+
+            builder.RegisterType<DriverPaymentPlanManager>().As<IDriverPaymentPlanService>();
+            builder.RegisterType<EfDriverPaymentPlanDal>().As<IDriverPaymentPlanDal>();
 
             builder.RegisterType<CollectionManager>().As<ICollectionService>();
             builder.RegisterType<EfCollectionDal>().As<ICollectionDal>();

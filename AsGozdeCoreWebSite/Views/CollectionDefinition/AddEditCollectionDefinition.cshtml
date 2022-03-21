@@ -28,8 +28,26 @@
             <div class="form-group row fv-plugins-icon-container">
                 <label class="col-xl-3 col-lg-3 col-form-label">Sıra</label>
                 <div class="col-lg-9 col-xl-9">
-                    <input class="form-control" id="txtSequence" type="number"  value="@if (Model != null) @Model.Sequence">
+                    <input class="form-control" id="txtSequence" type="number" value="@if (Model != null) @Model.Sequence">
                     <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 col-xl-9">
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkIsSequence" @Html.Raw((Model != null) ? (((Model.IsSequence) ? "checked" : "")) : "checked")>
+                        <span></span> Sıra Takibi Var
+                    </label>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 col-xl-9">
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkIsPrivateLesson" @Html.Raw((Model != null) ? (((Model.IsPrivateLesson) ? "checked" : "")) : "checked")>
+                        <span></span> Özel Ders Tanımı
+                    </label>
                 </div>
             </div>
             <div class="form-group row fv-plugins-icon-container">

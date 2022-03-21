@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -19,6 +21,7 @@ namespace Business.Concrete
             _collectionDefinitionDal = collectionDefinitionDal;
         }
 
+        [ValidationAspect(typeof(CollectionDefinitionValidator))]
         public IResult Add(CollectionDefinition collectionDefinition)
         {
             IResult result = BusinessRules.Run(CheckIfcollectionDefinitionNameExists(collectionDefinition.Id, collectionDefinition.Name, collectionDefinition.Sequence));
@@ -50,6 +53,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CollectionDefinition>>(_collectionDefinitionDal.GetList().ToList());
         }
 
+        [ValidationAspect(typeof(CollectionDefinitionValidator))]
         public IResult Update(CollectionDefinition collectionDefinition)
         {
             IResult result = BusinessRules.Run(CheckIfcollectionDefinitionNameExists(collectionDefinition.Id, collectionDefinition.Name, collectionDefinition.Sequence));

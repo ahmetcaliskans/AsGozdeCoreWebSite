@@ -4,7 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model Entities.Concrete.DriverInformation
+@model dynamic
+
+@{
+    var _driverInformation = Model.DriverInformation as Entities.Concrete.DriverInformation;
+    var _driverPaymentPlans = Model.DriverPaymentPlans as List<Entities.Concrete.DriverPaymentPlan>;
+}
 
 <div class="card card-custom card-sticky" id="kt_page_sticky_card">
     <div class="card-header">
@@ -15,7 +20,7 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            <a href="/Driver/Index"  class="btn btn-light-primary font-weight-bolder mr-2">
+            <a href="/Driver/Index" class="btn btn-light-primary font-weight-bolder mr-2">
                 <i class="ki ki-long-arrow-back icon-sm"></i>
                 Geri
             </a>
@@ -29,21 +34,23 @@
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                     <ul class="nav nav-hover flex-column">
                         <li class="nav-item">
-                            <a href="javascript:;" class="nav-link" onclick="js_addDriver(0)"> <!--Öncesinde Kaydetme İşlemi Yapılacak-->
+                            <a href="javascript:;" class="nav-link" onclick="js_addDriver(0)">
+                                <!--Öncesinde Kaydetme İşlemi Yapılacak-->
                                 <i class="nav-icon flaticon2-reload"></i>
                                 <span class="nav-text">Kaydet & Devam Et</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="javascript:;" class="nav-link" onclick="js_addDriver(1)"> <!--Öncesinde Kaydetme İşlemi Yapılacak-->
+                            <a href="javascript:;" class="nav-link" onclick="js_addDriver(1)">
+                                <!--Öncesinde Kaydetme İşlemi Yapılacak-->
                                 <i class="nav-icon flaticon2-add-1"></i>
                                 <span class="nav-text">Kaydet & Yeni Kayıt</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="javascript:;" class="nav-link" onclick="js_deleteDriverByIdQ(@if (Model != null) @Model.Id)" >
+                            <a href="javascript:;" class="nav-link" onclick="js_deleteDriverByIdQ(@if (_driverInformation != null) @_driverInformation.Id)">
                                 <i class="nav-icon flaticon2-delete"></i>
-                                <span  class="nav-text">Sil</span>
+                                <span class="nav-text">Sil</span>
                             </a>
                         </li>
                     </ul>
@@ -63,7 +70,7 @@
                         <div class="form-group row" hidden="hidden">
                             <label class="col-xl-3 col-lg-3 col-form-label">Id</label>
                             <div class="col-lg-9 col-xl-9">
-                                <input class="form-control form-control-solid form-control-lg" disabled="disabled" name="txtId" id="txtId" type="text" value="@if (Model != null) @Model.Id" />
+                                <input class="form-control form-control-solid form-control-lg" disabled="disabled" name="txtId" id="txtId" type="text" value="@if (_driverInformation != null) @_driverInformation.Id" />
                             </div>
                         </div>
                         <!--end::Group-->
@@ -71,14 +78,17 @@
                         <div class="form-group row">
                             <label class="col-xl-3 col-lg-3 col-form-label text-left">Sürücü Adayı Resmi</label>
                             <div class="col-lg-9 col-xl-9">
-                                <div class="image-input image-input-outline" id="kt_user_add_avatar">
-                                    <div class="image-input-wrapper" style="background-image: url(assets/media/users/100_6.jpg)"></div>
+                                <div class="image-input image-input-outline" id="kt_image_1">
+                                    <div class="image-input-wrapper" id="imgDriver" style="background-image: url(@_driverInformation.Image)"></div> <!--style="background-image: url(assets/media/users/100_6.jpg)"-->
                                     <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Resim Düzenle">
                                         <i class="fa fa-pen icon-sm text-muted"></i>
                                         <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
                                         <input type="hidden" name="profile_avatar_remove" />
                                     </label>
-                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Resim Düzenle">
+                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="İptal">
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    </span>
+                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Sil">
                                         <i class="ki ki-bold-close icon-xs text-muted"></i>
                                     </span>
                                 </div>
@@ -89,7 +99,7 @@
                         <div class="form-group row">
                             <label class="col-xl-3 col-lg-3 col-form-label">Adı</label>
                             <div class="col-lg-9 col-xl-9">
-                                <input class="form-control form-control-solid form-control-lg" name="txtName" id="txtName" type="text" value="@if (Model != null) @Model.Name" />
+                                <input class="form-control form-control-solid form-control-lg" name="txtName" id="txtName" type="text" value="@if (_driverInformation != null) @_driverInformation.Name" />
                             </div>
                         </div>
                         <!--end::Group-->
@@ -97,7 +107,7 @@
                         <div class="form-group row">
                             <label class="col-xl-3 col-lg-3 col-form-label">Soyadı</label>
                             <div class="col-lg-9 col-xl-9">
-                                <input class="form-control form-control-solid form-control-lg" name="txtSurname" id="txtSurname" type="text" value="@if (Model != null) @Model.Surname" />
+                                <input class="form-control form-control-solid form-control-lg" name="txtSurname" id="txtSurname" type="text" value="@if (_driverInformation != null) @_driverInformation.Surname" />
                             </div>
                         </div>
                         <!--end::Group-->
@@ -105,7 +115,7 @@
                         <div class="form-group row">
                             <label class="col-xl-3 col-lg-3 col-form-label">Tc Kimlik No</label>
                             <div class="col-lg-9 col-xl-9">
-                                <input class="form-control form-control-solid form-control-lg" name="txtIdentityNo" id="txtIdentityNo" type="number" value="@if (Model != null) @Model.IdentityNo" />
+                                <input class="form-control form-control-solid form-control-lg" name="txtIdentityNo" id="txtIdentityNo" type="number" value="@if (_driverInformation != null) @_driverInformation.IdentityNo" />
                             </div>
                         </div>
                         <!--end::Group-->
@@ -119,7 +129,7 @@
                                             <i class="la la-phone"></i>
                                         </span>
                                     </div>
-                                    <input type="text" class="form-control form-control-solid form-control-lg phone" name="txtPhone1" id="txtPhone1" value="@if (Model != null) @Model.Phone1" placeholder="Telefon 1" />
+                                    <input type="text" class="form-control form-control-solid form-control-lg phone" name="txtPhone1" id="txtPhone1" value="@if (_driverInformation != null) @_driverInformation.Phone1" placeholder="Telefon 1" />
                                 </div>
                             </div>
                         </div>
@@ -134,7 +144,7 @@
                                             <i class="la la-phone"></i>
                                         </span>
                                     </div>
-                                    <input type="text" class="form-control form-control-solid form-control-lg phone" name="txtPhone2" id="txtPhone2" value="@if (Model != null) @Model.Phone2" placeholder="Telefon 1" />
+                                    <input type="text" class="form-control form-control-solid form-control-lg phone" name="txtPhone2" id="txtPhone2" value="@if (_driverInformation != null) @_driverInformation.Phone2" placeholder="Telefon 1" />
                                 </div>
                             </div>
                         </div>
@@ -149,7 +159,7 @@
                                             <i class="la la-at"></i>
                                         </span>
                                     </div>
-                                    <input type="text" class="form-control form-control-solid form-control-lg" name="txtEmail" id="txtEmail" value="@if (Model != null) @Model.Email" />
+                                    <input type="text" class="form-control form-control-solid form-control-lg" name="txtEmail" id="txtEmail" value="@if (_driverInformation != null) @_driverInformation.Email" />
                                 </div>
                             </div>
                         </div>
@@ -161,13 +171,13 @@
                         <!--begin::Group-->
                         <div class="form-group">
                             <label>Address Satırı 1</label>
-                            <input type="text" class="form-control form-control-solid form-control-lg" name="txtAddress1" id="txtAddress1" placeholder="Address Satırı 1" value="@if(Model != null) @Model.Address1" />
+                            <input type="text" class="form-control form-control-solid form-control-lg" name="txtAddress1" id="txtAddress1" placeholder="Address Satırı 1" value="@if(_driverInformation != null) @_driverInformation.Address1" />
                         </div>
                         <!--end::Group-->
                         <!--begin::Group-->
                         <div class="form-group">
                             <label>Address Satırı 2</label>
-                            <input type="text" class="form-control form-control-solid form-control-lg" name="txtAddress2" id="txtAddress2" placeholder="Address Satırı 2" value="@if(Model != null) @Model.Address2" />
+                            <input type="text" class="form-control form-control-solid form-control-lg" name="txtAddress2" id="txtAddress2" placeholder="Address Satırı 2" value="@if(_driverInformation != null) @_driverInformation.Address2" />
                         </div>
                         <!--end::Group-->
                         <!--begin::Row-->
@@ -176,7 +186,7 @@
                                 <!--begin::Group-->
                                 <div class="form-group">
                                     <label>İl</label>
-                                    <input type="text" class="form-control form-control-solid form-control-lg" name="txtCity" id="txtCity" placeholder="İl Adı" value="@if(Model != null) @Model.City" />
+                                    <input type="text" class="form-control form-control-solid form-control-lg" name="txtCity" id="txtCity" placeholder="İl Adı" value="@if(_driverInformation != null) @_driverInformation.City" />
                                 </div>
                             </div>
                             <!--end::Group-->
@@ -184,7 +194,7 @@
                             <div class="col-xl-6">
                                 <div class="form-group">
                                     <label>İlçe</label>
-                                    <input type="text" class="form-control form-control-solid form-control-lg" name="txtCounty" id="txtCounty" placeholder="İlçe Adı" value="@if(Model != null) @Model.County" />
+                                    <input type="text" class="form-control form-control-solid form-control-lg" name="txtCounty" id="txtCounty" placeholder="İlçe Adı" value="@if(_driverInformation != null) @_driverInformation.County" />
                                 </div>
                             </div>
                             <!--end::Group-->
@@ -195,21 +205,84 @@
                     <div class="my-52">
                         <h3 class=" text-dark font-weight-bold mb-10">Sürücü Kurs Bilgileri:</h3>
 
-                        @await Component.InvokeAsync("SessionList", new { sessionId = ((Model == null || Model.Session == null) ? (int)0 : (int)Model.Session.Id) })
+                        @await Component.InvokeAsync("SessionList", new { sessionId = ((_driverInformation == null || _driverInformation.Session == null) ? (int)0 : (int)_driverInformation.Session.Id) })
 
-                        @await Component.InvokeAsync("BranchList", new { branchId = ((Model == null || Model.Branch == null) ? (int)0 : (int)Model.Branch.Id) })
+                        @await Component.InvokeAsync("BranchList", new { branchId = ((_driverInformation == null || _driverInformation.Branch == null) ? (int)0 : (int)_driverInformation.Branch.Id) })
 
                         <!--begin::Group-->
                         <div class="form-group row">
                             <label class="col-xl-3 col-lg-3 col-form-label">Kurs Ücreti</label>
                             <div class="col-lg-9 col-xl-9">
-                                <input class="form-control form-control-solid form-control-lg numeric2" name="txtCourseFee" id="txtCourseFee" type="text" value="@if (Model != null) @Model.CourseFee" />
+                                <input class="form-control form-control-solid form-control-lg numeric2" name="txtCourseFee" id="txtCourseFee" type="text" value="@if (_driverInformation != null) @_driverInformation.CourseFee" />
                             </div>
                         </div>
                         <!--end::Group-->
 
                     </div>
                     <div class="separator separator-dashed my-10"></div>
+
+                    <div class="my-5">
+                        <h3 class=" text-dark font-weight-bold mb-10">Ödeme Planı:</h3>
+
+                        <!--begin::Group-->
+                        <div class="form-group row">
+                            <!--begin::Button-->
+                            <a href="javascript:;" class="btn btn-secondary font-weight-bolder" data-toggle="modal" data-target="#NewHirePurchase" onclick="js_newHirePurchase()">
+                                <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
+                                <span class="svg-icon svg-icon-md">
+                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24" />
+                                            <circle fill="#000000" cx="9" cy="15" r="6" />
+                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                                        </g>
+                                    </svg>
+                                    <!--end::Svg Icon-->
+                                </span>Taksitlendir
+                            </a>
+                            <!--end::Button-->
+                            <!--begin::Button-->
+                            <a href="javascript:;" class="btn btn-success font-weight-bolder" data-toggle="modal" data-target="#NewDriverPaymentPlan" onclick="js_getDriverPaymentPlanById(0)">
+                                <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
+                                <span class="svg-icon svg-icon-md">
+                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24" />
+                                            <circle fill="#000000" cx="9" cy="15" r="6" />
+                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                                        </g>
+                                    </svg>
+                                    <!--end::Svg Icon-->
+                                </span>Yeni Ödeme 
+                            </a>
+                            <!--end::Button-->
+                        </div>
+                        <!--end::Group-->
+                        <!--begin::Group-->
+                        <div class="form-group row">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th title="Sıra">Sıra</th>
+                                        <th title="Tarih">Tarih</th>
+                                        <th title="Tutar">Tutar</th>
+                                        <th title="Islem" colspan="2">Islem</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataListDriverPaymentPlan">
+                                    @await Html.PartialAsync("/Views/Driver/ListDriverPaymentPlan.cshtml", _driverPaymentPlans)
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--end::Group-->
+
+                        
+                    </div>
+                    <div class="separator separator-dashed my-10"></div>
+
+
                 </div>
                 <div class="col-xl-2"></div>
             </div>
@@ -217,5 +290,47 @@
         <!--end::Form-->
     </div>
 </div>
+
+<!--begin: Modal-->
+<div class="modal fade" id="NewDriverPaymentPlan" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Taksit Bilgisi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="dataDriverPaymentPlan"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="js_addDriverPaymentPlan()">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+<!--begin: Modal-->
+<div class="modal fade" id="NewHirePurchase" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Taksitlendirme İşlemi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="dataHirePurchase"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="js_doHirePurchase()">Taksitlendir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
+
+
 
 <script src="~/js/Driver/js_Driver.js"></script>

@@ -60,24 +60,20 @@ function js_addBranch() {
 		Description: $('#txtDescription').val()
 	};
 
-	if (Branch.Name != null && Branch.Name != "") {
-		$.ajax({
-			async: true,
-			type: "POST",
-			url: "/Branch/AddBranch",
-			data: Branch,
-			success: function (data) {
-				var result = data;
-				mesajBox('mesaj', 'DURUM', result, 'success');
-				location.reload();
-			},
-			error: function (err) {
-				mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
-			}
-		});
-	}
-	else
-		mesajBox('mesaj', 'UYARI', 'Branş Adı Boş Olamaz !', 'warning');
+	$.ajax({
+		async: true,
+		type: "POST",
+		url: "/Branch/AddBranch",
+		data: Branch,
+		success: function (data) {
+			var result = data;
+			mesajBox('mesaj', 'DURUM', result, 'success');
+			location.reload();
+		},
+		error: function (err) {
+			mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+		}
+	});
 
 
 }

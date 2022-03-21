@@ -78,7 +78,8 @@ var KTImageInputDemo = function () {
                 confirmButtonClass: 'btn btn-primary font-weight-bold'
             });
 		});
-	}
+		
+	}	
 
 	return {
 		// public functions

@@ -15,7 +15,7 @@ namespace Entities.Concrete
         public string Name { get; set; }
         public string Surname { get; set; }
         public string IdentityNo { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public int BranchId { get; set; }
         public Branch Branch { get; set; }
         public decimal CourseFee { get; set; }
@@ -28,6 +28,7 @@ namespace Entities.Concrete
         public string Address2 { get; set; }
         public virtual List<Collection> Collections { get; set; }       
         public virtual decimal Balance { get; set; }
+        public virtual List<DriverPaymentPlan> DriverPaymentPlans { get; set; }
 
     }
 }

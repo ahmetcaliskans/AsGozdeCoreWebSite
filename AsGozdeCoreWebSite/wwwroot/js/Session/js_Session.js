@@ -63,24 +63,20 @@ function js_addSession() {
 		Active: chkKontrol('chkActive')
 	};
 
-	if (Session.Name != null && Session.Name != "") {
-		$.ajax({
-			async: true,
-			type: "POST",
-			url: "/Session/AddSession",
-			data: Session,
-			success: function (data) {
-				var result = data;
-				mesajBox('mesaj', 'DURUM', result, 'success');
-				location.reload();
-			},
-			error: function (err) {
-				mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
-			}
-		});
-	}
-	else
-		mesajBox('mesaj', 'UYARI', 'Dönem Adı Boş Olamaz !', 'warning');
+	$.ajax({
+		async: true,
+		type: "POST",
+		url: "/Session/AddSession",
+		data: Session,
+		success: function (data) {
+			var result = data;
+			mesajBox('mesaj', 'DURUM', result, 'success');
+			location.reload();
+		},
+		error: function (err) {
+			mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+		}
+	});
 
 
 }

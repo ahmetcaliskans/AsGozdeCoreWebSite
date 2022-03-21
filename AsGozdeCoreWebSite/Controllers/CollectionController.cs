@@ -36,7 +36,7 @@ namespace AsGozdeCoreWebSite.Controllers
             var result = _collectionService.GetListWithDetailsByOfficeId(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
             if (result != null)
             {
-                return View(result.Data.OrderByDescending(x => x.DriverInformation.Session.Year).ThenByDescending(x => x.DriverInformation.Session.Sequence).ThenByDescending(x=>x.Id).ToList());
+                return View(result.Data.OrderByDescending(x => x.CollectionDate).ThenByDescending(x=>x.Id).ToList());
             }
 
             return View();

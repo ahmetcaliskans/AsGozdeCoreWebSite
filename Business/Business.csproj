@@ -8,16 +8,13 @@
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
     <PackageReference Include="DevExpress.Xpo" Version="20.1.8-pre-20246" />
+    <PackageReference Include="FluentValidation" Version="10.3.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Entities\Entities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ValidationRules\" />
   </ItemGroup>
 
 </Project>

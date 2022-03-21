@@ -72,24 +72,20 @@ function js_addOffice() {
 		TaxOfficeNo: $('#txtTaxOfficeNo').val()
 	};
 
-	if (office.Name != null && office.Name!="") {
-		$.ajax({
-			async: true,
-			type: "POST",
-			url: "/Office/AddOffice",
-			data: office,
-			success: function (data) {
-				var result = data;
-				mesajBox('mesaj', 'DURUM', result, 'success');
-				location.reload();
-			},
-			error: function (err) {
-				mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
-			}
-		});
-	}
-	else
-		mesajBox('mesaj', 'UYARI', 'Şube Adı Boş Olamaz !', 'warning');
+	$.ajax({
+		async: true,
+		type: "POST",
+		url: "/Office/AddOffice",
+		data: office,
+		success: function (data) {
+			var result = data;
+			mesajBox('mesaj', 'DURUM', result, 'success');
+			location.reload();
+		},
+		error: function (err) {
+			mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+		}
+	});
 
 	
 }

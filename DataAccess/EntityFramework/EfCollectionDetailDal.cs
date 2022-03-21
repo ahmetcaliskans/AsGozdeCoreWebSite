@@ -21,7 +21,7 @@ namespace DataAccess.EntityFramework
             }
         }
 
-        List<CollectionDetail> ICollectionDetailDal.GetListWithDetailsByCollectionId(int collectionId)
+        public List<CollectionDetail> GetListWithDetailsByCollectionId(int collectionId)
         {
             using (AsGozdeWebSiteDB context = new AsGozdeWebSiteDB())
             {

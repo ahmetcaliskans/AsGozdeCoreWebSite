@@ -9,6 +9,7 @@ namespace Business.Abstract
     public interface ISessionService
     {
         IDataResult<Session> GetById(int SessionId);
+        IDataResult<Session> GetActive();
         IDataResult<List<Session>> GetList();
         IResult Add(Session Session);
         IResult Update(Session Session);

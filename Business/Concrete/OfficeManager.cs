@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -30,6 +32,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Office>>(_officeDal.GetList().ToList());
         }
 
+        [ValidationAspect(typeof(OfficeValidator))]
         public IResult Add(Office office)
         {
             IResult result = BusinessRules.Run(CheckIfOfficeNameExists(office.Id, office.Name));
@@ -44,8 +47,9 @@ namespace Business.Concrete
         {
             _officeDal.Delete(office);
             return new SuccessResult(Messages.Deleted);
-        }        
+        }
 
+        [ValidationAspect(typeof(OfficeValidator))]
         public IResult Update(Office office)
         {
             IResult result = BusinessRules.Run(CheckIfOfficeNameExists(office.Id, office.Name));

@@ -50,11 +50,23 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpPost]
         public IActionResult AddSession(Session Session)
         {
+            var activeOldSession = _SessionService.GetActive();
+            if (Session.Active && activeOldSession.Data != null)
+            {
+                activeOldSession.Data.Active = false;
+                _SessionService.Update(activeOldSession.Data);
+            }
+
             IResult result;
             if (Session.Id == null || Session.Id <= 0)
-                result = _SessionService.Add(Session);
+            {
+                result = _SessionService.Add(Session);                
+            }                
             else
+            {
                 result = _SessionService.Update(Session);
+            }
+                
 
             if (result.Success)
             {

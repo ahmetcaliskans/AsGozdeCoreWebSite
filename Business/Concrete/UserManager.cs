@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -42,6 +44,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<UserForRegisterDto>>(_userDal.GetListWithDetails().ToList());
         }
 
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User User)
         {
             IResult result = BusinessRules.Run(CheckIfSessionNameExists(User.UserId, User.UserName));
@@ -54,6 +57,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Update(User User)
         {
             IResult result = BusinessRules.Run(CheckIfSessionNameExists(User.UserId, User.UserName));

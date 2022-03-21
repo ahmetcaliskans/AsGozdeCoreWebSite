@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -25,12 +27,17 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Session>(_SessionDal.Get(p => p.Id == SessionId));
         }
+        public IDataResult<Session> GetActive()
+        {
+            return new SuccessDataResult<Session>(_SessionDal.Get(p => p.Active));
+        }
 
         public IDataResult<List<Session>> GetList()
         {
             return new SuccessDataResult<List<Session>>(_SessionDal.GetList().ToList());
         }
 
+        [ValidationAspect(typeof(SessionValidator))]
         public IResult Add(Session Session)
         {
             IResult result = BusinessRules.Run(CheckIfSessionNameExists(Session.Id, Session.Name));
@@ -52,6 +59,7 @@ namespace Business.Concrete
 
         }
 
+        [ValidationAspect(typeof(SessionValidator))]
         public IResult Update(Session Session)
         {
             IResult result = BusinessRules.Run(CheckIfSessionNameExists(Session.Id, Session.Name));
@@ -87,5 +95,7 @@ namespace Business.Concrete
 
             return new SuccessResult();
         }
+
+        
     }
 }

@@ -15,7 +15,6 @@ namespace Entities.Concrete
         public int DriverInformationId { get; set; }
         public DriverInformation DriverInformation { get; set; }
         public decimal TotalAmount { get; set; }
-        public int AddedUserId{ get; set; }
         public string AddedUserName { get; set; }
         public DateTime AddedDateTime { get; set; }
         public string UpdatedUserName { get; set; }

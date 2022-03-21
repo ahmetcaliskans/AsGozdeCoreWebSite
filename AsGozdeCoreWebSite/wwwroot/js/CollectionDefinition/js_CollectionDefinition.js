@@ -59,28 +59,26 @@ function js_addCollectionDefinition() {
 		Name: $('#txtName').val(),
 		Description: $('#txtDescription').val(),
 		Sequence: $('#txtSequence').val(),
+		IsSequence: chkKontrol('chkIsSequence'),
+		IsPrivateLesson: chkKontrol('chkIsPrivateLesson'),
 		PayBySelf: chkKontrol('chkPayBySelf'),
 		Active: chkKontrol('chkActive')
 	};
 
-	if (CollectionDefinition.Name != null && CollectionDefinition.Name != "") {
-		$.ajax({
-			async: true,
-			type: "POST",
-			url: "/CollectionDefinition/AddCollectionDefinition",
-			data: CollectionDefinition,
-			success: function (data) {
-				var result = data;
-				mesajBox('mesaj', 'DURUM', result, 'success');
-				location.reload();
-			},
-			error: function (err) {
-				mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
-			}
-		});
-	}
-	else
-		mesajBox('mesaj', 'UYARI', 'Branş Adı Boş Olamaz !', 'warning');
+	$.ajax({
+		async: true,
+		type: "POST",
+		url: "/CollectionDefinition/AddCollectionDefinition",
+		data: CollectionDefinition,
+		success: function (data) {
+			var result = data;
+			mesajBox('mesaj', 'DURUM', result, 'success');
+			location.reload();
+		},
+		error: function (err) {
+			mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+		}
+	});
 
 
 }

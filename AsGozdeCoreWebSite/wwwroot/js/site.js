@@ -1,8 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
+﻿
 /***** Message Box Onaylı *****/
 function mesajBox_confirm(id, baslik, mesaj, butonAdi, renk ,onClickFonksiyon) {
 	//Kontrol işlemini yapmassam her seferinde yeni modal oluşturuyor.
@@ -27,8 +23,6 @@ function mesajBox_confirm(id, baslik, mesaj, butonAdi, renk ,onClickFonksiyon) {
 		'</div>'
 
 	$(mesajs).modal();
-
-
 }
 
 /***** Message Box *****/
@@ -48,13 +42,14 @@ function mesajBox(id, baslik, mesaj, renk) {
 		'<p>' + mesaj + '</p>' +
 		'</div>' +
 		'<div class="modal-footer">' +
-		'<button type="button" data-dismiss="modal" class="btn btn-' + renk + '"">Tamam</button>' +
+		'<button type="button" data-dismiss="modal" class="btn btn-' + renk + '">Tamam</button>' +
 		' </div>' +
 		'</div>' +
 		'</div>' +
 		'</div>'
 
-	$(mesaj).modal();
+	$(mesaj).modal();	
+
 }
 
 /***** CheckBox Valuesini Al *****/
@@ -65,6 +60,16 @@ function chkKontrol(chkbox) {
 		return false;
 
 	return true;
+}
+
+function fluentValidationMessageParse(message) {
+
+	if (message.indexOf('FluentValidation.ValidationException:') > -1) {
+		var messages = message.split(' at Core');
+		return messages[0].replace('FluentValidation.ValidationException: Validation failed: ', '').split('Severity: Error').join('').split('--').join('<br\>');
+	}
+
+	return message;
 }
 
 ///***** Numeric Alanlar İçin Decimal Değerler  Miktar ,  BirimFiyat , Tutar *****/

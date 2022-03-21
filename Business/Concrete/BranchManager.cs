@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -20,6 +22,7 @@ namespace Business.Concrete
             _branchDal = branchDal;
         }
 
+        [ValidationAspect(typeof(BranchValidator))]
         public IResult Add(Branch branch)
         {
             IResult result = BusinessRules.Run(CheckIfbranchNameExists(branch.Id, branch.Name));
@@ -46,6 +49,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Branch>>(_branchDal.GetList().ToList());
         }
 
+        [ValidationAspect(typeof(BranchValidator))]
         public IResult Update(Branch branch)
         {
             IResult result = BusinessRules.Run(CheckIfbranchNameExists(branch.Id, branch.Name));

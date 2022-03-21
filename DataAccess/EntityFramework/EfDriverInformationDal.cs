@@ -16,7 +16,7 @@ namespace DataAccess.EntityFramework
         {
             using (AsGozdeWebSiteDB context = new AsGozdeWebSiteDB())
             {
-                var result = context.DriverInformations.Include(x => x.Office).Include(x => x.Branch).Include(x => x.Session).Where(x => x.Id == driverInformationId);
+                var result = context.DriverInformations.Include(x => x.Office).Include(x => x.Branch).Include(x => x.Session).Include(x => x.DriverPaymentPlans).Where(x => x.Id == driverInformationId);
                 if (result.Count()>0)
                 {
                     var result2 = from d in result
@@ -31,7 +31,7 @@ namespace DataAccess.EntityFramework
         {
             using (AsGozdeWebSiteDB context = new AsGozdeWebSiteDB())
             {                
-                var result = context.DriverInformations.Include(x => x.Office).Include(x => x.Branch).Include(x => x.Session).Where(x => x.Office.Id == officeId);
+                var result = context.DriverInformations.Include(x => x.Office).Include(x => x.Branch).Include(x => x.Session).Include(x => x.DriverPaymentPlans).Where(x => x.Office.Id == officeId);
                 if (result.Count()>0)
                 {
                     var result2 = from d in result

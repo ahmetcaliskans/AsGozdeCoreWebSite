@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@{
+
+    string activeController = Url.ActionContext.RouteData.Values["controller"].ToString();    
+}
+
+
+<!DOCTYPE html>
 <html lang="tr">
 <!--begin::Head-->
 <head>
@@ -106,7 +112,7 @@
                             </li>
 
                             <!--/Sürücü Adayı İşlemleri-->
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                            <li class="@((activeController == "Driver") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -130,7 +136,7 @@
                                                 <span class="menu-text">Sürücü Adayı İşlemleri</span>
                                             </span>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
+                                        <li class="@((activeController == "Driver") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
                                             <a href="/Driver/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -151,7 +157,7 @@
                             </li>
                             <!--/Sürücü Adayı İşlemleri-->
                             <!--Ödeme İşlemleri-->
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                            <li class="@((activeController == "Collection" || activeController == "Collection2") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -175,7 +181,7 @@
                                                 <span class="menu-text">Ödeme İşlemleri</span>
                                             </span>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
+                                        <li class="@((activeController == "Collection") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
                                             <a href="/Collection/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -204,7 +210,7 @@
                             </li>
                             <!--/Ödeme İşlemleri-->
                             <!--Raporlar-->
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                            <li class="@((activeController == "Report" || activeController == "Report2") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -241,7 +247,7 @@
                             </li>
                             <!--/Raporlar-->
                             <!--Tanımlar-->
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                            <li class="@((activeController == "User" || activeController == "Office" || activeController == "Session" || activeController == "Branch" || activeController == "CollectionDefinition" || activeController == "PaymentType" || activeController == "User2") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -265,7 +271,7 @@
                                                 <span class="menu-text">Tanımlar</span>
                                             </span>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
+                                        <li class="@((activeController == "User") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
                                             <a href="/User/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -273,7 +279,7 @@
                                                 <span class="menu-text">Kullanıcı Tanımları</span>
                                             </a>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
+                                        <li class="@((activeController == "Office") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
                                             <a href="/Office/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -281,7 +287,7 @@
                                                 <span class="menu-text">Şube Tanımları</span>
                                             </a>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
+                                        <li class="@((activeController == "Session") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
                                             <a href="/Session/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -289,7 +295,7 @@
                                                 <span class="menu-text">Dönem Tanımları</span>
                                             </a>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
+                                        <li class="@((activeController == "Branch") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
                                             <a href="/Branch/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -313,7 +319,7 @@
                                                 <span class="menu-text">Personel Tanımları</span>
                                             </a>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
+                                        <li class="@((activeController == "CollectionDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
                                             <a href="/CollectionDefinition/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -321,7 +327,15 @@
                                                 <span class="menu-text">Tahsilat Tanımları</span>
                                             </a>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
+                                        <li class="@((activeController == "CollectionDefinitionAmount") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                            <a href="/CollectionDefinitionAmount/Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Tahsilat Ücret Tanımları</span>
+                                            </a>
+                                        </li>
+                                        <li class="@((activeController == "PaymentType") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
                                             <a href="/PaymentType/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -480,6 +494,7 @@
     <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/bootstrap-select.js"></script>
     <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/features/cards/tools.js"></script>
     <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js"></script>
+    <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/file-upload/image-input.js"></script>
     <!--end::Page Scripts-->
     <script charset="utf-8" type="text/javascript" src="~/js/site.js"></script>
 

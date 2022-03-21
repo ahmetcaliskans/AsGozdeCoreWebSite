@@ -5,7 +5,7 @@ var KTDatatableHtmlTableDemo2 = function () {
 	// Private functions
 
 	// demo initializer
-	var demo = function () {
+	var demo2 = function () {
 
 		var datatable = $('#kt_datatable2').KTDatatable({
 			data: {
@@ -96,23 +96,24 @@ var KTDatatableHtmlTableDemo2 = function () {
 		});
 
 
-		$('#kt_datatable_search_type').on('change', function () {
-			datatable.search($(this).val().toLowerCase(), 'Type');
-		});
+		//$('#kt_datatable_search_type').on('change', function () {
+		//	datatable.search($(this).val().toLowerCase(), 'Type');
+		//});
 
 		$('#kt_datatable_search_donem').on('change', function () {
 			datatable.search($(this).val().toLowerCase(), 'Donem');
 		});
 
-		$('#kt_datatable_search_type, #kt_datatable_search_donem').selectpicker();
+		/*$('#kt_datatable_search_type, #kt_datatable_search_donem').selectpicker();*/
+		$('#kt_datatable_search_donem').selectpicker();
 
 	};
 
 	return {
 		// Public functions
 		init: function () {
-			// init dmeo
-			demo();
+			// init dmeo2
+			demo2();
 		},
 	};
 }();

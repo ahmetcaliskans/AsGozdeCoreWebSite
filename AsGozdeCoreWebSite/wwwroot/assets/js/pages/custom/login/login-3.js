@@ -51,9 +51,9 @@ var KTLogin = function() {
 				KTUtil.btnWait(formSubmitButton, _buttonSpinnerClasses, "Lütfen Bekleyin...");
 
 				// Simulate Ajax request
-				//setTimeout(function() {
-				//	KTUtil.btnRelease(formSubmitButton);
-				//}, 500);
+				setTimeout(function() {
+					KTUtil.btnRelease(formSubmitButton);
+				}, 300);
 
 				// Form Validation & Ajax Submission: https://formvalidation.io/guide/examples/using-ajax-to-submit-the-form
 
@@ -69,23 +69,23 @@ var KTLogin = function() {
 					// Release button
 					KTUtil.btnRelease(formSubmitButton);
 				
-					if (response && response == 'Success') {
-						window.location.href = "/home/index";
-					} else {
+					if (response == 'Success') {
+						window.location.href = "/Home/Index";
+					}
+					else {
 						Swal.fire({
 							text: response,
-			                icon: "error",
-			                buttonsStyling: false,
+							icon: "error",
+							buttonsStyling: false,
 							confirmButtonText: "Tamam, anladım !",
 							customClass: {
 								confirmButton: "btn font-weight-bold btn-light-primary"
 							}
-			            }).then(function() {
+						}).then(function () {
 							KTUtil.scrollTop();
 						});
+						
 					}
-
-
 		        });
 				
 		    })
