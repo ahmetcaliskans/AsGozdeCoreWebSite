@@ -53,7 +53,7 @@ var KTLogin = function() {
 				// Simulate Ajax request
 				setTimeout(function() {
 					KTUtil.btnRelease(formSubmitButton);
-				}, 300);
+				}, 500);
 
 				// Form Validation & Ajax Submission: https://formvalidation.io/guide/examples/using-ajax-to-submit-the-form
 
@@ -68,24 +68,34 @@ var KTLogin = function() {
 		        }).then(function(response) { // Return valid JSON
 					// Release button
 					KTUtil.btnRelease(formSubmitButton);
-				
-					if (response == 'Success') {
-						window.location.href = "/Home/Index";
-					}
-					else {
-						Swal.fire({
-							text: response,
-							icon: "error",
-							buttonsStyling: false,
-							confirmButtonText: "Tamam, anladım !",
-							customClass: {
-								confirmButton: "btn font-weight-bold btn-light-primary"
-							}
-						}).then(function () {
-							KTUtil.scrollTop();
-						});
+
+					if (response != 'Success') {
+						setTimeout(function () {
+							Swal.fire({
+								text: response,
+								icon: "error",
+								buttonsStyling: false,
+								confirmButtonText: "Tamam, anladım !",
+								customClass: {
+									confirmButton: "btn font-weight-bold btn-light-primary"
+								}
+							}).then(function () {
+								KTUtil.scrollTop();
+							});
+						}, 100);						
 						
 					}
+					else {
+						setTimeout(function () {
+							window.location.href = "/Home/Index";
+						}, 500);
+						
+
+					}
+
+					
+				
+					
 		        });
 				
 		    })

@@ -44,26 +44,27 @@
     <tbody class="datatable-body">
         @foreach (var dr in Model)
         {
-        <tr>
-            <td>
-                <div width="50">
-                    <button class="btn btn-sm btn-clean" title="Seç" onclick="js_addDriverById(@dr.Id)">
-                        <i class="flaticon2-add"></i> Seç
-                    </button>
-                </div>
-            </td>
-            <td>@dr.Name</td>
-            <td>@dr.Surname</td>
-            <td>@dr.IdentityNo</td>
-            <td>@dr.Session.Name - @dr.Session.Year-@dr.Session.Sequence</td>
-            <td>@dr.Branch.Name</td>
-            <td>@dr.Phone1</td>
-            <td>@dr.Office.Name</td>
-            <td>@string.Format("{0:n2}", @dr.CourseFee)</td>
-            <td>@dr.Id</td>
-        </tr>
+            <tr>
+                <td>
+                    <div width="50">
+                        <button class="btn btn-sm btn-clean" title="Seç" onclick="js_addDriverById(@dr.Id)">
+                            <i class="flaticon2-add"></i> Seç
+                        </button>
+                    </div>
+                </td>
+                <td>@dr.Name</td>
+                <td>@dr.Surname</td>
+                <td>@dr.IdentityNo</td>
+                <td>@dr.Session.Name - @dr.Session.Year-@dr.Session.Sequence</td>
+                <td>@dr.Branch.Name</td>
+                <td>@dr.Phone1</td>
+                <td>@dr.Office.Name</td>
+                <td>@string.Format("{0:n2}", @dr.CourseFee)</td>
+                <td>@dr.Id</td>
+            </tr>
         }
     </tbody>
 </table>
 <!--end: Datatable-->
+
 

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,12 @@ namespace AsGozdeCoreWebSite.Controllers
     public class UserController : Controller
     {
         private IUserService _userService;
+        private IAuthService _authService;
 
-        public UserController(IUserService UserService)
+        public UserController(IUserService UserService, IAuthService authService)
         {
             _userService = UserService;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -76,6 +79,36 @@ namespace AsGozdeCoreWebSite.Controllers
             return BadRequest(result.Message);
 
 
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(string oldPassword, string newPassword, string againNewPassword)
+        {
+            var userResult = _userService.GetByUserName(User.Identity.Name);
+            if (userResult.Data!=null)
+            {
+                if (SecuredOperation.DeEncryptAES(userResult.Data.PasswordHash, Messages.SecurityKey) != oldPassword)
+                {
+                    return BadRequest(Messages.PasswordDoesnotMatch);
+                }
+
+                if (newPassword != againNewPassword)
+                {
+                    return BadRequest(Messages.PasswordDoesnotMatchWithAgain);
+                }
+
+                var result = _authService.ChangePass(userResult.Data, newPassword);
+                return Ok(result.Message);
+                
+            }
+
+            return View();
         }
     }
 }

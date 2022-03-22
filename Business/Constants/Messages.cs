@@ -13,9 +13,13 @@
         public static string PasswordError = "Şifre hatalı";
         public static string UserNotActive = "Bu Kullanıcı Aktif Değil !";
         public static string UserDoesNotHavePermissionToThisOffice = "Kullanıcının Bu Şubeye Giriş Yetkisi Bulunmamaktadır !";
-        public static string SuccessfulLogin = "Sisteme giriş başarılı.";
-        public static string UserAlreadyExists = "Bu kullanıcı zaten mevcut";
-        public static string UserRegistered = "Kullanıcı başarıyla kaydedildi";
+        public static string SuccessfulLogin = "Sisteme Giriş Başarılı.";
+        public static string UserAlreadyExists = "Bu Kullanıcı Zaten Mevcut !";
+        public static string UserRegistered = "Kullanıcı Başarıyla Kaydedildi.";
+        public static string PasswordChanged = "Şifre Başarı ile Değiştirildi.";
+        public static string PasswordDoesnotMatch = "Eski Şifre Uyuşmuyor !";
+        public static string PasswordDoesnotMatchWithAgain = "Yeni Şifre ve Tekrarı Uyuşmuyor !";
+
 
         public static string AuthorizationDenied = "Yetkiniz Yok !";        
 

@@ -82,5 +82,54 @@ function js_addUser() {
 
 }
 
+/** Şifre Değiştirme işlemi öncesi kullanıcıya son ikaz yapılır */
+function js_changePasswordQ() {
+
+	var oldPassword = $('#txtOldPassword').val();
+	var newPassword = $('#txtNewPassword').val();
+	var againNewPassword = $('#txtAgainNewPassword').val();
+
+
+	if (oldPassword == null || oldPassword == "") {
+		mesajBox('mesaj', 'UYARI', 'Eski Şifre Boş Olamaz !', 'warning');
+		return;
+	}
+
+	if (newPassword == null || newPassword == "") {
+		mesajBox('mesaj', 'UYARI', 'Yeni Şifre Boş Olamaz !', 'warning');
+		return;
+	}
+
+	if (againNewPassword == null || againNewPassword == "") {
+		mesajBox('mesaj', 'UYARI', 'Yeni Şifre Tekrarı Boş Olamaz !', 'warning');
+		return;
+	}
+
+	mesajBox_confirm('Şifre Değiştir', 'Şifre Değiştir', 'Şifrenizi Değiştirmek İstediğinize Emin misiniz ?', 'Şifre Değiştir', 'warning', 'js_changePassword(\'' + oldPassword + '\',\'' + newPassword + '\',\''+againNewPassword+'\')');
+}
+
+/** Kullanıcı şifresi güncelleme işlemi yapılır. */
+function js_changePassword(oldPassword, newPassword, againNewPassword) {
+
+	$.ajax({
+		async: true,
+		type: "POST",
+		url: "/User/ChangePassword",
+		data: { oldPassword: oldPassword, newPassword: newPassword, againNewPassword: againNewPassword },
+		success: function (data) {
+			var result = data;
+			mesajBox('mesaj', 'DURUM', result, 'success');
+			location.reload();
+		},
+		error: function (err) {
+			mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+		}
+	});
+
+
+}
+
+	
+
 
 

@@ -79,7 +79,7 @@
                 <!--begin::Brand-->
                 <div class="brand flex-column-auto" id="kt_brand">
                     <!--begin::Logo-->
-                    <a href="" class="brand-logo">
+                    <a href="/Home/Index" class="brand-logo">
                         <img alt="Logo" src="~/assets/media/logos/logo-small.png" />
                     </a>
                     <!--end::Logo-->
@@ -374,7 +374,7 @@
                                     <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Merhaba,</span>
                                     <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3"> @User.Claims.Where(x => x.Type.Contains("name")).FirstOrDefault().Value</span>
                                     <span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
-                                        <span class="symbol-label font-size-h5 font-weight-bold">S</span>
+                                        <span class="symbol-label font-size-h5 font-weight-bold">@User.Claims.Where(x => x.Type.Contains("name")).FirstOrDefault().Value.ToString().Substring(0,1).ToUpper()</span>
                                     </span>
                                 </div>
                             </div>
@@ -447,6 +447,9 @@
                 <div class="d-flex flex-column">
                     <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">@User.Claims.Where(x => x.Type.Contains("givenname")).FirstOrDefault().Value @User.Claims.Where(x => x.Type.Contains("surname")).FirstOrDefault().Value</a>
                     <div class="text-muted mt-1"> @User.Claims.Where(x => x.Type.Contains("stateorpro")).FirstOrDefault().Value</div> <!--Görevi-->
+                    <div class="navi mt-2">
+                        <a href="/User/ChangePassword" class="btn btn-sm btn-secondary py-2 px-5">Şifre Değiştir</a>
+                    </div>
                     <div class="navi mt-2">
                         <a href="/Login/Logout" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Çıkış</a>
                     </div>

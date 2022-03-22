@@ -60,6 +60,14 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
+        public IDataResult<User> ChangePass(User user, string newPassword)
+        {
+            string passwordHash = SecuredOperation.EncryptAES(newPassword, Messages.SecurityKey);
+            user.PasswordHash = passwordHash;
+            _userService.Update(user);
+            return new SuccessDataResult<User>(user, Messages.PasswordChanged);
+        }
+
         public IResult UserExist(string userName)
         {
             if (_userService.GetByUserName(userName) != null)

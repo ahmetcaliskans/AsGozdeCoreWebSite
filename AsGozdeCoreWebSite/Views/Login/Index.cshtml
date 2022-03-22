@@ -86,14 +86,19 @@
                                 <div class="d-flex justify-content-between mt-n5">
                                     <label class="font-size-h6 font-weight-bolder text-dark pt-5">Şifre</label>
                                 </div>
-                                <input class="form-control h-auto py-7 px-6 rounded-lg border-0" type="password" name="password" autocomplete="off" />
+                                <div class="input-group" id="show_hide_password">
+                                    <input class="form-control h-auto py-7 px-6 rounded-lg border-0" type="password" name="password" autocomplete="off" />
+                                    <div class="input-group-addon">
+                                        <a><i class="fa fa-eye-slash h-auto py-8 px-3" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
                             </div>
                             <!--end::Form group-->
                             <!--begin::Form group-->
                             <div class="form-group row fv-plugins-icon-container has-success">
                                 <label class="font-size-h6 font-weight-bolder text-dark col-form-label col-lg-3 col-sm-12">Şube</label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <select class="form-control is-valid" id ="office" name="office">
+                                    <select class="form-control is-valid" id="office" name="office">
                                         @if (Model != null)
                                         {
                                             @foreach (var office in Model)
@@ -137,6 +142,23 @@
     <!--begin::Page Scripts(used by this page)-->
     <script src="assets/js/pages/custom/login/login-3.js"></script>    
     <!--end::Page Scripts-->
+
+    <script>
+        $(document).ready(function () {
+            $("#show_hide_password a").on('click', function (event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("fa-eye-slash");
+                    $('#show_hide_password i').removeClass("fa-eye");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("fa-eye-slash");
+                    $('#show_hide_password i').addClass("fa-eye");
+                }
+            });
+        });
+    </script>
 </body>
 <!--end::Body-->
 </html>
