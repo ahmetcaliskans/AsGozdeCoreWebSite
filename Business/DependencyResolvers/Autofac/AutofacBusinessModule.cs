@@ -53,6 +53,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CollectionDetailManager>().As<ICollectionDetailService>();
             builder.RegisterType<EfCollectionDetailDal>().As<ICollectionDetailDal>();
 
+            builder.RegisterType<Sp_GetListOfDueCoursePaymentManager>().As<Isp_GetListOfDueCoursePaymentService>();
+            builder.RegisterType<Efsp_GetListOfDueCoursePaymentDal>().As<Isp_GetListOfDueCoursePaymentDal>();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

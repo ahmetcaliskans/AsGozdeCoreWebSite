@@ -242,6 +242,14 @@
                                                 <span class="menu-text">Kasa Raporu</span>
                                             </a>
                                         </li>
+                                        <li class="@((activeController == "Report") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                            <a href="/Report/GetListOfDueCoursePayments" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Vade Günü Gelmiş veya Geçmiş Kurs Ücretleri Raporu</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -364,6 +372,20 @@
                     <div class="container-fluid d-flex align-items-stretch justify-content-between">
                         <!--begin::Header Menu Wrapper-->
                         <div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
+                            <!--begin::Header Menu-->
+                            <div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
+                                <!--begin::Header Nav-->
+                                <ul class="menu-nav">
+                                    <li class="menu-item menu-item-submenu menu-item-rel menu-item-active">
+                                        <a href="/Home/Index" class="menu-link">
+                                            <span class="menu-text">Ana Sayfa</span>
+                                            <i class="menu-arrow"></i>
+                                        </a>
+                                    </li>                                    
+                                </ul>
+                                <!--end::Header Nav-->
+                            </div>
+                            <!--end::Header Menu-->
                         </div>
                         <!--end::Header Menu Wrapper-->
                         <!--begin::Topbar-->
@@ -374,7 +396,7 @@
                                     <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Merhaba,</span>
                                     <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3"> @User.Claims.Where(x => x.Type.Contains("name")).FirstOrDefault().Value</span>
                                     <span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
-                                        <span class="symbol-label font-size-h5 font-weight-bold">@User.Claims.Where(x => x.Type.Contains("name")).FirstOrDefault().Value.ToString().Substring(0,1).ToUpper()</span>
+                                        <span class="symbol-label font-size-h5 font-weight-bold">@User.Claims.Where(x => x.Type.Contains("name")).FirstOrDefault().Value.ToString().Substring(0, 1).ToUpper()</span>
                                     </span>
                                 </div>
                             </div>

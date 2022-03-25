@@ -1,5 +1,6 @@
 ﻿using Core.Entities.Concrete;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -30,11 +31,12 @@ namespace DataAccess.EntityFramework.Context
         public DbSet<CollectionDetail> CollectionDetails { get; set; }
         public DbSet<DriverPaymentPlan> DriverPaymentPlans { get; set; }
         public DbSet<CollectionDefinitionAmount> CollectionDefinitionAmounts { get; set; }
+        public virtual DbSet<sp_GetListOfDueCoursePayment> Sp_GetListOfDueCoursePayments { get; set; }
 
-        //public IQueryable<Collection> SearchCustomers(string contactName)
+        //public IQueryable<List<sp_GetListOfDueCoursePayment>> sp_GetListOfDueCoursePayments(string contactName)
         //{
         //    //SqlParameter pContactName = new SqlParameter("@ContactName", contactName);
-        //    return this.Collections.FromSql("EXECUTE Customers_SearchCustomers @ContactName", pContactName);
+        //    return this.Database.ExecuteSqlRaw("","");
         //}
 
         [DbFunction("fn_GetDriverBalance", "dbo")]
@@ -45,6 +47,9 @@ namespace DataAccess.EntityFramework.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.HasDbFunction(() => fn_GetDriverBalance(default(int)));
+
+            modelBuilder.Entity<sp_GetListOfDueCoursePayment>().HasNoKey();
+
 
             ///User
             modelBuilder.Entity<User>().HasKey(e => e.UserId);
