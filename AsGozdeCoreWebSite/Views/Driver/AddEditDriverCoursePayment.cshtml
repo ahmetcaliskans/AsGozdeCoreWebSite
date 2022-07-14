@@ -52,7 +52,7 @@
 
             @if (dr.Debit > 0M)
             {
-                <a class="btn btn-sm btn-clean btn-icon mr-2" title="Yeni Ödeme" data-toggle="modal" data-target="#NewDriverCollectionDetail" onclick="js_checkDriverCollectionDetail('', '@dr.Debit', 'EditCollectionDetails',@dr.CollectionDefinitionId, @dr.CollectionDefinitionTypeId)">
+                <a class="btn btn-sm btn-clean btn-icon mr-2" title="Yeni Ödeme"  onclick="js_checkDriverCollectionDetail('', '@dr.Debit', 'EditCollectionDetails',@dr.CollectionDefinitionId, @dr.CollectionDefinitionTypeId)">
                     <!--href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#NewDriver" title="Düzenle" onclick="js_getDriverById(@dr.DriverPaymentPlanId)"-->
                     <span class="svg-icon svg-icon-md">
                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -68,7 +68,7 @@
 
             @if (dr.ClosingCollectionCount > 0)
             {
-                <a class="btn btn-sm btn-clean btn-icon mr-2" title="Ödeme Düzenle" data-toggle="modal" data-target="#NewDriverCollectionDetail" onclick="js_checkDriverCollectionDetail('@dr.CollectionDetailIds', 0,'EditCollectionDetails',@dr.CollectionDefinitionId, @dr.CollectionDefinitionTypeId)">
+                <a class="btn btn-sm btn-clean btn-icon mr-2" title="Ödeme Düzenle"   onclick="js_checkDriverCollectionDetail('@dr.CollectionDetailIds', 0,'EditCollectionDetails',@dr.CollectionDefinitionId, @dr.CollectionDefinitionTypeId)">
                     <!--href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#NewDriver" title="Düzenle" onclick="js_getDriverById(@dr.DriverPaymentPlanId)"-->
                     <span class="svg-icon svg-icon-md">
 
@@ -84,7 +84,7 @@
                     </span>
                 </a>
 
-                <a class="btn btn-sm btn-clean btn-icon mr-2" title="Ödeme Sil" data-toggle="modal" data-target="#NewDriverCollectionDetail" onclick="js_checkDriverCollectionDetail('@dr.CollectionDetailIds', 0,'DeleteCollectionDetails',@dr.CollectionDefinitionId, @dr.CollectionDefinitionTypeId)">
+                <a class="btn btn-sm btn-clean btn-icon mr-2" title="Ödeme Sil"   onclick="js_checkDriverCollectionDetail('@dr.CollectionDetailIds', 0,'DeleteCollectionDetails',@dr.CollectionDefinitionId, @dr.CollectionDefinitionTypeId)">
                     <!--href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#NewDriver" title="Düzenle" onclick="js_getDriverById(@dr.DriverPaymentPlanId)"-->
                     <span class="svg-icon svg-icon-md">
 

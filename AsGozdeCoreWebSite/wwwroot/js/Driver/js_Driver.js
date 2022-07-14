@@ -270,24 +270,9 @@ function js_newHirePurchase(CollectionDefinitionType) {
 
 	if (DriverId == null || DriverId <= 0) {
 
-		$.ajax({
-			async: true,
-			type: "GET",
-			url: "",
-			contentType: "application/json; charset=utf-8",
-			dataType: "html",
-			success: function (data) {
-				var result = data;
-				$("#NewHirePurchase").modal('hide');
-			},
-			error: function (err) {
-				$("#NewHirePurchase").modal('hide');
-
-			}
-		});
+		$("#NewHirePurchase").modal('hide');
 
 		mesajBox('mesaj', 'UYARI', 'Önce Sürücü Adayı Kaydedilmeli !', 'warning');
-		$("#NewHirePurchase").modal('hide');
 		return;
 	}
 
@@ -397,7 +382,6 @@ function js_checkDriverCollectionDetail(IdList, Debit, Type, CollectionDefinitio
 	$('#dataDriverCollectionDetail').html("");
 
 	if (IdList.split('/').length > 2) {
-
 		$.ajax({
 			async: true,
 			type: "GET",
@@ -407,48 +391,28 @@ function js_checkDriverCollectionDetail(IdList, Debit, Type, CollectionDefinitio
 			dataType: "html",
 			success: function (data) {
 				var result = data;
-				$('#NewDriverCollectionDetail').modal('hide');
-
 				$('#dataDriverCollectionDetailList').html("");
 				$('#dataDriverCollectionDetailList').html(result);
-
 				$('#CollectionDetailList').modal('show');
-
 			},
 			error: function (err) {
-				$('#NewDriverCollectionDetail').modal('hide');
+				
 				mesajBox('mesaj', 'UYARI', err.html, 'warning');
 			}
 		});
+		
 	}
 	else {
+		
 		$('#CollectionDetailList').modal('hide');
 
-		if (Type == 'EditCollectionDetails') {
+		if (Type == 'EditCollectionDetails') {			
 			js_getDriverCollectionDetailByIdWithDetails(IdList.split('/')[0], Debit, CollectionDefinitionId, CollectionDefinitionTypeId);
 		}
 		else if (Type == 'PrintCollectionDetails') {
 			js_printDriverCollectionDetail(IdList.split('/')[0])
 		}
 		else if (Type == 'DeleteCollectionDetails') {
-
-			$.ajax({
-				async: true,
-				type: "GET",
-				url: "",
-				contentType: "application/json; charset=utf-8",
-				dataType: "html",
-				success: function (data) {
-					var result = data;
-					$('#NewDriverCollectionDetail').modal('hide');
-					$('#CollectionDetailList').modal('hide');
-				},
-				error: function (err) {
-					$('#NewDriverCollectionDetail').modal('hide');
-
-				}
-			});
-
 			js_deleteDriverCollectionDetailByIdQ(IdList.split('/')[0]);
 		}
 
@@ -471,9 +435,10 @@ function js_getDriverCollectionDetailByIdWithDetails(Id, Debit, CollectionDefini
 		contentType: "application/json; charset=utf-8",
 		dataType: "html",
 		success: function (data) {
-			var result = data;
+			var result = data;			
 			$('#dataDriverCollectionDetail').html("");
 			$('#dataDriverCollectionDetail').html(result);
+			$('#NewDriverCollectionDetail').modal('show');
 		},
 		error: function (err) {
 			mesajBox('mesaj', 'UYARI', err.html, 'warning');
@@ -531,9 +496,7 @@ function js_addEditDriverCollectionDetail() {
 			else if (collectionDefinitionTypeId == 50) {
 				$('#dataListDriverSequentialPrivateLesson').html("");
 				$('#dataListDriverSequentialPrivateLesson').html(result);
-			}
-
-			
+			}			
 
 			$("#NewDriverCollectionDetail").modal('hide');
 
@@ -565,7 +528,7 @@ function js_deleteDriverCollectionDetailById(Id) {
 		data: { id: Id },
 		success: function (data) {
 			var result = data;
-			mesajBox('mesaj', 'DURUM', result, 'success');
+			mesajBox('mesaj', 'DURUM', 'Başarı İle Silindi.', 'success');
 			location.reload();
 		},
 		error: function (err) {
