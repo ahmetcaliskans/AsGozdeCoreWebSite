@@ -27,17 +27,14 @@ namespace DataAccess.EntityFramework.Context
         public DbSet<DriverInformation> DriverInformations { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<CollectionDefinition> CollectionDefinitions { get; set; }
+        public DbSet<CollectionDefinitionType> CollectionDefinitionTypes { get; set; }
         public DbSet<Collection> Collections { get; set; }
         public DbSet<CollectionDetail> CollectionDetails { get; set; }
         public DbSet<DriverPaymentPlan> DriverPaymentPlans { get; set; }
         public DbSet<CollectionDefinitionAmount> CollectionDefinitionAmounts { get; set; }
         public virtual DbSet<sp_GetListOfDueCoursePayment> Sp_GetListOfDueCoursePayments { get; set; }
-
-        //public IQueryable<List<sp_GetListOfDueCoursePayment>> sp_GetListOfDueCoursePayments(string contactName)
-        //{
-        //    //SqlParameter pContactName = new SqlParameter("@ContactName", contactName);
-        //    return this.Database.ExecuteSqlRaw("","");
-        //}
+        public virtual DbSet<sp_GetPayment> Sp_GetPayments { get; set; }
+        public virtual DbSet<sp_GetSequentialPayment> Sp_GetSequentialPayments { get; set; }
 
         [DbFunction("fn_GetDriverBalance", "dbo")]
         public decimal fn_GetDriverBalance(int DriverId) => throw new NotSupportedException();
@@ -49,6 +46,8 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.HasDbFunction(() => fn_GetDriverBalance(default(int)));
 
             modelBuilder.Entity<sp_GetListOfDueCoursePayment>().HasNoKey();
+            modelBuilder.Entity<sp_GetPayment>().HasNoKey();
+            modelBuilder.Entity<sp_GetSequentialPayment>().HasNoKey();
 
 
             ///User
@@ -124,6 +123,13 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<CollectionDefinition>().HasMany(e => e.CollectionDetails).WithOne(e => e.CollectionDefinition).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
             modelBuilder.Entity<CollectionDefinition>().HasMany(e => e.CollectionDefinitionAmounts).WithOne(e => e.CollectionDefinition).OnDelete(DeleteBehavior.Cascade);  // <= This entity has cascade behaviour on deletion
 
+            ///CollectionDefinitionType
+            modelBuilder.Entity<CollectionDefinitionType>().HasKey(e => e.Id);
+            modelBuilder.Entity<CollectionDefinitionType>().Property(e => e.Name).IsRequired().HasMaxLength(150);
+            modelBuilder.Entity<CollectionDefinitionType>().Property(e => e.Description).HasMaxLength(150);
+
+            modelBuilder.Entity<CollectionDefinitionType>().HasMany(e => e.CollectionDefinitions).WithOne(e => e.CollectionDefinitionType).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
+
             ///CollectionDefinitionAmount
             modelBuilder.Entity<CollectionDefinitionAmount>().HasKey(e => e.Id);
             modelBuilder.Entity<CollectionDefinitionAmount>().Property(e => e.Year).IsRequired().HasMaxLength(4);
@@ -139,21 +145,24 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<CollectionDetail>().Property(e => e.AddedDateTime).HasColumnType("datetime");
             modelBuilder.Entity<CollectionDetail>().Property(e => e.UpdatedUserName).HasMaxLength(30);
             modelBuilder.Entity<CollectionDetail>().Property(e => e.UpdatedDateTime).HasColumnType("datetime");
-            
+            modelBuilder.Entity<CollectionDetail>().Property(e => e.Note).HasMaxLength(200);
+
 
 
             ///DriverInformation
             modelBuilder.Entity<DriverInformation>().HasKey(e => e.Id);
             modelBuilder.Entity<DriverInformation>().Property(e => e.Name).IsRequired().HasMaxLength(70);
-            modelBuilder.Entity<DriverInformation>().Property(e => e.Surname).HasMaxLength(100);
-            modelBuilder.Entity<DriverInformation>().Property(e => e.IdentityNo).HasMaxLength(11);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.Surname).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.IdentityNo).IsRequired().HasMaxLength(11);
             modelBuilder.Entity<DriverInformation>().Property(e => e.Email).HasMaxLength(50);
-            modelBuilder.Entity<DriverInformation>().Property(e => e.Phone1).HasMaxLength(15);
-            modelBuilder.Entity<DriverInformation>().Property(e => e.Phone2).HasMaxLength(15);
-            modelBuilder.Entity<DriverInformation>().Property(e => e.City).HasMaxLength(50);
-            modelBuilder.Entity<DriverInformation>().Property(e => e.County).HasMaxLength(50);
-            modelBuilder.Entity<DriverInformation>().Property(e => e.Address1).HasMaxLength(100);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.Phone1).IsRequired().HasMaxLength(15);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.Phone2).IsRequired().HasMaxLength(15);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.City).IsRequired().HasMaxLength(50);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.County).IsRequired().HasMaxLength(50);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.Address1).IsRequired().HasMaxLength(100);
             modelBuilder.Entity<DriverInformation>().Property(e => e.Address2).HasMaxLength(100);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.RecordDate).IsRequired().HasColumnType("datetime");
+            modelBuilder.Entity<DriverInformation>().Property(e => e.Note).HasMaxLength(200);
 
 
             modelBuilder.Entity<DriverInformation>().HasMany(e => e.Collections).WithOne(e => e.DriverInformation).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion

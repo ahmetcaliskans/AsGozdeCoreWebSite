@@ -16,12 +16,32 @@
 
             @await Component.InvokeAsync("CollectionDefinitionList", new { collectionDefinitionId = ((Model == null || Model.CollectionDefinition == null) ? (int)0 : (int)Model.CollectionDefinitionId) })
 
+
+            <div class="form-group row fv-plugins-icon-container" id="divPaidBySelf" @Html.Raw(((bool)ViewData["PayBySelf"]) ? "" : "hidden")>
+                <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 col-xl-9">
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkPaidBySelf" @Html.Raw((Model != null) ? (((Model.PaidBySelf) ? "checked" : "")) : "")>
+                        <span></span> Kendisi Ödedi
+                    </label>
+                </div>
+            </div>
+
+
             <div class="form-group row">
                 <label class="col-xl-3 col-lg-3 col-form-label">Tutar</label>
                 <div class="col-lg-9 col-xl-9">
                     <input class="form-control numeric2" id="txtAmount" type="text" value="@if (Model != null) @Model.Amount">
                 </div>
             </div>
+
+            <div class="form-group row" id="divHour" @Html.Raw(((int)ViewData["CollectionDefinitionTypeId"] == 50) ? "" : "hidden")>
+                <label class="col-xl-3 col-lg-3 col-form-label">Saat</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control numeric2" id="txtHour" type="text" value="@string.Format("{0:n2}",(Model != null) ? Model.Hour : 0))">
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -17,5 +17,6 @@ namespace Entities.Concrete
         public DateTime AddedDateTime { get; set; }
         public string UpdatedUserName { get; set; }
         public DateTime UpdatedDateTime { get; set; }
+        public int CollectionDefinitionType { get; set; }
     }
 }

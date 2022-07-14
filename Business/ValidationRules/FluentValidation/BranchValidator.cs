@@ -12,10 +12,10 @@ namespace Business.ValidationRules.FluentValidation
         {
             /*Name*/
             RuleFor(b=> b.Name).NotEmpty().WithMessage("Branş Adı Boş Olamaz !");
-            RuleFor(b => b.Name).MaximumLength(50).WithMessage("Branş Adı En Fazla 50 Karakter Olmalı !");
+            RuleFor(b => b.Name).MaximumLength(50).WithMessage("Branş Adı En Fazla {MaxLenght} Karakter Olmalı !");
 
             /*Description*/
-            RuleFor(b => b.Description).MaximumLength(150).WithMessage("Açıklama En Fazla 150 Karakter Olmalı !");
+            RuleFor(b => b.Description).MaximumLength(150).WithMessage("Açıklama En Fazla {MaxLenght} Karakter Olmalı !");
         }
     }
 }

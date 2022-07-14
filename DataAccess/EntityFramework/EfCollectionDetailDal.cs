@@ -16,7 +16,7 @@ namespace DataAccess.EntityFramework
         {
             using (AsGozdeWebSiteDB context = new AsGozdeWebSiteDB())
             {
-                var result = context.CollectionDetails.Include(x => x.PaymentType).Include(x => x.CollectionDefinition).Where(x => x.Id == collectionDetailId);
+                var result = context.CollectionDetails.Include(x => x.PaymentType).Include(x => x.CollectionDefinition).Include(x=>x.Collection).Include(x=>x.Collection.DriverInformation).Include(x=>x.Collection.Office).Where(x => x.Id == collectionDetailId);
                 return result.FirstOrDefault();
             }
         }

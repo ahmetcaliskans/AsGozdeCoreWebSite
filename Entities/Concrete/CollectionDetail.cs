@@ -15,6 +15,9 @@ namespace Entities.Concrete
         public int CollectionDefinitionId { get; set; }
         public CollectionDefinition CollectionDefinition { get; set; }
         public decimal Amount { get; set; }
+        public string Note { get; set; }
+        public bool PaidBySelf { get; set; }
+        public decimal Hour { get; set; }
         public int AddedUserId { get; set; }
         public string AddedUserName { get; set; }
         public DateTime AddedDateTime { get; set; }

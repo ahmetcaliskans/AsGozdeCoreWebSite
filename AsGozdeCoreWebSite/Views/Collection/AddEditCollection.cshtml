@@ -24,10 +24,32 @@
                 <i class="ki ki-long-arrow-back icon-sm"></i>
                 Geri
             </a>
+            @if (_collection != null && _collection.Id > 0)
+            {
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary font-weight-bolder">
+                        <i class="ki ki-check icon-sm"></i>
+                        Yazdır
+                    </button>
+                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                        <ul class="nav nav-hover flex-column">
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link" onclick="js_printCollection(@if (_collection != null) @_collection.Id)">
+                                    <i class="nav-icon flaticon2-print"></i>
+                                    <span class="nav-text">Tahsilat Formu</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>                
+            }
+            &nbsp;
             <div class="btn-group">
                 <button type="button" class="btn btn-primary font-weight-bolder">
                     <i class="ki ki-check icon-sm"></i>
-                    Onayla
+                    Kaydet
                 </button>
                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 </button>
@@ -51,12 +73,6 @@
                             <a href="javascript:;" class="nav-link" onclick="js_deleteCollectionByIdQ(@if (_collection != null) @_collection.Id)">
                                 <i class="nav-icon flaticon2-delete"></i>
                                 <span class="nav-text">Sil</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:;" class="nav-link" onclick="js_printCollection(@if (_collection != null) @_collection.Id)">
-                                <i class="nav-icon flaticon2-print"></i>
-                                <span class="nav-text">Yazdır</span>
                             </a>
                         </li>
                     </ul>

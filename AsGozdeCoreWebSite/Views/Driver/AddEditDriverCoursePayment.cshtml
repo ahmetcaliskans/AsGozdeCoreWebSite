@@ -1,0 +1,126 @@
+﻿@model List<Entities.Dtos.sp_GetPayment>
+
+
+@if (Model != null && Model.Count>0)
+{
+    @foreach (var dr in Model.OrderBy(x => x.PaymentDate))
+    {
+<tr>
+    <td colspan="2">
+        <div width="50">
+            <a class="btn btn-sm btn-clean btn-icon mr-2" title="Taksit Düzenle" data-toggle="modal" data-target="#NewDriverPaymentPlan" onclick="js_getDriverPaymentPlanById(@dr.DriverPaymentPlanId,10)">
+                <!--href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#NewDriver" title="Düzenle" onclick="js_getDriverById(@dr.DriverPaymentPlanId)"-->
+                <span class="svg-icon svg-icon-md">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+
+                            <rect x="0" y="0" width="24" height="24" />
+                            <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" \ transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) " />
+                            <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1" />
+                        </g>
+                    </svg>
+                </span>
+            </a>
+            <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Taksit Sil" onclick="js_deleteDriverPaymentPlanByIdQ(@dr.DriverPaymentPlanId,10)">
+
+                <span class="svg-icon svg-icon-md">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+
+                            <rect x="0" y="0" width="24" height="24" />
+                            <path d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z" fill="#000000" fill-rule="nonzero" />
+                            <path d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3" />
+                        </g>
+                    </svg>
+                </span>
+            </a>
+        </div>
+    </td>
+
+    <td>@dr.PaymentDate.Date.ToShortDateString()</td>
+    <td>@string.Format("{0:n2}", dr.PaymentPlanAmount)</td>
+    <td>@dr.CollectionDates.Substring(0, (dr.CollectionDates.Length == 0 ? 0 : dr.CollectionDates.Length - 1))</td>
+    <td>@dr.CollectionTypeNames.Substring(0, (dr.CollectionTypeNames.Length == 0 ? 0 : dr.CollectionTypeNames.Length - 1))</td>
+    <td>@string.Format("{0:n2}", dr.Debit)</td>
+
+    <td colspan="2">
+        <div width="50">
+
+            @if (dr.Debit > 0M)
+            {
+                <a class="btn btn-sm btn-clean btn-icon mr-2" title="Yeni Ödeme" data-toggle="modal" data-target="#NewDriverCollectionDetail" onclick="js_checkDriverCollectionDetail('', '@dr.Debit', 'EditCollectionDetails',@dr.CollectionDefinitionId, @dr.CollectionDefinitionTypeId)">
+                    <!--href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#NewDriver" title="Düzenle" onclick="js_getDriverById(@dr.DriverPaymentPlanId)"-->
+                    <span class="svg-icon svg-icon-md">
+                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+                                <path d="M11,11 L11,7 C11,6.44771525 11.4477153,6 12,6 C12.5522847,6 13,6.44771525 13,7 L13,11 L17,11 C17.5522847,11 18,11.4477153 18,12 C18,12.5522847 17.5522847,13 17,13 L13,13 L13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 L11,13 L7,13 C6.44771525,13 6,12.5522847 6,12 C6,11.4477153 6.44771525,11 7,11 L11,11 Z" fill="#000000" />
+                            </g>
+                        </svg><!--end::Svg Icon-->
+                    </span>
+                </a>
+            }
+
+            @if (dr.ClosingCollectionCount > 0)
+            {
+                <a class="btn btn-sm btn-clean btn-icon mr-2" title="Ödeme Düzenle" data-toggle="modal" data-target="#NewDriverCollectionDetail" onclick="js_checkDriverCollectionDetail('@dr.CollectionDetailIds', 0,'EditCollectionDetails',@dr.CollectionDefinitionId, @dr.CollectionDefinitionTypeId)">
+                    <!--href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#NewDriver" title="Düzenle" onclick="js_getDriverById(@dr.DriverPaymentPlanId)"-->
+                    <span class="svg-icon svg-icon-md">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+
+                                <rect x="0" y="0" width="24" height="24" />
+                                <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero" \ transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) " />
+                                <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1" />
+                            </g>
+                        </svg>
+                    </span>
+                </a>
+
+                <a class="btn btn-sm btn-clean btn-icon mr-2" title="Ödeme Sil" data-toggle="modal" data-target="#NewDriverCollectionDetail" onclick="js_checkDriverCollectionDetail('@dr.CollectionDetailIds', 0,'DeleteCollectionDetails',@dr.CollectionDefinitionId, @dr.CollectionDefinitionTypeId)">
+                    <!--href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#NewDriver" title="Düzenle" onclick="js_getDriverById(@dr.DriverPaymentPlanId)"-->
+                    <span class="svg-icon svg-icon-md">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <path d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z" fill="#000000" fill-rule="nonzero" />
+                                <path d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3" />
+                            </g>
+                        </svg>
+                    </span>
+                </a>
+
+                <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Ödeme Yazdır" onclick="js_checkDriverCollectionDetail('@dr.CollectionDetailIds', 0,'PrintCollectionDetails',@dr.CollectionDefinitionId, @dr.CollectionDefinitionTypeId)">
+                    <span class="svg-icon svg-icon-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <path d="M16,17 L16,21 C16,21.5522847 15.5522847,22 15,22 L9,22 C8.44771525,22 8,21.5522847 8,21 L8,17 L5,17 C3.8954305,17 3,16.1045695 3,15 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,15 C21,16.1045695 20.1045695,17 19,17 L16,17 Z M17.5,11 C18.3284271,11 19,10.3284271 19,9.5 C19,8.67157288 18.3284271,8 17.5,8 C16.6715729,8 16,8.67157288 16,9.5 C16,10.3284271 16.6715729,11 17.5,11 Z M10,14 L10,20 L14,20 L14,14 L10,14 Z" fill="#000000" />
+                                <rect fill="#000000" opacity="0.3" x="8" y="2" width="8" height="2" rx="1" />
+                            </g>
+                        </svg>
+                    </span>
+                </a>
+            }
+
+
+        </div>
+    </td>
+</tr>
+    }
+
+<tr>
+    <td colspan="6"></td>
+    <td><b>@string.Format("Toplam: {0:n2}", Model.Sum(x => x.Debit))</b> </td>
+    <td colspan="2"></td>
+</tr>
+
+}

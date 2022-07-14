@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using AsGozdeCoreWebSite.Models.PermissionAuthorization;
+using Business.Abstract;
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -41,10 +42,13 @@ namespace AsGozdeCoreWebSite.Controllers
 
         }
 
+        [Permission("AddUser")]
+        [Permission("UpdateUser")]
         [HttpPost]
         public IActionResult AddUser(User User)
         {
             IResult result;
+            
             if (User.UserId == null || User.UserId <= 0)
                 result = _userService.Add(User);
             else

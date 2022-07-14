@@ -1,0 +1,207 @@
+﻿@model dynamic
+
+@{
+    var _driverInformation = Model.DriverInformation as Entities.Concrete.DriverInformation;
+    var _driverPaymentPlan = Model.DriverPaymentPlan as List<Entities.Concrete.DriverPaymentPlan>;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>As Gözde Sürücü Kursu Müracaat Formu</title>
+    <style>
+        td {
+            padding-left: 7px;
+        }
+
+        body {
+            font-size: 12px;
+        }
+
+        .tdunderline {
+            border-bottom: 1px solid black;
+            border-right: 1px solid black;
+            text-align: center;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3 style="text-align: center;">ÖZEL AS GÖZDE M.T.S.K MÜRACAAT FORMU</h3>
+
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    KAYIT TARİHİ : @_driverInformation.RecordDate.Date.ToShortDateString()
+                </td>
+                <td>
+                    KURS ÜCRETİ : @string.Format("{0:n2}",_driverInformation.CourseFee)
+                </td>
+                <td>
+                    ADI SOYADI : @_driverInformation.Name @_driverInformation.Surname
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    SINIFI : @_driverInformation.Branch.Name
+                </td>
+                <td>
+                    DÖNEMİ : @_driverInformation.Session.Name / @_driverInformation.Session.Sequence
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    EV ADRESİ : @_driverInformation.Address1 @_driverInformation.Address2 @_driverInformation.County/@_driverInformation.City
+                </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+                <td>
+                    CEP TEL. 1 : @string.Format("{0:# ### ### ## ##}", _driverInformation.Phone1)
+                </td>
+                <td>
+                    CEP TEL. 2 : @string.Format("{0:# ### ### ## ##}", _driverInformation.Phone2)
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+
+        <h3 style="text-align: center;">KAYIT-ÖDEME SÖZLEŞMESİ</h3>
+
+        <table style='width: 100%; border: 1px  solid black; margin-left: auto; margin-right: auto; border-collapse: collapse;'>
+            <thead>
+                <tr>
+                    <th class="tdunderline" style="width: 19%">
+                        &nbsp;
+                    </th>
+                    <th class="tdunderline" style="width: 27%">
+                        ÖDEME TARİHİ
+                    </th>
+                    <th class="tdunderline" style="width: 27%">
+                        ÖDENECEK TUTAR
+                    </th>
+                    <th class="tdunderline" style="width: 27%">
+                        &nbsp;
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var dr in _driverPaymentPlan.OrderBy(x => x.Sequence))
+                {
+                    <tr>
+                        <td class="tdunderline">
+                            &nbsp;
+                            @dr.Sequence . TAKSİT
+                        </td>
+                        <td class="tdunderline">
+                            &nbsp;
+                            @dr.PaymentDate.Date.ToShortDateString()
+                        </td>
+                        <td class="tdunderline">
+                            &nbsp;
+                            @string.Format("{0:n2}",dr.Amount)
+                        </td>
+                        <td class="tdunderline">
+                            &nbsp;
+
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+
+        </table>
+
+        <h4>
+            ADI SOYADI :
+        </h4>
+
+        <h4>
+            İMZA :
+        </h4>
+
+        <br>
+
+        <h4 style="border-top: 2px dotted black"></h4>
+
+        <br>
+        <div style="padding-left: 5px; font-size: 14px;">
+            <b><i><u>SÜRÜCÜ ADAYININ DİKKATİNE</u></i></b>
+            <br>
+            <b><u>Kurumumuzla yapmış olduğunuz sözleşme gereği;</u></b>
+            <br>
+            <i>1-Yukarıdaki şartlar doğrultusunda ödeyeceğimi, taksitlerden birisi vadesinde ödenmediği taktirde müteakip taksitlerinde muaccel hale geleceğini, iş bu kayıt sözleşmesinden doğacak anlaşmazlıklarda, Bursa Mahkeme ve İcra Dairelerinin yetkili olduğunu kabul ederim.</i>
+            <br>
+            <i><u>2-Tüm taksitler ödenmeden Ehliyet dosyanız teslim edilmeyecektir.</u></i>
+            <br>
+            <i>3-Yazılı ve Direksiyon Sınavınızdaki başarı durumunuzdan kurumumuz sorumlu değildir.</i>
+            <br>
+            <i>
+                4-Adayların direksiyon sınavından kalmaları halinde ilgili yönetmelik gereği +2 ders saati ücretini ödemek koşulu ile direksiyon eğitimi alma zorunluluğu bulunmamaktadır. Dersini almayan aday sınava alınamaz. Ücretlendirme aşağıdaki gibidir.
+                <br>
+                +2 Direksiyon Eğitimi ve Direksiyon sınav ücreti : 450 TL
+            </i>
+            <br>
+            <i>5-Kaydınızı sildirmek istemeniz durumunda sözleşmede anlaşılan kurs ücreti kurumumuz tarafından tahsil edilir.</i>
+            <br>
+        </div>
+
+        <table style='width: 100%; border: 1px  solid black; margin-left: auto; margin-right: auto; border-collapse: collapse;'>
+            <thead>
+                <tr>
+                    <th class="tdunderline" style="width: 19%">
+                        &nbsp;
+                    </th>
+                    <th class="tdunderline" style="width: 27%">
+                        ÖDEME TARİHİ
+                    </th>
+                    <th class="tdunderline" style="width: 27%">
+                        ÖDENECEK TUTAR
+                    </th>
+                    <th class="tdunderline" style="width: 27%">
+                        ÖDENDİ İMZA
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var dr in _driverPaymentPlan.OrderBy(x => x.Sequence))
+                {
+                    <tr>
+                        <td class="tdunderline">
+                            &nbsp;
+                            @dr.Sequence . TAKSİT
+                        </td>
+                        <td class="tdunderline">
+                            &nbsp;
+                            @dr.PaymentDate.Date.ToShortDateString()
+                        </td>
+                        <td class="tdunderline">
+                            &nbsp;
+                            @string.Format("{0:n2}", dr.Amount)
+                        </td>
+                        <td class="tdunderline">
+                            &nbsp;
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+</body>
+</html>

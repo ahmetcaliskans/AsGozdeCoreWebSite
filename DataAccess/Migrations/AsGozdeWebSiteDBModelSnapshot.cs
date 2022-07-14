@@ -141,12 +141,12 @@ namespace DataAccess.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<int>("CollectionDefinitionTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<bool>("IsPrivateLesson")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsSequence")
                         .HasColumnType("bit");
@@ -163,6 +163,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CollectionDefinitionTypeId");
 
                     b.ToTable("CollectionDefinitions");
                 });
@@ -205,6 +207,33 @@ namespace DataAccess.Migrations
                     b.ToTable("CollectionDefinitionAmounts");
                 });
 
+            modelBuilder.Entity("Entities.Concrete.CollectionDefinitionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsPayBySelf")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSequence")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CollectionDefinitionTypes");
+                });
+
             modelBuilder.Entity("Entities.Concrete.CollectionDetail", b =>
                 {
                     b.Property<int>("Id")
@@ -230,6 +259,16 @@ namespace DataAccess.Migrations
 
                     b.Property<int>("CollectionId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Hour")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("PaidBySelf")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PaymentTypeId")
                         .HasColumnType("int");
@@ -260,6 +299,7 @@ namespace DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address1")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -274,14 +314,19 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("County")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("CourseFee")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CourseFeePlus")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Email")
@@ -289,6 +334,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("IdentityNo")
+                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
@@ -300,21 +346,31 @@ namespace DataAccess.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
+                    b.Property<string>("Note")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<int>("OfficeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Phone1")
+                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Phone2")
+                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
+
+                    b.Property<DateTime>("RecordDate")
+                        .HasColumnType("datetime");
 
                     b.Property<int>("SessionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -345,6 +401,9 @@ namespace DataAccess.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("CollectionDefinitionType")
+                        .HasColumnType("int");
 
                     b.Property<int>("DriverInformationId")
                         .HasColumnType("int");
@@ -542,7 +601,7 @@ namespace DataAccess.Migrations
                     b.Property<int>("SessionYear")
                         .HasColumnType("int");
 
-                    b.Property<string>("SurName")
+                    b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalCourseCollectionAmount")
@@ -552,6 +611,106 @@ namespace DataAccess.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.ToTable("Sp_GetListOfDueCoursePayments");
+                });
+
+            modelBuilder.Entity("Entities.Dtos.sp_GetPayment", b =>
+                {
+                    b.Property<int>("ClosingCollectionCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CollectionDates")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CollectionDefinitionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CollectionDefinitionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CollectionDetailIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CollectionIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CollectionTypeNames")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Debit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DriverPaymentPlanDriverInformationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DriverPaymentPlanId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DriverPaymentPlanSequence")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("PaymentPlanAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.ToTable("Sp_GetPayments");
+                });
+
+            modelBuilder.Entity("Entities.Dtos.sp_GetSequentialPayment", b =>
+                {
+                    b.Property<DateTime?>("CollectionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CollectionDefinitionDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CollectionDefinitionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CollectionDefinitionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("CollectionDefinitionPayBySelf")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CollectionDefinitionSequence")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CollectionDefinitionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CollectionDefinitionTypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("CollectionDetailAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("CollectionDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("CollectionDetailPaidBySelf")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("CollectionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DocumentNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DriverInformationId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Hour")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("PaymentTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentTypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Sp_GetSequentialPayments");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Collection", b =>
@@ -571,6 +730,17 @@ namespace DataAccess.Migrations
                     b.Navigation("DriverInformation");
 
                     b.Navigation("Office");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.CollectionDefinition", b =>
+                {
+                    b.HasOne("Entities.Concrete.CollectionDefinitionType", "CollectionDefinitionType")
+                        .WithMany("CollectionDefinitions")
+                        .HasForeignKey("CollectionDefinitionTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CollectionDefinitionType");
                 });
 
             modelBuilder.Entity("Entities.Concrete.CollectionDefinitionAmount", b =>
@@ -664,6 +834,11 @@ namespace DataAccess.Migrations
                     b.Navigation("CollectionDefinitionAmounts");
 
                     b.Navigation("CollectionDetails");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.CollectionDefinitionType", b =>
+                {
+                    b.Navigation("CollectionDefinitions");
                 });
 
             modelBuilder.Entity("Entities.Concrete.DriverInformation", b =>

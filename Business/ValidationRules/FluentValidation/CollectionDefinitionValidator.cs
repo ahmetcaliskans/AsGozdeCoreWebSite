@@ -12,14 +12,14 @@ namespace Business.ValidationRules.FluentValidation
         {
             /*Name*/
             RuleFor(c => c.Name).NotEmpty().WithMessage("Tahsilat Adı Boş Olamaz !");
-            RuleFor(c => c.Name).MinimumLength(2).WithMessage("Tahsilat Adı En Az 2 Karakter Olmalı !");
-            RuleFor(c => c.Name).MaximumLength(100).WithMessage("Tahsilat Adı En Fazla 100 Karakter Olmalı !");
+            RuleFor(c => c.Name).MinimumLength(2).WithMessage("Tahsilat Adı En Az {MinLength} Karakter Olmalı !");
+            RuleFor(c => c.Name).MaximumLength(100).WithMessage("Tahsilat Adı En Fazla {MaxLength} Karakter Olmalı !");
 
             /*Description*/
-            RuleFor(c => c.Description).MaximumLength(150).WithMessage("Açıklama En Fazla 150 Karakter Olmalı !");
+            RuleFor(c => c.Description).MaximumLength(150).WithMessage("Açıklama En Fazla {MaxLength} Karakter Olmalı !");
 
             /*Sequence*/
-            RuleFor(c => c.Sequence).GreaterThanOrEqualTo(0).WithMessage("Sıfırdan Büyük Bir Sıra Numarası Giriniz !");
+            RuleFor(c => c.Sequence).GreaterThanOrEqualTo(0).WithMessage("Sıfırdan({ComparisonValue}) Büyük Bir Sıra Numarası Giriniz !");
 
         }
     }

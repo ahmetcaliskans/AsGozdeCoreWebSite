@@ -1,33 +1,48 @@
-﻿@model Entities.Concrete.DriverPaymentPlan
+﻿
+@model dynamic
+
+@{
+    var _collectionDefinitionType = Model.CollectionDefinitionType;
+    var _driverPaymentPlan = Model.DriverPaymentPlan as Entities.Concrete.DriverPaymentPlan;
+}
 
 
 <div class="row">
     <div class="col-xl-12">
         <div style="margin:5px 5px  5px 5px">
+
+            <div class="form-group row" hidden="hidden">
+                <label class="col-xl-3 col-lg-3 col-form-label">Plan Tipi</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtCollectionDefinitionType" type="number" disabled="disabled" value="@_collectionDefinitionType">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+
             <div class="form-group row fv-plugins-icon-container">
                 <label class="col-xl-3 col-lg-3 col-form-label">Id</label>
                 <div class="col-lg-9 col-xl-9">
-                    <input class="form-control" id="txtDriverPaymentPlanId" type="number" disabled="disabled" value="@if (Model != null) @Model.Id">
+                    <input class="form-control" id="txtDriverPaymentPlanId" type="number" disabled="disabled" value="@if (_driverPaymentPlan != null) @_driverPaymentPlan.Id">
                     <div class="fv-plugins-message-container"></div>
                 </div>
             </div>
             <div class="form-group row fv-plugins-icon-container">
                 <label class="col-xl-3 col-lg-3 col-form-label">Sıra</label>
                 <div class="col-lg-9 col-xl-9">
-                    <input class="form-control" id="txtDriverPaymentPlanSequence" type="number" disabled="disabled" value="@if (Model != null) @Model.Sequence">
+                    <input class="form-control" id="txtDriverPaymentPlanSequence" type="number" disabled="disabled" value="@if (_driverPaymentPlan != null) @_driverPaymentPlan.Sequence">
                     <div class="fv-plugins-message-container"></div>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-xl-3 col-lg-3 col-form-label">Ödeme Tarihi</label>
                 <div class="col-lg-9 col-xl-9 date">
-                    <input type="text" class="form-control" value="@if(Model==null || Model.PaymentDate==null || Model.PaymentDate <= Convert.ToDateTime("1900-01-01")) @DateTime.Now.ToShortDateString() else @Model.PaymentDate.ToShortDateString()" id="kt_datepicker_3" name="txtDriverPaymentPlanPaymentDate" />
+                    <input type="text" class="form-control" value="@if(_driverPaymentPlan==null || _driverPaymentPlan.PaymentDate==null || _driverPaymentPlan.PaymentDate <= Convert.ToDateTime("1900-01-01")) @DateTime.Now.ToShortDateString() else @_driverPaymentPlan.PaymentDate.ToShortDateString()" id="kt_datepicker_3" name="txtDriverPaymentPlanPaymentDate" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-xl-3 col-lg-3 col-form-label">Tutar</label>
                 <div class="col-lg-9 col-xl-9">
-                    <input class="form-control numeric2" id="txtDriverPaymentPlanAmount" type="text" value="@if (Model != null) @Model.Amount">
+                    <input class="form-control numeric2" id="txtDriverPaymentPlanAmount" type="text" value="@if (_driverPaymentPlan != null) @_driverPaymentPlan.Amount">
                 </div>
             </div>
         </div>

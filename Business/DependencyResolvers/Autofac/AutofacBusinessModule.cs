@@ -38,6 +38,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CollectionDefinitionManager>().As<ICollectionDefinitionService>();
             builder.RegisterType<EfCollectionDefinitionDal>().As<ICollectionDefinitionDal>();
 
+            builder.RegisterType<CollectionDefinitionTypeManager>().As<ICollectionDefinitionTypeService>();
+            builder.RegisterType<EfCollectionDefinitionTypeDal>().As<ICollectionDefinitionTypeDal>();
+
             builder.RegisterType<CollectionDefinitionAmountManager>().As<ICollectionDefinitionAmountService>();
             builder.RegisterType<EfCollectionDefinitionAmountDal>().As<ICollectionDefinitionAmountDal>();
 
@@ -55,6 +58,12 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<Sp_GetListOfDueCoursePaymentManager>().As<Isp_GetListOfDueCoursePaymentService>();
             builder.RegisterType<Efsp_GetListOfDueCoursePaymentDal>().As<Isp_GetListOfDueCoursePaymentDal>();
+
+            builder.RegisterType<Sp_GetPaymentManager>().As<Isp_GetPaymentService>();
+            builder.RegisterType<Efsp_GetPaymentDal>().As<Isp_GetPaymentDal>();
+
+            builder.RegisterType<Sp_GetSequentialPaymentManager>().As<Isp_GetSequentialPaymentService>();
+            builder.RegisterType<Efsp_GetSequentialPaymentDal>().As<Isp_GetSequentialPaymentDal>();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

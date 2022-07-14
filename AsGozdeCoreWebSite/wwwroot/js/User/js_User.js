@@ -75,7 +75,14 @@ function js_addUser() {
 			location.reload();
 		},
 		error: function (err) {
-			mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+			if (err.status == 403) {
+				mesajBox('mesaj', 'UYARI', "Bu İşlem İçin Yetkiniz Yok !", 'warning');
+			}
+			else {
+				mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+            }
+
+			
 		}
 	});
 

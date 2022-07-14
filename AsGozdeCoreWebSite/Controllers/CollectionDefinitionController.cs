@@ -21,14 +21,14 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var result = _collectionDefinitionService.GetList();
+            var result = _collectionDefinitionService.GetListWithDetails();
             return View(result.Data);
         }
 
         [HttpGet]
         public IActionResult GetCollectionDefinitionById(int id)
         {
-            var result = _collectionDefinitionService.GetById(id);
+            var result = _collectionDefinitionService.GetByIdWithDetails(id);
             if (result.Success)
             {
                 return PartialView("AddEditCollectionDefinition", result.Data);
@@ -60,7 +60,7 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpPost]
         public IActionResult DeleteCollectionDefinitionById(int id)
         {
-            var _collectionDefinitionResult = _collectionDefinitionService.GetById(id);
+            var _collectionDefinitionResult = _collectionDefinitionService.GetByIdWithDetails(id);
 
             var result = _collectionDefinitionService.Delete(_collectionDefinitionResult.Data);
             if (result.Success)

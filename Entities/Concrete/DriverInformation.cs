@@ -19,6 +19,7 @@ namespace Entities.Concrete
         public int BranchId { get; set; }
         public Branch Branch { get; set; }
         public decimal CourseFee { get; set; }
+        public decimal CourseFeePlus { get; set; }
         public string Email { get; set; }
         public string Phone1 { get; set; }
         public string Phone2 { get; set; }
@@ -26,6 +27,8 @@ namespace Entities.Concrete
         public string County { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
+        public DateTime RecordDate { get; set; }
+        public string Note { get; set; }
         public virtual List<Collection> Collections { get; set; }       
         public virtual decimal Balance { get; set; }
         public virtual List<DriverPaymentPlan> DriverPaymentPlans { get; set; }

@@ -8,6 +8,7 @@ namespace DataAccess.Abstract
 {
     public interface ICollectionDefinitionDal : IEntityRepository<CollectionDefinition>
     {
-
+        List<CollectionDefinition> GetListWithDetails();
+        CollectionDefinition GetByIdWithDetails(int collectionDefinitonId);
     }
 }

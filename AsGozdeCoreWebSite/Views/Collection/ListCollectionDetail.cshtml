@@ -74,7 +74,7 @@
                     <td>@dr.CollectionDefinition.Description</td>
                     <td>@dr.CollectionDefinition.Sequence</td>
                     <td>@dr.PaymentType.Name</td>
-                    <td>@string.Format("{0:n2}", @dr.Amount)</td>
+                    <td>@if (!dr.PaidBySelf)@string.Format("{0:n2}", dr.Amount) else @string.Format("Kendisi Ödedi")</td>
                     <td colspan="2">
                         <div width="50">
                             <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#NewCollectionDetail" title="Düzenle" onclick="js_getCollectionDetailByIdWithDetails(@dr.Id)">

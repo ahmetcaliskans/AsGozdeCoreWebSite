@@ -39,17 +39,11 @@ namespace AsGozdeCoreWebSite.Controllers
             var userToLogin = _authService.Login(userForLoginDto);
             if (userToLogin.Success)
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.UserData,userToLogin.Data.UserName)
-                };
-
-                //var userIdentity = new ClaimsIdentity(claims,"a");
-
                 var officeResult = _officeService.GetById(officeId);
                 
                 var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, userToLogin.Data.UserName), }, "a", ClaimTypes.Name, ClaimTypes.Role);
                 identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
+                identity.AddClaim(new Claim(ClaimTypes.Role, "AddUser"));
                 identity.AddClaim(new Claim(ClaimTypes.GivenName, userToLogin.Data.FirstName==null ? "" : userToLogin.Data.FirstName));
                 identity.AddClaim(new Claim(ClaimTypes.Surname, userToLogin.Data.LastName==null ? "" : userToLogin.Data.LastName));
                 identity.AddClaim(new Claim(ClaimTypes.GroupSid, (officeResult!=null && officeResult.Data!=null) ? officeResult.Data.Name : ""));

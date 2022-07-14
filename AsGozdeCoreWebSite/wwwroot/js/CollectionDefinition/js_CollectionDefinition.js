@@ -60,9 +60,10 @@ function js_addCollectionDefinition() {
 		Description: $('#txtDescription').val(),
 		Sequence: $('#txtSequence').val(),
 		IsSequence: chkKontrol('chkIsSequence'),
-		IsPrivateLesson: chkKontrol('chkIsPrivateLesson'),
 		PayBySelf: chkKontrol('chkPayBySelf'),
-		Active: chkKontrol('chkActive')
+		Active: chkKontrol('chkActive'),
+		CollectionDefinitionTypeId: $('#selectCollectionDefinitionType option:selected').val()
+
 	};
 
 	$.ajax({

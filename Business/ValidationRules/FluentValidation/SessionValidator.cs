@@ -12,10 +12,10 @@ namespace Business.ValidationRules.FluentValidation
         {
             /*Name*/
             RuleFor(s => s.Name).NotEmpty().WithMessage("Dönem Adı Boş Olamaz !");
-            RuleFor(s => s.Name).MaximumLength(50).WithMessage("Dönem Adı En Fazla 50 Karakter Olabilir !");
+            RuleFor(s => s.Name).MaximumLength(50).WithMessage("Dönem Adı En Fazla {MaxLength} Karakter Olabilir !");
 
             /*Description*/
-            RuleFor(s => s.Description).MaximumLength(150).WithMessage("Açıklama En Fazla 150 Karakter Olabilir !");
+            RuleFor(s => s.Description).MaximumLength(150).WithMessage("Açıklama En Fazla {MaxLength} Karakter Olabilir !");
         }
     }
 }

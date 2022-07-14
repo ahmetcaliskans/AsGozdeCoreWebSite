@@ -24,7 +24,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CollectionDefinitionValidator))]
         public IResult Add(CollectionDefinition collectionDefinition)
         {
-            IResult result = BusinessRules.Run(CheckIfcollectionDefinitionNameExists(collectionDefinition.Id, collectionDefinition.Name, collectionDefinition.Sequence));
+            IResult result = BusinessRules.Run(CheckIfcollectionDefinitionNameExists(collectionDefinition));
             if (result != null)
                 return result;
 
@@ -43,6 +43,11 @@ namespace Business.Concrete
             return new SuccessDataResult<CollectionDefinition>(_collectionDefinitionDal.Get(p => p.Id == collectionDefinitionId));
         }
 
+        public IDataResult<CollectionDefinition> GetByIdWithDetails(int collectionDefinitionId)
+        {
+            return new SuccessDataResult<CollectionDefinition>(_collectionDefinitionDal.GetByIdWithDetails(collectionDefinitionId));
+        }
+
         public IDataResult<CollectionDefinition> GetByName(string collectionDefinitionName)
         {
             return new SuccessDataResult<CollectionDefinition>(_collectionDefinitionDal.Get(p => p.Name == collectionDefinitionName));
@@ -53,10 +58,15 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CollectionDefinition>>(_collectionDefinitionDal.GetList().ToList());
         }
 
+        public IDataResult<List<CollectionDefinition>> GetListWithDetails()
+        {
+            return new SuccessDataResult<List<CollectionDefinition>>(_collectionDefinitionDal.GetListWithDetails());
+        }
+
         [ValidationAspect(typeof(CollectionDefinitionValidator))]
         public IResult Update(CollectionDefinition collectionDefinition)
         {
-            IResult result = BusinessRules.Run(CheckIfcollectionDefinitionNameExists(collectionDefinition.Id, collectionDefinition.Name, collectionDefinition.Sequence));
+            IResult result = BusinessRules.Run(CheckIfcollectionDefinitionNameExists(collectionDefinition));
             if (result != null)
                 return result;
 
@@ -64,9 +74,10 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Updated);
         }
 
-        private IResult CheckIfcollectionDefinitionNameExists(int Id, string collectionDefinitionName, int collectionDefinitionSequence)
+        private IResult CheckIfcollectionDefinitionNameExists(CollectionDefinition collectionDefinition)
         {
-            var result = _collectionDefinitionDal.GetList(x => x.Id != Id && x.Name == collectionDefinitionName && x.Sequence == collectionDefinitionSequence).Any();
+            var result = _collectionDefinitionDal.GetList(x => x.Id != collectionDefinition.Id && 
+            ((x.Name == collectionDefinition.Name && x.Sequence == collectionDefinition.Sequence) || (!x.IsSequence && x.CollectionDefinitionTypeId==collectionDefinition.CollectionDefinitionTypeId) )).Any();
             if (result)
             {
                 return new ErrorResult(Messages.AlreadyExists);

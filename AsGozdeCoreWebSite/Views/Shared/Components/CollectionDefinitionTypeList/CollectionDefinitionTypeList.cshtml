@@ -1,0 +1,24 @@
+﻿
+@model dynamic
+
+<div class="form-group row">
+    <label class="col-form-label col-lg-3 col-xl-3">Tipi</label>
+    <div class="col-lg-9 col-xl-9">
+        <select class="form-control is-valid" name="selectCollectionDefinitionType" id="selectCollectionDefinitionType">
+            @foreach (var dr in Model.CollectionDefinitionType as List<Entities.Concrete.CollectionDefinitionType>)
+            {
+
+                if (dr.Id == (int)Model.SelectedId)
+                {
+                    <option selected="" value="@dr.Id">@dr.Name</option>
+                }
+                else
+                {
+                    <option value="@dr.Id">@dr.Name</option>
+
+                }
+
+            }
+        </select>
+    </div>
+</div>

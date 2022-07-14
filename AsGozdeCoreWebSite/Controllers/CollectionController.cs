@@ -218,9 +218,13 @@ namespace AsGozdeCoreWebSite.Controllers
         {
             var collectionDetailResult = JsonConvert.DeserializeObject<List<CollectionDetail>>(HttpContext.Session.GetString("CollectionDetails"), new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
             var result = new SuccessDataResult<CollectionDetail>(collectionDetailResult.Where(x => x.Id == id).FirstOrDefault(), Messages.Added);
+            ViewData["PayBySelf"] = false;
+            ViewData["CollectionDefinitionTypeId"] = 99;
 
-            if (result.Success)
+            if (result.Success && result.Data != null)
             {
+                ViewData["PayBySelf"] = result.Data.CollectionDefinition.PayBySelf;
+                ViewData["CollectionDefinitionTypeId"] = result.Data.CollectionDefinition.CollectionDefinitionTypeId;
                 return PartialView("AddEditCollectionDetail", result.Data);
             }
 
@@ -239,6 +243,8 @@ namespace AsGozdeCoreWebSite.Controllers
                     foreach (var dr in _dr)
                     {
                         dr.Amount = collectionDetail.Amount;
+                        dr.Hour = collectionDetail.Hour;
+                        dr.PaidBySelf = collectionDetail.PaidBySelf;
                         if (dr.PaymentTypeId!=collectionDetail.PaymentTypeId)
                         {
                             dr.PaymentTypeId = collectionDetail.PaymentTypeId;
@@ -248,7 +254,7 @@ namespace AsGozdeCoreWebSite.Controllers
                         {
                             dr.CollectionDefinitionId = collectionDetail.CollectionDefinitionId;
                             dr.CollectionDefinition = _collectionDefinitionService.GetById(collectionDetail.CollectionDefinitionId).Data;
-                        }
+                        }       
                         
                         
                     }
@@ -268,6 +274,10 @@ namespace AsGozdeCoreWebSite.Controllers
                 collectionDetail.CollectionDefinition = _collectionDefinitionService.GetById(collectionDetail.CollectionDefinitionId).Data;
                 collectionDetailResult.Add(collectionDetail);
             }
+
+            if (collectionDetail.PaidBySelf)
+                collectionDetail.Amount = 0M;
+
             HttpContext.Session.SetString("CollectionDetails", JsonConvert.SerializeObject(collectionDetailResult, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));            
 
             return PartialView("ListCollectionDetail", collectionDetailResult);
@@ -311,6 +321,22 @@ namespace AsGozdeCoreWebSite.Controllers
             }
 
             return PartialView("DriverInformation", result.Data);
+        }
+
+        [HttpPost]
+        public IActionResult GetCollectionDefinitionInformations(int id)
+        {
+            var result = _collectionDefinitionService.GetByIdWithDetails(id);
+            ViewData["PayBySelf"] = false;
+            ViewData["CollectionDefinitionTypeId"] = 99;
+
+            if (result.Success && result.Data != null)
+            {
+                ViewData["PayBySelf"] = result.Data.PayBySelf;
+                ViewData["CollectionDefinitionTypeId"] = result.Data.CollectionDefinitionTypeId;
+                return Ok(string.Format("{0}/{1}", result.Data.PayBySelf,result.Data.CollectionDefinitionTypeId));
+            }
+            return Ok();
         }
 
         #endregion

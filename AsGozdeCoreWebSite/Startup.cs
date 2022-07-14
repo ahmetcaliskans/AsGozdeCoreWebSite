@@ -1,3 +1,4 @@
+using AsGozdeCoreWebSite.Models.PermissionAuthorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -46,11 +47,23 @@ namespace AsGozdeCoreWebSite
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
 
+
+            services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Permission", policyBuilder =>
+                {
+                    policyBuilder.Requirements.Add(new PermissionAuthorizationRequirement());
+                });
+            });
+
             services.AddMvc();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>
             {
                 x.LoginPath = "/";
-            });            
+            });
+
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -61,6 +74,8 @@ namespace AsGozdeCoreWebSite
                 options.SlidingExpiration = true;
 
             });
+
+
 
         }
 
@@ -76,7 +91,7 @@ namespace AsGozdeCoreWebSite
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }           
+            }
 
             app.UseRequestLocalization();
 
@@ -87,6 +102,7 @@ namespace AsGozdeCoreWebSite
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

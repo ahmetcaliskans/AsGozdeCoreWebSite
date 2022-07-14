@@ -21,7 +21,7 @@ namespace Business.Concrete
 
         public IResult Add(DriverPaymentPlan driverPaymentPlan)
         {
-            IResult result = BusinessRules.Run(CheckIfdriverPaymentPlanNameExists(driverPaymentPlan.Id, driverPaymentPlan.DriverInformationId, driverPaymentPlan.PaymentDate));
+            IResult result = BusinessRules.Run(CheckIfdriverPaymentPlanNameExists(driverPaymentPlan.Id, driverPaymentPlan.DriverInformationId, driverPaymentPlan.PaymentDate, driverPaymentPlan.CollectionDefinitionType));
             if (result != null)
                 return result;
 
@@ -45,14 +45,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<DriverPaymentPlan>>(_driverPaymentPlanDal.GetList().ToList());
         }
 
-        public IDataResult<List<DriverPaymentPlan>> GetListByDriverInformationId(int driverInformationId)
+        public IDataResult<List<DriverPaymentPlan>> GetListByDriverInformationId(int driverInformationId, int collectionDefinitionType)
         {
-            return new SuccessDataResult<List<DriverPaymentPlan>>(_driverPaymentPlanDal.GetList(x=>x.DriverInformationId == driverInformationId).ToList());
+            return new SuccessDataResult<List<DriverPaymentPlan>>(_driverPaymentPlanDal.GetList(x=>x.DriverInformationId == driverInformationId && x.CollectionDefinitionType == collectionDefinitionType).ToList());
         }
 
         public IResult Update(DriverPaymentPlan driverPaymentPlan)
         {
-            IResult result = BusinessRules.Run(CheckIfdriverPaymentPlanNameExists(driverPaymentPlan.Id, driverPaymentPlan.DriverInformationId, driverPaymentPlan.PaymentDate));
+            IResult result = BusinessRules.Run(CheckIfdriverPaymentPlanNameExists(driverPaymentPlan.Id, driverPaymentPlan.DriverInformationId, driverPaymentPlan.PaymentDate, driverPaymentPlan.CollectionDefinitionType));
             if (result != null)
                 return result;
 
@@ -60,9 +60,9 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Updated);
         }        
 
-        private IResult CheckIfdriverPaymentPlanNameExists(int Id, int driverInformationId, DateTime driverPaymentPlanPaymentDate)
+        private IResult CheckIfdriverPaymentPlanNameExists(int Id, int driverInformationId, DateTime driverPaymentPlanPaymentDate, int driverPaymentPlanCollectionDefinitionType)
         {
-            var result = _driverPaymentPlanDal.GetList(x => x.Id != Id && x.DriverInformationId == driverInformationId  && x.PaymentDate.Date == driverPaymentPlanPaymentDate).Any();
+            var result = _driverPaymentPlanDal.GetList(x => x.Id != Id && x.DriverInformationId == driverInformationId  && x.PaymentDate.Date == driverPaymentPlanPaymentDate && x.CollectionDefinitionType == driverPaymentPlanCollectionDefinitionType).Any();
             if (result)
             {
                 return new ErrorResult(Messages.AlreadyExists);

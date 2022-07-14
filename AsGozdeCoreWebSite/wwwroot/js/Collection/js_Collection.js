@@ -170,7 +170,9 @@ function js_addCollectionDetail() {
 		Id: $('#txtId').val(),
 		PaymentTypeId: $('#selectPaymentType option:selected').val(),
 		CollectionDefinitionId: $('#selectCollectionDefinition option:selected').val(),
-		Amount: $('#txtAmount').val()
+		Amount: $('#txtAmount').val(),
+		PaidBySelf: chkKontrol('chkPaidBySelf'),
+		Hour: $('#txtHour').val()
 	};
 
 	$.ajax({
@@ -276,5 +278,44 @@ function js_print(data,baslik) {
 
 	return true;
 
+}
+
+/***** Tahsilat Tipi Değiştiğince mevcut tipin özelliklerine göre saat yada kendi ödeyebilir seçeneklerini gösteriyor yada gizliyorum. *****/
+function js_checkCollectionDefinitionInformations() {
+	var Id = document.getElementById("selectCollectionDefinition").value;
+	$.ajax({
+		async: true,
+		type: "POST",
+		url: "/Collection/GetCollectionDefinitionInformations",
+		data: { id: Id },
+		success: function (data) {
+			var result = data;
+			var resultSplit = result.split('/');
+			/** PayBySelf Kendi Ödeyebilir Özelliği varsa **/
+			if (resultSplit[0] == "True") {
+				document.getElementById("divPaidBySelf").removeAttribute("hidden");
+			}
+			else  {
+				document.getElementById("divPaidBySelf").setAttribute("hidden", "hidden");
+				document.getElementById("chkPaidBySelf").removeAttribute("checked");
+
+			}
+
+			if (resultSplit[1] == 50) {
+				document.getElementById("divHour").removeAttribute("hidden");
+			}
+			else {
+				$("#txtHour").val(0);
+				document.getElementById("divHour").setAttribute("hidden", "hidden");
+			}
+
+		},
+		error: function (err) {
+			if (err.responseText.indexOf('FK_') > -1)
+				mesajBox('mesaj', 'UYARI', 'Bu Tanım Kullanılıyor !', 'warning');
+			else
+				mesajBox('mesaj', 'UYARI', err.responseText, 'danger');
+		}
+	});
 }
 
