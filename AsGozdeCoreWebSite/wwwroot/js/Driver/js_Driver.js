@@ -613,6 +613,32 @@ function js_printApplicationForm() {
 	});
 }
 
+function js_getAllCollectionDetailsByDriverInformationId(Id) {
+    if (Id==null || Id<=0) {	
+
+		mesajBox('mesaj', 'UYARI', 'Önce Sürücü Adayı Kaydedilmeli !', 'warning');
+		return;	
+	}
+
+	$.ajax({
+		async: true,
+		type: "GET",
+		url: "/Driver/GetAllCollectionDetailsByDriverInformationId",
+		data: { driverId: Id },
+		contentType: "application/json; charset=utf-8",
+		dataType: "html",
+		success: function (data) {
+			var result = data;
+			$('#dataCollectionDetailListOfDriver').html("");
+			$('#dataCollectionDetailListOfDriver').html(result);
+			$('#CollectionDetailListOfDriver').modal('show');
+		},
+		error: function (err) {
+			mesajBox('mesaj', 'UYARI', err.html, 'warning');
+		}
+	});
+}
+
 
 
 

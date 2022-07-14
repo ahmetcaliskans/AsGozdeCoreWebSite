@@ -9,6 +9,7 @@ namespace DataAccess.Abstract
     public interface ICollectionDetailDal : IEntityRepository<CollectionDetail>
     {
         List<CollectionDetail> GetListWithDetailsByCollectionId(int collectionId);
+        List<CollectionDetail> GetListWithDetailsByDriverInformationId(int driverInformationId);
         CollectionDetail GetByIdWithDetails(int collectionDetailId);
     }
 }

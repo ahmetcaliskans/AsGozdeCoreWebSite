@@ -51,5 +51,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<CollectionDetail>(_collectionDetailDal.GetByIdWithDetails(collectionDetailId));
         }
+
+        public IDataResult<List<CollectionDetail>> GetListWithDetailsByDriverInformationId(int driverInformationId)
+        {
+            return new SuccessDataResult<List<CollectionDetail>>(_collectionDetailDal.GetListWithDetailsByDriverInformationId(driverInformationId));
+        }
     }
 }

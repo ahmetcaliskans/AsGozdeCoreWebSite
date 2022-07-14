@@ -349,6 +349,18 @@ namespace AsGozdeCoreWebSite.Controllers
             return PartialView("CollectionDetailList", collectionDetails);
         }
 
+        [HttpGet]
+        public IActionResult GetAllCollectionDetailsByDriverInformationId(int driverId)
+        {
+            var result = _collectionDetailService.GetListWithDetailsByDriverInformationId(driverId);
+            if (result!=null && result.Success)
+            {
+                return PartialView("CollectionDetailListOfDriver", result.Data);
+            }
+
+            return PartialView("CollectionDetailListOfDriver", result.Data);
+        }
+
         void fn_AddEditDriverCollectionDetail(CollectionDetail collectionDetail, int driverId, int collectionId)
         {
             if (collectionId == 0)

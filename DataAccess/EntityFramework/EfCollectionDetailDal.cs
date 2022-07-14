@@ -29,5 +29,14 @@ namespace DataAccess.EntityFramework
                 return result.ToList();
             }
         }
+
+        public List<CollectionDetail> GetListWithDetailsByDriverInformationId(int driverInformationId)
+        {
+            using (AsGozdeWebSiteDB context = new AsGozdeWebSiteDB())
+            {
+                var result = context.CollectionDetails.Include(x => x.PaymentType).Include(x => x.CollectionDefinition).Include(x=> x.Collection).Include(x=> x.Collection.DriverInformation).Where(x => x.Collection.DriverInformationId == driverInformationId);
+                return result.ToList();
+            }
+        }
     }
 }

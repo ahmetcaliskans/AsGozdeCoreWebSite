@@ -11,6 +11,7 @@ namespace Business.Abstract
         IDataResult<CollectionDetail> GetById(int collectionDetailId);
         IDataResult<CollectionDetail> GetByIdWithDetails(int collectionDetailId);
         IDataResult<List<CollectionDetail>> GetListWithDetailsByCollectionId(int collectionId);
+        IDataResult<List<CollectionDetail>> GetListWithDetailsByDriverInformationId(int driverInformationId);
         IResult Add(CollectionDetail collectionDetail);
         IResult Update(CollectionDetail collectionDetail);
         IResult Delete(CollectionDetail collectionDetail);
