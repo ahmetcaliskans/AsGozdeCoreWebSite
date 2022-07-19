@@ -20,14 +20,19 @@ namespace AsGozdeCoreWebSite.Controllers
         }
 
         [HttpGet]
+        public IActionResult ListOfDueCoursePayments()
+        {            
+            return View("ListOfDueCoursePayments");
+        }
+
         public IActionResult GetListOfDueCoursePayments()
         {
             var result = _sp_GetListOfDueCoursePaymentService.GetList(DateTime.Now.Date, Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
             if (result.Data != null)
             {
-                return View("ListOfDueCoursePayments", result.Data);
+                return Ok(result.Data);
             }
-            return View();
+            return Ok(result.Data);
         }
     }
 }

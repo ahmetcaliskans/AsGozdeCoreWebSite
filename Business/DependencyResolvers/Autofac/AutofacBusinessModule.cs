@@ -68,6 +68,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<Sp_GetListOfDriverInformationByOfficeIdManager>().As<Isp_GetListOfDriverInformationByOfficeIdService>();
             builder.RegisterType<Efsp_GetListOfDriverInformationByOfficeIdDal>().As<Isp_GetListOfDriverInformationByOfficeIdDal>();
 
+            builder.RegisterType<Sp_GetListOfCollectionByOfficeIdManager>().As<Isp_GetListOfCollectionByOfficeIdService>();
+            builder.RegisterType<Efsp_GetListOfCollectionByOfficeIdDal>().As<Isp_GetListOfCollectionByOfficeIdDal>();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

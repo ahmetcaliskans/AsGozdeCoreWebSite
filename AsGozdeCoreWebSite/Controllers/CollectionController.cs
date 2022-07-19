@@ -20,9 +20,11 @@ namespace AsGozdeCoreWebSite.Controllers
         private ICollectionDefinitionService _collectionDefinitionService;
         private IDriverInformationService _driverInformationService;
         private IOfficeService _officeService;
+        private Isp_GetListOfCollectionByOfficeIdService _sp_GetListOfCollectionByOfficeIdService;
 
         public CollectionController(ICollectionService collectionService, ICollectionDetailService collectionDetailService,IPaymentTypeService paymentTypeService, 
-            ICollectionDefinitionService collectionDefinitionService, IDriverInformationService driverInformationService, IOfficeService officeService)
+            ICollectionDefinitionService collectionDefinitionService, IDriverInformationService driverInformationService, IOfficeService officeService,
+            Isp_GetListOfCollectionByOfficeIdService sp_GetListOfCollectionByOfficeIdService)
         {
             _collectionService = collectionService;
             _collectionDetailService = collectionDetailService;
@@ -30,16 +32,28 @@ namespace AsGozdeCoreWebSite.Controllers
             _collectionDefinitionService = collectionDefinitionService;
             _driverInformationService = driverInformationService;
             _officeService = officeService;
+            _sp_GetListOfCollectionByOfficeIdService = sp_GetListOfCollectionByOfficeIdService;
         }
         public IActionResult Index()
         {
-            var result = _collectionService.GetListWithDetailsByOfficeId(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
-            if (result != null)
-            {
-                return View(result.Data.OrderByDescending(x => x.CollectionDate).ThenByDescending(x=>x.Id).ToList());
-            }
+            //var result = _collectionService.GetListWithDetailsByOfficeId(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
+            //if (result != null)
+            //{
+            //    return View(result.Data.OrderByDescending(x => x.CollectionDate).ThenByDescending(x=>x.Id).ToList());
+            //}
 
             return View();
+        }
+
+        public IActionResult GetListOfCollectionByOfficeId()
+        {
+            var result = _sp_GetListOfCollectionByOfficeIdService.GetList(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
+            if (result != null)
+            {
+                return Ok(result.Data);
+            }
+
+            return Ok(result.Data);
         }
 
         [HttpGet]

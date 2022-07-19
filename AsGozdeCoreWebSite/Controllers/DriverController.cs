@@ -44,7 +44,7 @@ namespace AsGozdeCoreWebSite.Controllers
             return View();
         }
                 
-        public IActionResult GetListOfDriverInformationByOfficeIdService()
+        public IActionResult GetListOfDriverInformationByOfficeId()
         {
             var result = _sp_GetListOfDriverInformationByOfficeIdService.GetList(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
             if (result != null)

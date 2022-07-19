@@ -1,27 +1,20 @@
-﻿@model List<Entities.Concrete.Session>
+﻿@model dynamic
+
+@{
+    var _sessions = Model.Sessions as List<Entities.Concrete.Session>;
+    var _idString = Model.Id;
+}
 
 <div class="col-md-4 my-2 my-md-0">
     <div class="d-flex align-items-center">
         <label class="mr-3 mb-0 d-none d-md-block">Dönem:</label>
-        <select class="form-control" id="kt_datatable_search_donem">
+        <select class="form-control" id="@_idString">
             <option value="">Hepsi</option>
-            @if (Model != null)
+            @if (_sessions != null)
             {
-
-                @foreach (var session in Model)
+                @foreach (var session in _sessions)
                 {
-
-                    @*if (session.Active)
-                    {
-                        <option selected="" value="@session.Name">@session.Name</option>
-                    }
-                    else
-                    {
-                        <option value="@session.Name">@session.Name</option>
-                    }*@
-
                     <option value="@session.Name">@session.Name</option>
-
                 }
 
             }

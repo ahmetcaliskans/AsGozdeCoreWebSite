@@ -25,11 +25,11 @@ var KTDatatableHtmlTableDemo2 = function () {
 		});
 		
 
-		$('#kt_datatable_search_donem').on('change', function () {
-			datatable.search($(this).val().toLowerCase(), 'Donem');
-		});
+		//$('#kt_datatable_search_donem').on('change', function () {
+		//	datatable.search($(this).val().toLowerCase(), 'Donem');
+		//});
 		
-		$('#kt_datatable_search_donem').selectpicker();
+		//$('#kt_datatable_search_donem').selectpicker();
 
 	};
 

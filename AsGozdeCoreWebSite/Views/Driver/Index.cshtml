@@ -108,14 +108,14 @@
                         <div class="row align-items-center">
                             <div class="col-md-4 my-2 my-md-0">
                                 <div class="input-icon">
-                                    <input type="text" class="form-control" placeholder="Ara..." id="datatableAjaxDriverInformations_search_query" />
+                                    <input type="text" class="form-control" oninput="this.value = this.value.replace('i','İ').replace('ö','Ö').replace('ü','Ü').replace('ç','Ç').replace('ş','Ş').toUpperCase()" placeholder="Ara..." id="datatableAjaxDriverInformation_search_query" />
                                     <span>
                                         <i class="flaticon2-search-1 text-muted"></i>
                                     </span>
                                 </div>
                             </div>
 
-                            @await Component.InvokeAsync("SessionSearchList")
+                            @await Component.InvokeAsync("SessionSearchList", new { id = "kt_datatable_search_driverInformationSessionName" })
                             
                         </div>
                     </div>
@@ -124,7 +124,7 @@
             <!--end::Search Form-->
             <!--end: Search Form-->
             <!--begin: Datatable-->
-            <div class="datatable datatable-bordered datatable-head-custom" id="datatableAjax_DriverInformations"></div>
+            <div class="datatable datatable-bordered datatable-head-custom" id="datatableAjax_DriverInformation"></div>
             <!--end: Datatable-->
         </div>
     </div>
@@ -170,6 +170,5 @@
 
     <script src="~/js/Driver/js_Driver.js"></script>
 
-    
     
 

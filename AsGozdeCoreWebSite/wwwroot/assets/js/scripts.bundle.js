@@ -5425,8 +5425,8 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 				var prevKeyword = '';
 				$(Plugin.getOption('search.input')).on('keyup', function(e) {
-					if (Plugin.getOption('search.onEnter') && e.which !== 13) return;
-					var keyword = $(this).val();
+                    if (Plugin.getOption('search.onEnter') && e.which !== 13) return;
+                    var keyword = $(this).val();
 					// prevent multiple search request on every button keyup
 					if (prevKeyword !== keyword) {
 						Plugin.search(keyword);
@@ -7812,8 +7812,8 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 					};
 
 					var search = $(Plugin.getOption('search.input')).val();
-					if (typeof search !== 'undefined' && search !== '') {
-						search = search.toLowerCase();
+                    if (typeof search !== 'undefined' && search !== '') {
+                        search = search.toLowerCase();
 						datatable.dataSet = $.grep(datatable.dataSet, nestedSearch);
 						// remove generalSearch as we don't need this for next columns filter
 						delete params.query[Plugin.getGeneralSearchKey()];

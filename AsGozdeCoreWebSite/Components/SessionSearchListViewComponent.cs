@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,20 @@ namespace AsGozdeCoreWebSite.Components
             _sessionService = sessionService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
-        {
+        public async Task<IViewComponentResult> InvokeAsync(string id)
+        {            
+            dynamic dynamicResult = new System.Dynamic.ExpandoObject();
+            dynamicResult.Sessions = new List<Session>();
+            dynamicResult.Id = id;
             var result = _sessionService.GetList();
-            return View("SessionSearchList", result.Data.OrderByDescending(x => x.Year).ThenByDescending(x => x.Sequence).ToList());
+            if (result.Success)
+            {
+                dynamicResult.Sessions = result.Data.OrderByDescending(x => x.Year).ThenByDescending(x => x.Sequence).ToList();
+                return View("SessionSearchList", dynamicResult);
+            }
+
+            return View("SessionSearchList", dynamicResult);
+
         }
     }
 }
