@@ -151,7 +151,6 @@
         <table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable">
             <thead>
                 <tr>
-                    <th title="Id">Id</th>
                     <th title="Tahsilat Tanımı Adı">Tahsilat Tanımları Adı</th>
                     <th title="Açıklama">Açıklama</th>
                     <th title="Sıra">Sıra</th>
@@ -159,19 +158,19 @@
                     <th title="Kendi Ödeyebilir">Kendi Ödeyebilir</th>
                     <th title="Aktif">Aktif</th>
                     <th title="İşlem" colspan="2">Islem</th>
+                    <th title="Id">Id</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var dr in Model)
                 {
                 <tr>
-                    <td>@dr.Id</td>
                     <td>@dr.Name</td>
                     <td>@dr.Description</td>
                     <td>@dr.Sequence</td>
-                    <td>@dr.IsSequence</td>
-                    <td>@dr.PayBySelf</td>
-                    <td>@dr.Active</td>
+                    <td>@if (dr.IsSequence)@string.Format("Evet") else @string.Format("Hayır")</td>
+                    <td>@if (dr.PayBySelf)@string.Format("Evet") else @string.Format("Hayır")</td>
+                    <td>@if (dr.Active)@string.Format("Evet") else @string.Format("Hayır")</td>
                     <td colspan="2">
                         <div with="50">
                             <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="modal" data-target="#NewCollectionDefinition" title="Düzenle" onclick="js_getCollectionDefinitionById(@dr.Id)">
@@ -206,6 +205,7 @@
                             </a>
                         </div>
                     </td>
+                    <td>@dr.Id</td>
 
                 </tr>
                 }

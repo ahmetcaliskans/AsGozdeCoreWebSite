@@ -89,6 +89,11 @@ var KTInputmask = function () {
             'digitsOptional': false,
             'placeholder': '0,00'
         });
+
+
+        $('input.justNumber').on('input', function () {
+            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+        });
     }
 
     return {

@@ -9,7 +9,8 @@ var KTDatatableHtmlTableDemo = function() {
 
 		var datatable = $('#kt_datatable').KTDatatable({
 			data: {
-				saveState: false
+				saveState: false,
+				pageSize: 10
 			},
 			search: {
 				input: $('#kt_datatable_search_query'),
@@ -91,7 +92,15 @@ var KTDatatableHtmlTableDemo = function() {
 					field: 'Islem',
 					autoHide: false,
 					sortable: false
-                }
+				},
+				{
+					field: 'Bakiye',
+					type: 'number'
+				},
+				{
+					field: 'Kurs Ucreti',
+					type: 'number'
+				}
 			],
 		});
         

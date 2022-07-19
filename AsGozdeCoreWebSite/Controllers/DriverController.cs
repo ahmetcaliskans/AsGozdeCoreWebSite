@@ -19,13 +19,15 @@ namespace AsGozdeCoreWebSite.Controllers
         private IDriverPaymentPlanService _driverPaymentPlanService;
         private Isp_GetPaymentService _sp_GetPaymentService;
         private Isp_GetSequentialPaymentService _sp_GetSequentialPaymentService;
+        private Isp_GetListOfDriverInformationByOfficeIdService _sp_GetListOfDriverInformationByOfficeIdService;
         private ICollectionService _collectionService;
         private ICollectionDetailService _collectionDetailService;
         private ICollectionDefinitionService _collectionDefinitionService;
 
         public DriverController(IDriverInformationService driverInformationService, IDriverPaymentPlanService driverPaymentPlanService, 
             Isp_GetPaymentService sp_GetPaymentService, Isp_GetSequentialPaymentService sp_GetSequentialPaymentService, ICollectionService collectionService, 
-            ICollectionDetailService collectionDetailService, ICollectionDefinitionService collectionDefinitionService)
+            ICollectionDetailService collectionDetailService, ICollectionDefinitionService collectionDefinitionService,
+            Isp_GetListOfDriverInformationByOfficeIdService sp_GetListOfDriverInformationByOfficeIdService)
         {
             _driverInformationService = driverInformationService;
             _driverPaymentPlanService = driverPaymentPlanService;
@@ -34,19 +36,24 @@ namespace AsGozdeCoreWebSite.Controllers
             _collectionService = collectionService;
             _collectionDetailService = collectionDetailService;
             _collectionDefinitionService = collectionDefinitionService;
+            _sp_GetListOfDriverInformationByOfficeIdService = sp_GetListOfDriverInformationByOfficeIdService;
         }
 
         public IActionResult Index()
         {
-            var result = _driverInformationService.GetListWithDetails(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
-            if (result != null)
-            {
-                return View(result.Data.OrderByDescending(x=> x.Session.Year).ThenByDescending(x=>x.Session.Sequence).ThenByDescending(x=>x.Id).ToList());
-            }
-
             return View();
         }
+                
+        public IActionResult GetListOfDriverInformationByOfficeIdService()
+        {
+            var result = _sp_GetListOfDriverInformationByOfficeIdService.GetList(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
+            if (result != null)
+            {
+                return Ok(result.Data);
+            }
 
+            return Ok(result.Data);
+        }
 
         [HttpGet]
         public IActionResult GetDriverByIdWithDetails(int id)

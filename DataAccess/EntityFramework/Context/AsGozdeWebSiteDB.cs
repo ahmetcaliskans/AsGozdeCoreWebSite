@@ -35,6 +35,7 @@ namespace DataAccess.EntityFramework.Context
         public virtual DbSet<sp_GetListOfDueCoursePayment> Sp_GetListOfDueCoursePayments { get; set; }
         public virtual DbSet<sp_GetPayment> Sp_GetPayments { get; set; }
         public virtual DbSet<sp_GetSequentialPayment> Sp_GetSequentialPayments { get; set; }
+        public virtual DbSet<sp_GetListOfDriverInformationByOfficeId> Sp_GetListOfDriverInformationByOfficeIds { get; set; }
 
         [DbFunction("fn_GetDriverBalance", "dbo")]
         public decimal fn_GetDriverBalance(int DriverId) => throw new NotSupportedException();
@@ -48,6 +49,7 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<sp_GetListOfDueCoursePayment>().HasNoKey();
             modelBuilder.Entity<sp_GetPayment>().HasNoKey();
             modelBuilder.Entity<sp_GetSequentialPayment>().HasNoKey();
+            modelBuilder.Entity<sp_GetListOfDriverInformationByOfficeId>().HasNoKey();
 
 
             ///User

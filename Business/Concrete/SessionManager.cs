@@ -34,7 +34,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Session>> GetList()
         {
-            return new SuccessDataResult<List<Session>>(_SessionDal.GetList().ToList());
+            return new SuccessDataResult<List<Session>>(_SessionDal.GetList().ToList().OrderByDescending(x=>x.Year).ThenByDescending(x=>x.Sequence).ToList());
         }
 
         [ValidationAspect(typeof(SessionValidator))]

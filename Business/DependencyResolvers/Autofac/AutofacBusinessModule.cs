@@ -65,6 +65,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<Sp_GetSequentialPaymentManager>().As<Isp_GetSequentialPaymentService>();
             builder.RegisterType<Efsp_GetSequentialPaymentDal>().As<Isp_GetSequentialPaymentDal>();
 
+            builder.RegisterType<Sp_GetListOfDriverInformationByOfficeIdManager>().As<Isp_GetListOfDriverInformationByOfficeIdService>();
+            builder.RegisterType<Efsp_GetListOfDriverInformationByOfficeIdDal>().As<Isp_GetListOfDriverInformationByOfficeIdDal>();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

@@ -33,7 +33,6 @@ namespace AsGozdeCoreWebSite.Controllers
             return View(result.Data);
         }
 
-
         [HttpGet]
         public IActionResult GetSessionById(int id)
         {

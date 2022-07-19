@@ -4,14 +4,16 @@ using DataAccess.EntityFramework.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AsGozdeWebSiteDB))]
-    partial class AsGozdeWebSiteDBModelSnapshot : ModelSnapshot
+    [Migration("20220718134357_sp_getListOfDriverInformationByOfficeIdprocedureAdded")]
+    partial class sp_getListOfDriverInformationByOfficeIdprocedureAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -763,9 +765,9 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Collection", b =>
                 {
                     b.HasOne("Entities.Concrete.DriverInformation", "DriverInformation")
-                        .WithMany("Collections")
+                        .WithMany()
                         .HasForeignKey("DriverInformationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.Concrete.Office", "Office")
@@ -831,21 +833,21 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.DriverInformation", b =>
                 {
                     b.HasOne("Entities.Concrete.Branch", "Branch")
-                        .WithMany("DriverInformations")
+                        .WithMany()
                         .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.Concrete.Office", "Office")
-                        .WithMany("DriverInformations")
+                        .WithMany()
                         .HasForeignKey("OfficeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.Concrete.Session", "Session")
-                        .WithMany("DriverInformations")
+                        .WithMany()
                         .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Branch");
@@ -858,17 +860,12 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.DriverPaymentPlan", b =>
                 {
                     b.HasOne("Entities.Concrete.DriverInformation", "DriverInformation")
-                        .WithMany("DriverPaymentPlans")
+                        .WithMany()
                         .HasForeignKey("DriverInformationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DriverInformation");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Branch", b =>
-                {
-                    b.Navigation("DriverInformations");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Collection", b =>
@@ -888,28 +885,14 @@ namespace DataAccess.Migrations
                     b.Navigation("CollectionDefinitions");
                 });
 
-            modelBuilder.Entity("Entities.Concrete.DriverInformation", b =>
-                {
-                    b.Navigation("Collections");
-
-                    b.Navigation("DriverPaymentPlans");
-                });
-
             modelBuilder.Entity("Entities.Concrete.Office", b =>
                 {
                     b.Navigation("Collections");
-
-                    b.Navigation("DriverInformations");
                 });
 
             modelBuilder.Entity("Entities.Concrete.PaymentType", b =>
                 {
                     b.Navigation("CollectionDetails");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Session", b =>
-                {
-                    b.Navigation("DriverInformations");
                 });
 #pragma warning restore 612, 618
         }
