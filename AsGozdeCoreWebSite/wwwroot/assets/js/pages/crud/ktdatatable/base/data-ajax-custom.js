@@ -228,6 +228,107 @@ var KTDatatableRemoteAjaxDriverInformations = function() {
     };
 }();
 
+var KTDatatableRemoteAjaxDriverInformationSelects = function () {
+    // Private functions
+
+    // basic demo
+    var demo = function () {
+
+        var datatable = $('#datatableAjax_DriverInformationSelect').KTDatatable({
+            // datasource definition
+            data: {
+                type: 'remote',
+                source: {
+                    read: {
+                        url: window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/Driver/GetListOfDriverInformationByOfficeId',
+                        // sample custom headers
+                        //headers: {'x-my-custom-header': 'some value', 'x-test-header': 'the value'},
+                        map: function (raw) {
+                            // sample data mapping
+                            var dataSet = raw;
+                            if (typeof raw.data !== 'undefined') {
+                                dataSet = raw.data;
+                            }
+                            return dataSet;
+                        },
+                    },
+                },
+                pageSize: 5,
+                serverPaging: false,
+                serverFiltering: false,
+                serverSorting: false,
+                autoColumns: false,
+                saveState: false,
+            },
+
+            // layout definition
+            layout: {
+                scroll: false,
+                footer: false,
+            },
+
+            // column sorting
+            sortable: true,
+
+            pagination: true,
+
+            search: {
+                input: $('#datatableAjaxDriverInformationSelect_search_query'),
+                key: 'generalSearch'
+            },
+
+            // columns definition
+            columns: [{
+                field: 'id',
+                title: 'Sec',
+                sortable: false,
+                autoHide: false,
+                width: 50,
+                textAlign: 'center',
+                template: function (row) {
+                    return '\
+                        <button class="btn btn-sm btn-clean" title="Sec" onclick="js_addDriverById('+ row.id + ')">\
+                            <i class="flaticon2-add" ></i > Sec\
+                        </button >\
+                    ';
+                },
+            }, {
+                field: 'nameSurname',
+                title: 'Adi Soyadi',
+            }, {
+                field: 'identityNo',
+                title: 'TC Kimlik No',
+            }, {
+                field: 'phone1',
+                title: 'Telefon 1',
+            }, {
+                field: 'sessionName',
+                title: 'Donem',
+            }, {
+                field: 'branchName',
+                title: 'Brans',
+            }],
+
+
+
+        });
+
+
+        $('#kt_datatable_search_driverInformationSelectSessionName').on('change', function () {
+            datatable.search($(this).val().toUpperCase(), 'sessionName');
+        });
+
+        $('#kt_datatable_search_driverInformationSelectSessionName').selectpicker();
+    };
+
+    return {
+        // public functions
+        init: function () {
+            demo();
+        },
+    };
+}();
+
 var KTDatatableRemoteAjaxCollections = function () {
     // Private functions
 
@@ -417,7 +518,7 @@ var KTDatatableRemoteAjaxListOfDueCoursePayments = function () {
                 serverSorting: false,
                 autoColumns: false,
                 saveState: false,
-            },
+            },            
 
             // layout definition
             layout: {
@@ -528,7 +629,7 @@ var KTDatatableRemoteAjaxListOfDueCoursePayments = function () {
             datatable.search($(this).val().toUpperCase(), 'sessionName');
         });
 
-        $('#kt_datatable_search_listOfDueCoursePaymentSessionName').selectpicker();
+        $('#kt_datatable_search_listOfDueCoursePaymentSessionName').selectpicker();        
     };
 
     return {
@@ -541,6 +642,7 @@ var KTDatatableRemoteAjaxListOfDueCoursePayments = function () {
 
 jQuery(document).ready(function() {
     KTDatatableRemoteAjaxDriverInformations.init();
+    KTDatatableRemoteAjaxDriverInformationSelects.init();
     KTDatatableRemoteAjaxCollections.init();
     KTDatatableRemoteAjaxListOfDueCoursePayments.init();
 });

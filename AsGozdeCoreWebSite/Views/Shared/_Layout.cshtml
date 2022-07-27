@@ -144,14 +144,6 @@
                                                 <span class="menu-text">Sürücü Adayı Listesi</span>
                                             </a>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
-                                            <a href="" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Sertifika İşlemleri</span>
-                                            </a>
-                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -194,15 +186,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text">Özel Ders İşlemleri</span>
-                                            </a>
-                                        </li>
-                                        <li class="menu-item" aria-haspopup="true">
-                                            <a href="#" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Gider Girişi</span>
+                                                <span class="menu-text">Gider Listesi</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -210,7 +194,7 @@
                             </li>
                             <!--/Ödeme İşlemleri-->
                             <!--Raporlar-->
-                            <li class="@((activeController == "Report" || activeController == "Report2") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
+                            <li class="@((activeController == "Report") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -235,14 +219,14 @@
                                             </span>
                                         </li>
                                         <li class="menu-item" aria-haspopup="true">
-                                            <a href="" class="menu-link">
+                                            <a href="/Report/CashReport" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
                                                 <span class="menu-text">Kasa Raporu</span>
                                             </a>
                                         </li>
-                                        <li class="@((activeController == "Report") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                        <li class="menu-item" aria-haspopup="true">
                                             <a href="/Report/ListOfDueCoursePayments" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
@@ -523,6 +507,10 @@
     <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/file-upload/image-input.js"></script>
     <!--end::Page Scripts-->
     <script charset="utf-8" type="text/javascript" src="~/js/site.js"></script>
+
+    <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="~/assets/js/pages/crud/datatables/extensions/datatables-buttons-custom.js"></script>
 
 
     @RenderSection("Scripts", required: false)

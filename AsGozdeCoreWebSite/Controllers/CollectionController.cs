@@ -312,13 +312,13 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]
         public IActionResult GetDriverInformationsWithDetails()
         {
-            var result = _driverInformationService.GetListWithDetails(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
-            if (result.Success)
-            {
-                return PartialView("ListDriverInformation", result.Data);
-            }
+            //var result = _driverInformationService.GetListWithDetails(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
+            //if (result.Success)
+            //{
+            //    return PartialView("ListDriverInformation", result.Data);
+            //}
 
-            return PartialView("ListDriverInformation", result.Data);
+            return PartialView("ListDriverInformation");
         }
 
         [HttpGet]

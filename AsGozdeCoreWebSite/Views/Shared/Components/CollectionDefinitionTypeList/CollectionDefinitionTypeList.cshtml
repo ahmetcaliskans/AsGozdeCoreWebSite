@@ -5,6 +5,12 @@
     <label class="col-form-label col-lg-3 col-xl-3">Tipi</label>
     <div class="col-lg-9 col-xl-9">
         <select class="form-control is-valid" name="selectCollectionDefinitionType" id="selectCollectionDefinitionType">
+
+            @if ((int)Model.SelectedId == -99)
+            {
+                <option selected="" value="0">Hepsi</option>
+            }
+
             @foreach (var dr in Model.CollectionDefinitionType as List<Entities.Concrete.CollectionDefinitionType>)
             {
 

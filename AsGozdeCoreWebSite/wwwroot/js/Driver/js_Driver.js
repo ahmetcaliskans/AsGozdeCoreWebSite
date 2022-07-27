@@ -2,7 +2,6 @@
 function js_getDriverByIdWithDetails(Id) {
 	$('#dataDriver').html("");
 
-	alert('Deneme');
 
 	$.ajax({
 		async: true,

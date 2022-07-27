@@ -1,6 +1,6 @@
-﻿@model List<Entities.Concrete.DriverInformation>
+﻿
 
-<script src="~/assets/js/pages/crud/ktdatatable/base/html-table2.js"></script>
+<script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/ktdatatable/base/data-ajax-custom.js"></script>
 
 <!--begin: Search Form-->
 <!--begin::Search Form-->
@@ -10,14 +10,14 @@
             <div class="row align-items-center">
                 <div class="col-md-4 my-2 my-md-0">
                     <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="Ara..." id="kt_datatable_search_query2" />
+                        <input type="text" class="form-control" oninput="this.value = this.value.replace('i','İ').replace('ö','Ö').replace('ü','Ü').replace('ç','Ç').replace('ş','Ş').toUpperCase()" placeholder="Ara..." id="datatableAjaxDriverInformationSelect_search_query" />
                         <span>
                             <i class="flaticon2-search-1 text-muted"></i>
                         </span>
                     </div>
                 </div>
 
-                @await Component.InvokeAsync("SessionSearchList")
+                @await Component.InvokeAsync("SessionSearchList", new { id = "kt_datatable_search_driverInformationSelectSessionName" })
 
             </div>
         </div>
@@ -26,45 +26,5 @@
 <!--end::Search Form-->
 <!--end: Search Form-->
 <!--begin: Datatable-->
-<table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable2">
-    <thead class="datatable-head">
-        <tr>
-            <th title="Seç">Seç</th>
-            <th title="Adı">Adı</th>
-            <th title="Soyadı">Soyadı</th>
-            <th title="TC Kimlik No">TC Kimlik No</th>
-            <th title="Donem">Donem</th>
-            <th title="Branş">Branş</th>
-            <th title="Telefon 1">Telefon 1</th>
-            <th title="Şube">Şube</th>
-            <th title="Kurs Ücreti">Kurs Ücreti</th>
-            <th title="Id">Id</th>
-        </tr>
-    </thead>
-    <tbody class="datatable-body">
-        @foreach (var dr in Model)
-        {
-            <tr>
-                <td>
-                    <div width="50">
-                        <button class="btn btn-sm btn-clean" title="Seç" onclick="js_addDriverById(@dr.Id)">
-                            <i class="flaticon2-add"></i> Seç
-                        </button>
-                    </div>
-                </td>
-                <td>@dr.Name</td>
-                <td>@dr.Surname</td>
-                <td>@dr.IdentityNo</td>
-                <td>@dr.Session.Name - @dr.Session.Year-@dr.Session.Sequence</td>
-                <td>@dr.Branch.Name</td>
-                <td>@dr.Phone1</td>
-                <td>@dr.Office.Name</td>
-                <td>@string.Format("{0:n2}", @dr.CourseFee)</td>
-                <td>@dr.Id</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="datatable datatable-bordered datatable-head-custom" id="datatableAjax_DriverInformationSelect"></div>
 <!--end: Datatable-->
-
-

@@ -8,6 +8,11 @@
             @if (Model.Session != null)
             {
 
+                @if ((int)Model.SelectedId == -99)
+                {
+                    <option selected="" value="0">Hepsi</option>
+                }
+
                 @foreach (var session in Model.Session as List<Entities.Concrete.Session>)
                 {
 

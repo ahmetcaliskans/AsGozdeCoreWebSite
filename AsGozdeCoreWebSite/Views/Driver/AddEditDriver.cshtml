@@ -25,54 +25,64 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            <a href="/Driver/Index" class="btn btn-light-primary font-weight-bolder mr-2">
+            <a href="/Driver/Index" class="btn btn-light font-weight-bolder mr-2">
                 <i class="ki ki-long-arrow-back icon-sm"></i>
                 Geri
             </a>
 
             @if (_driverInformation != null && _driverInformation.Id > 0)
             {
-            
-            <a href="javascript:;" class="btn btn-light-warning font-weight-bolder mr-2" onclick="js_getAllCollectionDetailsByDriverInformationId(@_driverInformation.Id)">
-                <i class="ki ki-bold-sort icon-sm"></i>
-                Tahsilat Listesi
-            </a>
 
-            <div class="btn-group">
-                <button type="button" class="btn btn-secondary font-weight-bolder">
-                    <i class="ki ki-long-arrow-down icon-sm"></i>
-                    Yazdır
-                </button>
-                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                </button>
-                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                    <ul class="nav nav-hover flex-column">
-                        <li class="nav-item">
-                            <a href="javascript:;" class="nav-link" onclick="js_printApplicationForm()">
-                                <!--Öncesinde Kaydetme İşlemi Yapılacak-->
-                                <i class="nav-icon flaticon2-print"></i>
-                                <span class="nav-text">Müracaat Formu</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:;" class="nav-link" onclick="js_printAddressForm()">
-                                <!--Öncesinde Kaydetme İşlemi Yapılacak-->
-                                <i class="nav-icon flaticon2-print"></i>
-                                <span class="nav-text">Adres Beyan Formu</span>
-                            </a>
-                        </li>
-                    </ul>
+                <a href="javascript:;" class="btn btn-light-warning font-weight-bolder mr-2" onclick="js_getAllCollectionDetailsByDriverInformationId(@_driverInformation.Id)">
+                    <i class="ki ki-bold-sort icon-sm"></i>
+                    Tahsilat Listesi
+                </a>
+
+                <div class="dropdown dropdown-inline">
+                    <a class="btn btn-secondary font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="svg-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <path d="M16,17 L16,21 C16,21.5522847 15.5522847,22 15,22 L9,22 C8.44771525,22 8,21.5522847 8,21 L8,17 L5,17 C3.8954305,17 3,16.1045695 3,15 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,15 C21,16.1045695 20.1045695,17 19,17 L16,17 Z M17.5,11 C18.3284271,11 19,10.3284271 19,9.5 C19,8.67157288 18.3284271,8 17.5,8 C16.6715729,8 16,8.67157288 16,9.5 C16,10.3284271 16.6715729,11 17.5,11 Z M10,14 L10,20 L14,20 L14,14 L10,14 Z" fill="#000000" />
+                                    <rect fill="#000000" opacity="0.3" x="8" y="2" width="8" height="2" rx="1" />
+                                </g>
+                            </svg>
+                        </span>Yazdır
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                        <ul class="nav nav-hover flex-column">
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link" onclick="js_printApplicationForm()">
+                                    <!--Öncesinde Kaydetme İşlemi Yapılacak-->
+                                    <i class="nav-icon flaticon2-print"></i>
+                                    <span class="nav-text">Müracaat Formu</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link" onclick="js_printAddressForm()">
+                                    <!--Öncesinde Kaydetme İşlemi Yapılacak-->
+                                    <i class="nav-icon flaticon2-print"></i>
+                                    <span class="nav-text">Adres Beyan Formu</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
             }
             &nbsp;
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary font-weight-bolder">
-                    <i class="ki ki-check icon-sm"></i>
-                    Kaydet
-                </button>
-                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                </button>
+            <div class="dropdown dropdown-inline">
+                <a class="btn btn-success font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="svg-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <polygon points="0 0 24 0 24 24 0 24" />
+                                <path d="M17,4 L6,4 C4.79111111,4 4,4.7 4,6 L4,18 C4,19.3 4.79111111,20 6,20 L18,20 C19.2,20 20,19.3 20,18 L20,7.20710678 C20,7.07449854 19.9473216,6.94732158 19.8535534,6.85355339 L17,4 Z M17,11 L7,11 L7,4 L17,4 L17,11 Z" fill="#000000" fill-rule="nonzero" />
+                                <rect fill="#000000" opacity="0.3" x="12" y="4" width="3" height="5" rx="0.5" />
+                            </g>
+                        </svg>
+                    </span>Kaydet
+                </a>
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                     <ul class="nav nav-hover flex-column">
                         <li class="nav-item">
@@ -329,7 +339,7 @@
                             </a>
                             <!--end::Button-->
                             <!--begin::Button-->
-                            <a href="javascript:;" class="btn btn-success font-weight-bolder" data-toggle="modal" data-target="#NewDriverPaymentPlan" onclick="js_getDriverPaymentPlanById(0,10)">
+                            <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#NewDriverPaymentPlan" onclick="js_getDriverPaymentPlanById(0,10)">
                                 <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
                                 <span class="svg-icon svg-icon-md">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
@@ -467,7 +477,7 @@
                             </a>
                             <!--end::Button-->
                             <!--begin::Button-->
-                            <a href="javascript:;" class="btn btn-success font-weight-bolder" data-toggle="modal" data-target="#NewDriverPaymentPlan" onclick="js_getDriverPaymentPlanById(0,11)">
+                            <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#NewDriverPaymentPlan" onclick="js_getDriverPaymentPlanById(0,11)">
                                 <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
                                 <span class="svg-icon svg-icon-md">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
@@ -557,7 +567,7 @@
                         <!--begin::Group-->
                         <div class="form-group row">
                             <!--begin::Button-->
-                            <a href="javascript:;" class="btn btn-success font-weight-bolder" data-toggle="modal" data-target="#NewDriverCollectionDetail" onclick="js_getDriverCollectionDetailByIdWithDetails(0, '0',@_sp_GetSequentialPaymentsPrivateLesson.FirstOrDefault().CollectionDefinitionId, @_sp_GetSequentialPaymentsPrivateLesson.FirstOrDefault().CollectionDefinitionTypeId)">
+                            <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#NewDriverCollectionDetail" onclick="js_getDriverCollectionDetailByIdWithDetails(0, '0',@_sp_GetSequentialPaymentsPrivateLesson.FirstOrDefault().CollectionDefinitionId, @_sp_GetSequentialPaymentsPrivateLesson.FirstOrDefault().CollectionDefinitionTypeId)">
                                 <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
                                 <span class="svg-icon svg-icon-md">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
@@ -621,7 +631,7 @@
             <div class="modal-body" id="dataDriverPaymentPlan"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="js_addDriverPaymentPlan()">Kaydet</button>
+                <button type="button" class="btn btn-success font-weight-bold" onclick="js_addDriverPaymentPlan()">Kaydet</button>
             </div>
         </div>
     </div>
@@ -640,7 +650,7 @@
             <div class="modal-body" id="dataHirePurchase"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="js_doHirePurchase()">Taksitlendir(Kaydet)</button>
+                <button type="button" class="btn btn-success font-weight-bold" onclick="js_doHirePurchase()">Taksitlendir(Kaydet)</button>
             </div>
         </div>
     </div>
@@ -659,7 +669,7 @@
             <div class="modal-body" id="dataDriverCollectionDetail"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-                <button type="button" class="btn btn-primary font-weight-bold" onclick="js_addEditDriverCollectionDetail()">Kaydet</button>
+                <button type="button" class="btn btn-success font-weight-bold" onclick="js_addEditDriverCollectionDetail()">Kaydet</button>
             </div>
         </div>
     </div>

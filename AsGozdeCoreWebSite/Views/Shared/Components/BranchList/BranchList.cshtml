@@ -5,6 +5,11 @@
     <label class="col-form-label col-lg-3 col-xl-3">Branş</label>
     <div class="col-lg-9 col-xl-9">
         <select class="form-control selectpicker" name="selectBranch" id="selectBranch">
+            @if ((int)Model.SelectedId == -99)
+            {
+                <option selected="" value="0" >Hepsi</option>
+            }
+
             @if (Model.Branch != null)
             {
 
