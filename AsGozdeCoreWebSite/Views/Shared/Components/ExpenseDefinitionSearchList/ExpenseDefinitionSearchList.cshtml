@@ -1,0 +1,23 @@
+﻿@model dynamic
+
+@{
+    var _expenseDefinitions = Model.ExpenseDefinitions as List<Entities.Concrete.ExpenseDefinition>;
+    var _idString = Model.Id;
+}
+
+<div class="col-md-4 my-2 my-md-0">
+    <div class="d-flex align-items-center">
+        <label class="mr-3 mb-0 d-none d-md-block">Gider Tipi:</label>
+        <select class="form-control" id="@_idString">
+            <option value="">Hepsi</option>
+            @if (_expenseDefinitions != null)
+            {
+            @foreach (var expenseDefinition in _expenseDefinitions)
+                {
+            <option value="@expenseDefinition.Name">@expenseDefinition.Name</option>
+                }
+
+            }
+        </select>
+    </div>
+</div>

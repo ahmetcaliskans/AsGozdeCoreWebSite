@@ -1,0 +1,75 @@
+﻿@model Entities.Concrete.ExpenseDefinition
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div style="margin:5px 5px  5px 5px">
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Id</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtId" type="number" disabled="disabled" value="@if (Model != null) @Model.Id">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Gider Tanımı Adı</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtName" type="text" placeholder="Gider Tanımı Adı" value="@if (Model != null) @Model.Name">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Açıklama</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtDescription" type="text" placeholder="Açıklama" value="@if (Model != null) @Model.Description">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 col-xl-9">
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkIsFixtureCanBeSelected" @Html.Raw((Model != null) ? (((Model.IsFixtureCanBeSelected) ? "checked" : "")) : "")>
+                        <span></span> Demirbaş Seçilebilir
+                    </label>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 col-xl-9">
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkIsFixtureSelectionRequired" @Html.Raw((Model != null) ? (((Model.IsFixtureSelectionRequired) ? "checked" : "")) : "")>
+                        <span></span> Demirbaş Seçimi Zorunlu
+                    </label>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 col-xl-9">
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkIsPersonnelCanBeSelected" @Html.Raw((Model != null) ? (((Model.IsPersonnelCanBeSelected) ? "checked" : "")) : "")>
+                        <span></span> Personel Seçilebilir
+                    </label>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 col-xl-9">
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkIsPersonnelSelectionRequired" @Html.Raw((Model != null) ? (((Model.IsPersonnelSelectionRequired) ? "checked" : "")) : "")>
+                        <span></span> Personel Seçimi Zorunlu
+                    </label>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 col-xl-9">
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkActive" @Html.Raw((Model != null) ? (((Model.Active) ? "checked" : "")) : "checked")>
+                        <span></span> Aktif
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

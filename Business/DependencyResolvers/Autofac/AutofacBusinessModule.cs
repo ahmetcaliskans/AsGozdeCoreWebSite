@@ -55,6 +55,18 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<CollectionDetailManager>().As<ICollectionDetailService>();
             builder.RegisterType<EfCollectionDetailDal>().As<ICollectionDetailDal>();
+            
+            builder.RegisterType<ExpenseManager>().As<IExpenseService>();
+            builder.RegisterType<EfExpenseDal>().As<IExpenseDal>();
+
+            builder.RegisterType<ExpenseDefinitionManager>().As<IExpenseDefinitionService>();
+            builder.RegisterType<EfExpenseDefinitionDal>().As<IExpenseDefinitionDal>();
+
+            builder.RegisterType<FixtureDefinitionManager>().As<IFixtureDefinitionService>();
+            builder.RegisterType<EfFixtureDefinitionDal>().As<IFixtureDefinitionDal>();
+
+            builder.RegisterType<PersonnelDefinitionManager>().As<IPersonnelDefinitionService>();
+            builder.RegisterType<EfPersonnelDefinitionDal>().As<IPersonnelDefinitionDal>();
 
             builder.RegisterType<Sp_GetListOfDueCoursePaymentManager>().As<Isp_GetListOfDueCoursePaymentService>();
             builder.RegisterType<Efsp_GetListOfDueCoursePaymentDal>().As<Isp_GetListOfDueCoursePaymentDal>();
@@ -71,11 +83,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<Sp_GetListOfCollectionByOfficeIdManager>().As<Isp_GetListOfCollectionByOfficeIdService>();
             builder.RegisterType<Efsp_GetListOfCollectionByOfficeIdDal>().As<Isp_GetListOfCollectionByOfficeIdDal>();
 
-            builder.RegisterType<Sp_rCashReport1Manager>().As<Isp_rCashReport1Service>();
-            builder.RegisterType<Efsp_rCashReport1Dal>().As<Isp_rCashReport1Dal>();
-
-            builder.RegisterType<Sp_rCashReport1DetailCollectionManager>().As<Isp_rCashReport1DetailCollectionService>();
-            builder.RegisterType<Efsp_rCashReport1DetailCollectionDal>().As<Isp_rCashReport1DetailCollectionDal>();
+            builder.RegisterType<ReportManager>().As<IReportService>();
+            builder.RegisterType<EfReportDal>().As<IReportDal>();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

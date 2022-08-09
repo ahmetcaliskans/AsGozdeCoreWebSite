@@ -1,0 +1,63 @@
+﻿@model Entities.Concrete.Expense
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div style="margin:5px 5px  5px 5px">
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Id</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtId" type="number" disabled="disabled" value="@if (Model != null) @Model.Id">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Evrak Seri No</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtId" disabled="disabled" value="@if (Model != null) @Model.DocumentNo">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label">Gider Tarihi</label>
+                <div class="col-lg-9 col-xl-9 date">
+                    <input type="text" class="form-control" value="@if (Model == null || Model.Id == 0 || Model.ExpenseDate == null) @DateTime.Now.Date.ToShortDateString()  else @(((DateTime)Model.ExpenseDate).Date.ToShortDateString())" id="kt_datepicker_3" name="txtExpenseDate" />
+                </div>
+            </div>
+
+            @await Component.InvokeAsync("PaymentTypeList", new { paymentTypeId = ((Model == null || Model.PaymentType == null) ? (int)0 : (int)Model.PaymentTypeId) })
+
+            @await Component.InvokeAsync("ExpenseDefinitionList", new { expenseDefinitionId = ((Model == null || Model.ExpenseDefinition == null) ? (int)0 : (int)Model.ExpenseDefinitionId) })
+
+            <div id="divIsFixtureDefinitionCanBeSelected" @Html.Raw(((bool)ViewData["IsFixtureCanBeSelected"]) ? "" : "hidden")>
+                @await Component.InvokeAsync("FixtureDefinitionList", new { fixtureDefinitionId = ((Model == null || Model.FixtureDefinition == null) ? (int)0 : (int)Model.FixtureDefinitionId) })
+            </div>
+
+            <div id="divIsPersonnelDefinitionCanBeSelected" @Html.Raw(((bool)ViewData["IsPersonnelCanBeSelected"]) ? "" : "hidden")>
+                @await Component.InvokeAsync("PersonnelDefinitionList", new { personnelDefinitionId = ((Model == null || Model.PersonnelDefinition == null) ? (int)0 : (int)Model.PersonnelDefinitionId), officeId = (int)ViewData["OfficeId"] })
+            </div>
+
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Açıklama</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtDescription"  value="@if (Model != null) @Model.Description">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label">Tutar</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control numeric2" id="txtAmount" type="text" value="@if (Model != null) @Model.Amount">
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/input-mask.js"></script>
+<script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js"></script>

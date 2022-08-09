@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace AsGozdeCoreWebSite.Controllers
 {
     public class HomeController : Controller
-    {
+    {        
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -21,7 +22,7 @@ namespace AsGozdeCoreWebSite.Controllers
         }
 
         public IActionResult Index()
-        {            
+        {
             return View();
         }
         

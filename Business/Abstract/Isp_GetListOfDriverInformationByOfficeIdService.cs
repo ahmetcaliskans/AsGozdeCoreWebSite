@@ -8,6 +8,6 @@ namespace Business.Abstract
 {
     public interface Isp_GetListOfDriverInformationByOfficeIdService
     {
-        IDataResult<List<sp_GetListOfDriverInformationByOfficeId>> GetList(int officeId);
+        IDataResult<List<sp_GetListOfDriverInformationByOfficeId>> GetList(int officeId, int certificateState);
     }
 }

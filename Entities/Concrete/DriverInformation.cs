@@ -29,6 +29,8 @@ namespace Entities.Concrete
         public string Address2 { get; set; }
         public DateTime RecordDate { get; set; }
         public string Note { get; set; }
+        public bool IsCertificateDelivered { get; set; }
+        public DateTime? CertificateDeliveredDate { get; set; }
         public virtual List<Collection> Collections { get; set; }       
         public virtual decimal Balance { get; set; }
         public virtual List<DriverPaymentPlan> DriverPaymentPlans { get; set; }

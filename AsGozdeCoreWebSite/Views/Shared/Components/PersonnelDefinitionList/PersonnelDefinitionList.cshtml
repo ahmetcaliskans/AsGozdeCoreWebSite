@@ -1,0 +1,38 @@
+﻿
+@model dynamic
+
+<div class="form-group row">
+    <label class="col-form-label col-lg-3 col-xl-3">Personel </label>
+    <div class="col-lg-9 col-xl-9">
+        <select class="form-control is-valid" name="selectPersonnelDefinition" id="selectPersonnelDefinition">
+
+            @if ((int)Model.SelectedId == -99)
+            {
+                <option selected="" value="0">Hepsi</option>
+            }
+            else if ((int)Model.SelectedId == 0)
+            {
+                <option selected="" value="0"></option>
+            }
+            else
+            {
+                <option value="0"></option>
+            }
+
+            @foreach (var personnelDefinition in Model.PersonnelDefinition as List<Entities.Concrete.PersonnelDefinition>)
+            {
+
+                if (personnelDefinition.Id == (int)Model.SelectedId)
+                {
+                    <option selected="" value="@personnelDefinition.Id">@personnelDefinition.Name @personnelDefinition.Surname @if (personnelDefinition.IdentityNo != null && !string.IsNullOrEmpty(personnelDefinition.IdentityNo))@string.Format(" - {0}", personnelDefinition.IdentityNo)</option>
+                }
+                else
+                {
+                    <option value="@personnelDefinition.Id">@personnelDefinition.Name @personnelDefinition.Surname @if (personnelDefinition.IdentityNo != null && !string.IsNullOrEmpty(personnelDefinition.IdentityNo))@string.Format(" - {0}", personnelDefinition.IdentityNo)</option>
+
+                }
+
+            }
+        </select>
+    </div>
+</div>

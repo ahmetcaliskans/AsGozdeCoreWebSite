@@ -13,5 +13,6 @@ namespace Entities.Concrete
         public string Description { get; set; }
         public bool Active { get; set; }
         public virtual List<CollectionDetail> CollectionDetails { get; set; }
+        public virtual List<Expense> Expenses { get; set; }
     }
 }

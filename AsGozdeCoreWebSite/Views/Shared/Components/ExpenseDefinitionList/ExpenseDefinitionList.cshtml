@@ -1,0 +1,30 @@
+﻿
+@model dynamic
+
+<div class="form-group row">
+    <label class="col-form-label col-lg-3 col-xl-3">Gider Tipi</label>
+    <div class="col-lg-9 col-xl-9">
+        <select class="form-control is-valid" name="selectExpenseDefinition" id="selectExpenseDefinition" onchange="js_checkExpenseDefinitionInformations()">
+
+            @if ((int)Model.SelectedId == -99)
+            {
+                <option selected="" value="0">Hepsi</option>
+            }
+
+            @foreach (var expenseDefinition in Model.ExpenseDefinition as List<Entities.Concrete.ExpenseDefinition>)
+            {
+
+                if (expenseDefinition.Id == (int)Model.SelectedId)
+                {
+                    <option selected="" value="@expenseDefinition.Id">@expenseDefinition.Name @if (expenseDefinition.Description != null && !string.IsNullOrEmpty(expenseDefinition.Description))@string.Format(" - {0}", expenseDefinition.Description)</option>
+                }
+                else
+                {
+                    <option value="@expenseDefinition.Id">@expenseDefinition.Name @if (expenseDefinition.Description != null && !string.IsNullOrEmpty(expenseDefinition.Description))@string.Format(" - {0}", expenseDefinition.Description)</option>
+
+                }
+
+            }
+        </select>
+    </div>
+</div>

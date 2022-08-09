@@ -34,7 +34,7 @@ namespace DataAccess.EntityFramework
                                  Active = u.Active,
                                  OfficeId = u.OfficeId,
                                  OfficeName = o.Name,
-                                 RoleId = u.RoleId,
+                                 RoleId = u.RoleTypeId,
                                  RoleName = "Deneme",
                                  Title = u.Title
                              };

@@ -1,0 +1,38 @@
+﻿
+@model dynamic
+
+<div class="form-group row">
+    <label class="col-form-label col-lg-3 col-xl-3">Demirbaş </label>
+    <div class="col-lg-9 col-xl-9">
+        <select class="form-control is-valid" name="selectFixtureDefinition" id="selectFixtureDefinition">
+
+            @if ((int)Model.SelectedId == -99)
+            {
+                <option selected="" value="0">Hepsi</option>
+            }
+            else if ((int)Model.SelectedId == 0)
+            {
+                <option selected="" value="0"></option>
+            }
+            else
+            {
+                <option value="0"></option>
+            }
+
+            @foreach (var fixtureDefinition in Model.FixtureDefinition as List<Entities.Concrete.FixtureDefinition>)
+            {
+
+                if (fixtureDefinition.Id == (int)Model.SelectedId)
+                {
+                    <option selected="" value="@fixtureDefinition.Id">@fixtureDefinition.Name @if (fixtureDefinition.Description != null && !string.IsNullOrEmpty(fixtureDefinition.Description))@string.Format(" - {0}", fixtureDefinition.Description)</option>
+                }
+                else
+                {
+                    <option value="@fixtureDefinition.Id">@fixtureDefinition.Name @if (fixtureDefinition.Description != null && !string.IsNullOrEmpty(fixtureDefinition.Description))@string.Format(" - {0}", fixtureDefinition.Description)</option>
+
+                }
+
+            }
+        </select>
+    </div>
+</div>

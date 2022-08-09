@@ -53,6 +53,9 @@ namespace Business.ValidationRules.FluentValidation
 
             /*Note*/
             RuleFor(b => b.Note).MaximumLength(200).WithMessage("Not En Fazla {MaxLength} Karakter Olmalı !");
+
+            /*CertificateDeliveredDate*/
+            RuleFor(b => b.CertificateDeliveredDate).NotEmpty().When(b=>b.IsCertificateDelivered).WithMessage("Sertifikat Tarihi Boş Olamaz !");
         }
     }
 }

@@ -9,6 +9,6 @@ namespace DataAccess.Abstract
 
     public interface Isp_GetListOfDriverInformationByOfficeIdDal : IDtoRepository<sp_GetListOfDriverInformationByOfficeId>
     {
-        List<sp_GetListOfDriverInformationByOfficeId> GetList(int officeId);
+        List<sp_GetListOfDriverInformationByOfficeId> GetList(int officeId, int certificateState);
     }
 }

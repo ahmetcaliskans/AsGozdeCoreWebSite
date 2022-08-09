@@ -1,0 +1,200 @@
+﻿@model Entities.Concrete.PersonnelDefinition
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div style="margin:5px 5px  5px 5px">
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Id</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtId" type="number" disabled="disabled" value="@if (Model != null) @Model.Id">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <!--begin::Group-->
+            <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label text-left">Personel Resmi</label>
+                <div class="col-lg-9 col-xl-9">
+                    <div class="image-input image-input-outline" id="kt_image_1">
+                        <div class="image-input-wrapper" id="imgPersonnel" style="background-image: url(@if (Model != null && Model.Image != null) @Model.Image)" )></div> <!--style="background-image: url(assets/media/users/100_6.jpg)"-->
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Resim Düzenle">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="İptal">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Sil">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!--end::Group-->
+
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Adı</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtName" type="text" placeholder="Adı" value="@if (Model != null) @Model.Name">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Soyadı</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtSurname" type="text" placeholder="Soyadı" value="@if (Model != null) @Model.Surname">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+
+            <!--begin::Group-->
+            <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label">Tc Kimlik No</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control justNumber" name="txtIdentityNo" id="txtIdentityNo" type="tel" maxlength="11" value="@if (Model != null) @Model.IdentityNo" />
+                </div>
+            </div>
+            <!--end::Group-->
+            <!--begin::Group-->
+            <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label">Giriş Tarihi</label>
+                <div class="col-lg-9 col-xl-9 date">
+                    <input type="text" class="form-control" value="@if (Model == null || Model.Id == 0 || Model.StartDate == null) @string.Format("")  else @(((DateTime)Model.StartDate).Date.ToShortDateString())" id="kt_datepicker_3" name="txtStartDate" />
+                </div>
+            </div>
+            <!--end::Group-->
+            <!--begin::Group-->
+            <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label">Çıkış Tarihi</label>
+                <div class="col-lg-9 col-xl-9 date">
+                    <input type="text" class="form-control"  value="@if (Model == null || Model.Id == 0 || Model.EndDate == null) @string.Format("") else @(((DateTime)Model.EndDate).Date.ToShortDateString())" id="kt_datepicker_3_1" name="txtEndDate" />
+                </div>
+            </div>
+            <!--end::Group-->
+            <!--begin::Group-->
+            <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label">Ücreti</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control numeric2" name="txtSalary" id="txtSalary" type="text" value="@if (Model != null) @Model.Salary" />
+                </div>
+            </div>
+            <!--end::Group-->
+
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Mesleği</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtJob" type="text" placeholder="Mesleği" value="@if (Model != null) @Model.Job">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Görevi</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtPosition" type="text" placeholder="Görevi" value="@if (Model != null) @Model.Position">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+
+            <!--begin::Group-->
+            <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label">Telefon 1</label>
+                <div class="col-lg-9 col-xl-9">
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="la la-phone"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control phone" name="txtPhone1" id="txtPhone1" value="@if (Model != null) @Model.Phone1" placeholder="Telefon 1" />
+                    </div>
+                </div>
+            </div>
+            <!--end::Group-->
+            <!--begin::Group-->
+            <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label">Telefon 2</label>
+                <div class="col-lg-9 col-xl-9">
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="la la-phone"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control phone" name="txtPhone2" id="txtPhone2" value="@if (Model != null) @Model.Phone2" placeholder="Telefon 2" />
+                    </div>
+                </div>
+            </div>
+            <!--end::Group-->
+            <!--begin::Group-->
+            <div class="form-group row">
+                <label class="col-xl-3 col-lg-3 col-form-label">Email Adresi</label>
+                <div class="col-lg-9 col-xl-9">
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="la la-at"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" name="txtEmail" id="txtEmail" value="@if (Model != null) @Model.Email" />
+                    </div>
+                </div>
+            </div>
+            <!--end::Group-->
+            <!--begin::Group-->
+            <div class="form-group">
+                <label>Not</label>
+                <input type="text" class="form-control" name="txtNote" id="txtNote" placeholder="Not" value="@if(Model != null) @Model.Note" />
+            </div>
+            <!--end::Group-->
+            <!--Adres Bilgisi-->
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-xl-6">
+                    <!--begin::Group-->
+                    <div class="form-group">
+                        <label>İl</label>
+                        <input type="text" class="form-control" name="txtCity" id="txtCity" placeholder="İl Adı" value="@if(Model != null) @Model.City" />
+                    </div>
+                </div>
+                <!--end::Group-->
+                <!--begin::Group-->
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label>İlçe</label>
+                        <input type="text" class="form-control" name="txtCounty" id="txtCounty" placeholder="İlçe Adı" value="@if(Model != null) @Model.County" />
+                    </div>
+                </div>
+                <!--end::Group-->
+            </div>
+            <!--end::Row-->
+            <!--begin::Group-->
+            <div class="form-group">
+                <label>Address Satırı 1</label>
+                <input type="text" class="form-control" name="txtAddress1" id="txtAddress1" placeholder="Address Satırı 1" value="@if(Model != null) @Model.Address1" />
+            </div>
+            <!--end::Group-->
+            <!--begin::Group-->
+            <div class="form-group">
+                <label>Address Satırı 2</label>
+                <input type="text" class="form-control" name="txtAddress2" id="txtAddress2" placeholder="Address Satırı 2" value="@if(Model != null) @Model.Address2" />
+            </div>
+            <!--end::Group-->
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 col-xl-9">
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkActive" @Html.Raw((Model != null) ? (((Model.Active) ? "checked" : "")) : "checked")>
+                        <span></span> Aktif
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/js/pages/crud/forms/widgets/input-mask.js"></script>
+<script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js"></script>
+<script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/file-upload/image-input.js"></script>

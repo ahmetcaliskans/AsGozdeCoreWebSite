@@ -41,7 +41,7 @@
     <!--begin::Header Mobile-->
     <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
         <!--begin::Logo-->
-        <a href="">
+        <a href="/Home/Index">
             <img alt="Logo" src="~/assets/media/logos/logo-small.png" />
         </a>
         <!--end::Logo-->
@@ -181,8 +181,8 @@
                                                 <span class="menu-text">Tahsilat Listesi</span>
                                             </a>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
-                                            <a href="#" class="menu-link">
+                                        <li class="@((activeController == "Expense") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                            <a href="/Expense/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
@@ -239,7 +239,7 @@
                             </li>
                             <!--/Raporlar-->
                             <!--Tanımlar-->
-                            <li class="@((activeController == "User" || activeController == "Office" || activeController == "Session" || activeController == "Branch" || activeController == "CollectionDefinition" || activeController == "PaymentType" || activeController == "User2") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
+                            <li class="@((activeController == "User" || activeController == "Office" || activeController == "Session" || activeController == "Branch" || activeController == "CollectionDefinition" || activeController == "CollectionDefinitionAmount" || activeController == "PaymentType" || activeController == "User2" || activeController == "ExpenseDefinition" ||activeController == "FixtureDefinition" || activeController == "PersonnelDefinition") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -295,20 +295,12 @@
                                                 <span class="menu-text">Branş Tanımları</span>
                                             </a>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
-                                            <a href="#" class="menu-link">
+                                        <li class="@((activeController == "PaymentType") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                            <a href="/PaymentType/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text">Demirbaş Tanımları</span>
-                                            </a>
-                                        </li>
-                                        <li class="menu-item" aria-haspopup="true">
-                                            <a href="#" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Personel Tanımları</span>
+                                                <span class="menu-text">Ödeme Tipi Tanımları</span>
                                             </a>
                                         </li>
                                         <li class="@((activeController == "CollectionDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
@@ -327,12 +319,28 @@
                                                 <span class="menu-text">Tahsilat Ücret Tanımları</span>
                                             </a>
                                         </li>
-                                        <li class="@((activeController == "PaymentType") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/PaymentType/Index" class="menu-link">
+                                        <li class="@((activeController == "ExpenseDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                            <a href="/ExpenseDefinition/Index" class="menu-link">
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text">Ödeme Tipi Tanımları</span>
+                                                <span class="menu-text">Gider Tanımları</span>
+                                            </a>
+                                        </li>
+                                        <li class="@((activeController == "FixtureDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                            <a href="/FixtureDefinition/Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Demirbaş Tanımları</span>
+                                            </a>
+                                        </li>
+                                        <li class="@((activeController == "PersonnelDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                            <a href="/PersonnelDefinition/Index" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Personnel Tanımları</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -411,7 +419,7 @@
                         <!--begin::Copyright-->
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted font-weight-bold mr-2">@DateTime.Now.Year ©</span>
-                            <a href="http://www.editorgroup.net/" target="_blank" class="text-dark-75 text-hover-primary">Ahmet Çalışkan - Editör Bilgi İşlem</a>
+                            <a href="https://wa.me/0905374020914" target="_blank" class="text-dark-75 text-hover-primary">Ahmet Çalışkan</a>
                         </div>
                         <!--end::Copyright-->
                         <!--begin::Nav-->

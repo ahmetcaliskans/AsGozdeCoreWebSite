@@ -16,11 +16,11 @@
 
                 if (collectionDefinition.Id == (int)Model.SelectedId)
                 {
-                    <option selected="" value="@collectionDefinition.Id">@collectionDefinition.Name - @collectionDefinition.Sequence</option>
+                    <option selected="" value="@collectionDefinition.Id">@collectionDefinition.Name @if (collectionDefinition.Sequence != null && collectionDefinition.Sequence!=0) @string.Format(" - {0}", collectionDefinition.Sequence)</option>
                 }
                 else
                 {
-                    <option value="@collectionDefinition.Id">@collectionDefinition.Name - @collectionDefinition.Sequence</option>
+                    <option value="@collectionDefinition.Id">@collectionDefinition.Name @if (collectionDefinition.Sequence != null && collectionDefinition.Sequence != 0)@string.Format(" - {0}", collectionDefinition.Sequence)</option>
 
                 }
 

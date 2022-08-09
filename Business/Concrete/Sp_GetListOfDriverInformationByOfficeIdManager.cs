@@ -15,9 +15,9 @@ namespace Business.Concrete
         {
             _sp_GetListOfDriverInformationByOfficeIdDal = sp_GetListOfDriverInformationByOfficeIdDal;
         }
-        public IDataResult<List<sp_GetListOfDriverInformationByOfficeId>> GetList(int officeId)
+        public IDataResult<List<sp_GetListOfDriverInformationByOfficeId>> GetList(int officeId, int certificateState)
         {
-            return new SuccessDataResult<List<sp_GetListOfDriverInformationByOfficeId>>(_sp_GetListOfDriverInformationByOfficeIdDal.GetList(officeId));
+            return new SuccessDataResult<List<sp_GetListOfDriverInformationByOfficeId>>(_sp_GetListOfDriverInformationByOfficeIdDal.GetList(officeId,certificateState));
         }
     }
 }

@@ -43,10 +43,21 @@ namespace AsGozdeCoreWebSite.Controllers
         {
             return View();
         }
-                
+
         public IActionResult GetListOfDriverInformationByOfficeId()
         {
-            var result = _sp_GetListOfDriverInformationByOfficeIdService.GetList(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
+            var result = _sp_GetListOfDriverInformationByOfficeIdService.GetList(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value),2);
+            if (result != null)
+            {
+                return Ok(result.Data);
+            }
+
+            return Ok(result.Data);
+        }
+
+        public IActionResult GetListOfDriverInformationByOfficeIdAndCertificate(int certificateState)
+        {
+            var result = _sp_GetListOfDriverInformationByOfficeIdService.GetList(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value), certificateState);
             if (result != null)
             {
                 return Ok(result.Data);
@@ -105,6 +116,8 @@ namespace AsGozdeCoreWebSite.Controllers
             IResult driverInformationResult;
 
             driverInformation.OfficeId = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
+            if (!driverInformation.IsCertificateDelivered)
+                driverInformation.CertificateDeliveredDate = null;
             if (driverInformation.Id == null || driverInformation.Id <= 0)
                 driverInformationResult = _driverInformationService.Add(driverInformation);
             else

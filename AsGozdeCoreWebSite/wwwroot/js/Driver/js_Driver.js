@@ -94,7 +94,9 @@ function js_addDriver(islem) {
 		Address2: $('#txtAddress2').val(),
 		Image: imgDriver,
 		Note: $('#txtNote').val(),
-		RecordDate: $('input[name="txtRecordDate"]').val()
+		RecordDate: $('input[name="txtRecordDate"]').val(),
+		IsCertificateDelivered: chkKontrol('chkIsCertificateDelivered'),
+		CertificateDeliveredDate: $('input[name="txtCertificateDeliveredDate"]').val()
 	};
 
 

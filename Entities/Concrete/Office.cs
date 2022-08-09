@@ -24,5 +24,7 @@ namespace Entities.Concrete
         public string TaxOfficeNo { get; set; }
         public virtual List<DriverInformation> DriverInformations { get; set; }
         public virtual List<Collection> Collections { get; set; }
+        public virtual List<Expense> Expenses { get; set; }
+        public virtual List<PersonnelDefinition> PersonnelDefinitions { get; set; }
     }
 }

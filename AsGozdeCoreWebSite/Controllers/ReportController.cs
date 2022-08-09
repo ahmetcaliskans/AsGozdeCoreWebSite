@@ -9,31 +9,33 @@ namespace AsGozdeCoreWebSite.Controllers
 {
     public class ReportController : Controller
     {
-        private Isp_rCashReport1Service _sp_rCashReport1Service;
-        private Isp_rCashReport1DetailCollectionService _sp_rCashReport1DetailCollectionService;
+        private IReportService _sp_rCashReport1Service;
         private Isp_GetListOfDueCoursePaymentService _sp_GetListOfDueCoursePaymentService;
-        public ReportController(Isp_rCashReport1Service sp_rCashReport1Service, Isp_rCashReport1DetailCollectionService sp_rCashReport1DetailCollectionService,
+        public ReportController(IReportService sp_rCashReport1Service,
             Isp_GetListOfDueCoursePaymentService sp_GetListOfDueCoursePaymentService)
         {
             _sp_rCashReport1Service = sp_rCashReport1Service;
-            _sp_rCashReport1DetailCollectionService = sp_rCashReport1DetailCollectionService;
             _sp_GetListOfDueCoursePaymentService = sp_GetListOfDueCoursePaymentService;
         }
         public IActionResult Index()
         {
+            ViewData["OfficeId"] = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
             return View();
         }
 
         [HttpGet]
         public IActionResult CashReport()
         {
+            ViewData["OfficeId"] = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
             return View("CashReport");
         }
 
-        public IActionResult GetCashReport1(DateTime? startDate, DateTime? endDate, int paymentTypeId, int collectionDefinitionId, int collectionDefinitionTypeId, int sessionId, int branchId)
+        public IActionResult GetCashReport1(DateTime? startDate, DateTime? endDate, int paymentTypeId, int collectionDefinitionId, int collectionDefinitionTypeId, int sessionId, int branchId, int expenseDefinitionId,
+            int fixtureDefinitionId, int personnelDefinitionId)
         {
-            var result = _sp_rCashReport1Service.GetListByParameters(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value), startDate, endDate, 
-                paymentTypeId, collectionDefinitionId, collectionDefinitionTypeId, sessionId, branchId);
+            var result = _sp_rCashReport1Service.sp_rCashReport1GetListByParameters(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value), startDate, endDate, 
+                paymentTypeId, collectionDefinitionId, collectionDefinitionTypeId, sessionId, branchId, expenseDefinitionId, fixtureDefinitionId , personnelDefinitionId);
+            ViewData["OfficeId"] = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
             if (result.Data != null)
             {
                 return Json(result.Data);
@@ -43,8 +45,19 @@ namespace AsGozdeCoreWebSite.Controllers
 
         public IActionResult GetCashReport1DetailCollection(DateTime? startDate, DateTime? endDate, int paymentTypeId, int collectionDefinitionId, int collectionDefinitionTypeId, int sessionId, int branchId)
         {
-            var result = _sp_rCashReport1DetailCollectionService.GetListByParameters(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value), startDate, endDate,
+            var result = _sp_rCashReport1Service.sp_rCashReport1DetailCollectionGetListByParameters(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value), startDate, endDate,
                 paymentTypeId, collectionDefinitionId, collectionDefinitionTypeId, sessionId, branchId);
+            if (result.Data != null)
+            {
+                return Json(result.Data);
+            }
+            return Ok(result.Data);
+        }
+
+        public IActionResult GetCashReport1DetailExpense(DateTime? startDate, DateTime? endDate, int paymentTypeId, int expenseDefinitionId,  int fixtureDefinitionId, int personnelDefinitionId)
+        {
+            var result = _sp_rCashReport1Service.sp_rCashReport1DetailExpenseGetListByParameters(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value), startDate, endDate,
+                paymentTypeId, expenseDefinitionId, fixtureDefinitionId, personnelDefinitionId);
             if (result.Data != null)
             {
                 return Json(result.Data);

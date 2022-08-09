@@ -191,7 +191,7 @@
                                                     <i class="la la-phone"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control form-control-solid form-control-lg phone" name="txtPhone2" id="txtPhone2" value="@if (_driverInformation != null) @_driverInformation.Phone2" placeholder="Telefon 1" />
+                                            <input type="text" class="form-control form-control-solid form-control-lg phone" name="txtPhone2" id="txtPhone2" value="@if (_driverInformation != null) @_driverInformation.Phone2" placeholder="Telefon 2" />
                                         </div>
                                     </div>
                                 </div>
@@ -302,6 +302,27 @@
                                     </div>
                                 </div>
                                 <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-3 col-form-label">Sertifika Durumu</label>
+                                    <div class="col-3">
+                                        <span class="switch switch-outline switch-icon switch-success">
+                                            <label>
+                                                <input type="checkbox" @Html.Raw((_driverInformation != null) ? (((_driverInformation.IsCertificateDelivered) ? "checked" : "")) : "checked") name="select" id="chkIsCertificateDelivered" />
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Sertifika Tarihi</label>
+                                    <div class="col-lg-9 col-xl-9 date">
+                                        <input type="text" class="form-control" value="@if (_driverInformation == null || _driverInformation.Id == 0 || _driverInformation.CertificateDeliveredDate == null) @string.Format("") else @(((DateTime)_driverInformation.CertificateDeliveredDate).Date.ToShortDateString())" id="kt_datepicker_3_1" name="txtCertificateDeliveredDate" />
+                                    </div>
+                                </div>
+                                <!--end::Group-->
 
                             </div>
 
@@ -315,299 +336,310 @@
 
                 @if (_driverInformation != null && _driverInformation.Id > 0)
                 {
-                <div class="col-lg-12">
-                    <div class="separator separator-dashed my-10"></div>
-                    <div class="my-5">
-                        <h3 class=" text-dark font-weight-bold mb-10">Kurs Ücreti Ödeme Planı:</h3>
+                    <div class="col-lg-12">
+                        <div class="separator separator-dashed my-10"></div>
+                        <div class="my-5">
+                            <h3 class=" text-dark font-weight-bold mb-10">Kurs Ücreti Ödeme Planı:</h3>
 
-                        <!--begin::Group-->
-                        <div class="form-group row">
-                            <!--begin::Button-->
-                            <a href="javascript:;" class="btn btn-secondary font-weight-bolder" data-toggle="modal" data-target="#NewHirePurchase" onclick="js_newHirePurchase(10)">
-                                <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
-                                <span class="svg-icon svg-icon-md">
-                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24" />
-                                            <circle fill="#000000" cx="9" cy="15" r="6" />
-                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
-                                        </g>
-                                    </svg>
-                                    <!--end::Svg Icon-->
-                                </span>Taksitlendir
-                            </a>
-                            <!--end::Button-->
-                            <!--begin::Button-->
-                            <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#NewDriverPaymentPlan" onclick="js_getDriverPaymentPlanById(0,10)">
-                                <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
-                                <span class="svg-icon svg-icon-md">
-                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24" />
-                                            <circle fill="#000000" cx="9" cy="15" r="6" />
-                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
-                                        </g>
-                                    </svg>
-                                    <!--end::Svg Icon-->
-                                </span>İlave Taksit
-                            </a>
-                            <!--end::Button-->
+                            <!--begin::Group-->
+                            <div class="form-group row">
+                                <!--begin::Button-->
+                                <a href="javascript:;" class="btn btn-secondary font-weight-bolder" data-toggle="modal" data-target="#NewHirePurchase" onclick="js_newHirePurchase(10)">
+                                    <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
+                                    <span class="svg-icon svg-icon-md">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <circle fill="#000000" cx="9" cy="15" r="6" />
+                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>Taksitlendir
+                                </a>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#NewDriverPaymentPlan" onclick="js_getDriverPaymentPlanById(0,10)">
+                                    <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
+                                    <span class="svg-icon svg-icon-md">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <circle fill="#000000" cx="9" cy="15" r="6" />
+                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>İlave Taksit
+                                </a>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Group-->
+                            <!--begin::Group-->
+                            <div class="form-group row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th title="Islem" colspan="2">Taksit Islemi</th>
+
+                                                <th title="Taksit Ödeme Tarihi">Taksit Ödeme Tarihi</th>
+                                                <th title="Taksit Tutarı">Taksit Tutarı</th>
+                                                <th title="Ödeme Tarihi">Ödeme Tarihi</th>
+                                                <th title="Ödeme Türü">Ödeme Türü</th>
+                                                <th title="Kalan Borç">Kalan Borç</th>
+
+                                                <th title="Islem" colspan="2">Ödeme Islemi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dataListDriverPaymentPlan">
+                                            @await Html.PartialAsync("/Views/Driver/AddEditDriverCoursePayment.cshtml", _sp_getPayments)
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                            <!--end::Group-->
+
+
                         </div>
-                        <!--end::Group-->
-                        <!--begin::Group-->
-                        <div class="form-group row">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th title="Islem" colspan="2">Taksit Islemi</th>
-
-                                        <th title="Taksit Ödeme Tarihi">Taksit Ödeme Tarihi</th>
-                                        <th title="Taksit Tutarı">Taksit Tutarı</th>
-                                        <th title="Ödeme Tarihi">Ödeme Tarihi</th>
-                                        <th title="Ödeme Türü">Ödeme Türü</th>
-                                        <th title="Kalan Borç">Kalan Borç</th>
-
-                                        <th title="Islem" colspan="2">Ödeme Islemi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dataListDriverPaymentPlan">
-                                    @await Html.PartialAsync("/Views/Driver/AddEditDriverCoursePayment.cshtml", _sp_getPayments)
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--end::Group-->
-
-
-                    </div>
-                </div>
-
-                <div class="col-xl-2"></div>
-
-                <div class="col-lg-12">
-
-                    <div class="separator separator-dashed my-10"></div>
-
-                    <div class="my-5">
-                        <h3 class=" text-dark font-weight-bold mb-10">Yazılı Sınav Harcı Ödemeleri:</h3>
-
-                        <!--begin::Group-->
-                        <div class="form-group row">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th title="Taksit Ödeme Tarihi">Ödeme Şekli</th>
-                                        <th title="Taksit Ödeme Tarihi">Ödeme Şekli Adı</th>
-                                        <th title="Taksit Ödeme Tarihi">Sıra</th>
-                                        <th title="Ödeme Tarihi">Ödeme Tarihi</th>
-                                        <th title="Taksit Tutarı">Tutar</th>
-
-                                        <th title="Islem" colspan="2">Islem</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dataListDriverSequentialYSHPayment">
-                                    @await Html.PartialAsync("/Views/Driver/AddEditDriverSequentialPaymentYSH.cshtml", _sp_getSequentialPaymentsYSH)
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--end::Group-->
-
                     </div>
 
-                </div>
+                    <div class="col-xl-2"></div>
 
-                <div class="col-xl-2"></div>
+                    <div class="col-lg-12">
 
-                <div class="col-lg-12">
+                        <div class="separator separator-dashed my-10"></div>
 
-                    <div class="separator separator-dashed my-10"></div>
+                        <div class="my-5">
+                            <h3 class=" text-dark font-weight-bold mb-10">Yazılı Sınav Harcı Ödemeleri:</h3>
 
-                    <div class="my-5">
-                        <h3 class=" text-dark font-weight-bold mb-10">Direksiyon Sınav Harcı Ödemeleri:</h3>
+                            <!--begin::Group-->
+                            <div class="form-group row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th title="Taksit Ödeme Tarihi">Ödeme Şekli</th>
+                                                <th title="Taksit Ödeme Tarihi">Ödeme Şekli Adı</th>
+                                                <th title="Taksit Ödeme Tarihi">Sıra</th>
+                                                <th title="Ödeme Tarihi">Ödeme Tarihi</th>
+                                                <th title="Taksit Tutarı">Tutar</th>
 
-                        <!--begin::Group-->
-                        <div class="form-group row">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th title="Taksit Ödeme Tarihi">Ödeme Şekli</th>
-                                        <th title="Taksit Ödeme Tarihi">Ödeme Şekli Adı</th>
-                                        <th title="Taksit Ödeme Tarihi">Sıra</th>
-                                        <th title="Ödeme Tarihi">Ödeme Tarihi</th>
-                                        <th title="Taksit Tutarı">Tutarı</th>
+                                                <th title="Islem" colspan="2">Islem</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dataListDriverSequentialYSHPayment">
+                                            @await Html.PartialAsync("/Views/Driver/AddEditDriverSequentialPaymentYSH.cshtml", _sp_getSequentialPaymentsYSH)
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                            <!--end::Group-->
 
-                                        <th title="Islem" colspan="2">Islem</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dataListDriverSequentialDSHFirstPayment">
-                                    @await Html.PartialAsync("/Views/Driver/AddEditDriverSequentialPaymentDSHFirst.cshtml", _sp_getSequentialPaymentsDSHFirst)
-                                </tbody>
-                            </table>
                         </div>
-                        <!--end::Group-->
 
                     </div>
 
-                </div>
+                    <div class="col-xl-2"></div>
 
-                <div class="col-xl-2"></div>
+                    <div class="col-lg-12">
 
-                <div class="col-lg-12">
-                    <div class="separator separator-dashed my-10"></div>
-                    <div class="my-5">
-                        <h3 class=" text-dark font-weight-bold mb-10">İlave 4 Hak Ödeme Planı:</h3>
+                        <div class="separator separator-dashed my-10"></div>
 
-                        <!--begin::Group-->
-                        <div class="form-group row">
-                            <!--begin::Button-->
-                            <a href="javascript:;" class="btn btn-secondary font-weight-bolder" data-toggle="modal" data-target="#NewHirePurchase" onclick="js_newHirePurchase(11)">
-                                <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
-                                <span class="svg-icon svg-icon-md">
-                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24" />
-                                            <circle fill="#000000" cx="9" cy="15" r="6" />
-                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
-                                        </g>
-                                    </svg>
-                                    <!--end::Svg Icon-->
-                                </span>Taksitlendir
-                            </a>
-                            <!--end::Button-->
-                            <!--begin::Button-->
-                            <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#NewDriverPaymentPlan" onclick="js_getDriverPaymentPlanById(0,11)">
-                                <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
-                                <span class="svg-icon svg-icon-md">
-                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24" />
-                                            <circle fill="#000000" cx="9" cy="15" r="6" />
-                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
-                                        </g>
-                                    </svg>
-                                    <!--end::Svg Icon-->
-                                </span>İlave Taksit
-                            </a>
-                            <!--end::Button-->
+                        <div class="my-5">
+                            <h3 class=" text-dark font-weight-bold mb-10">Direksiyon Sınav Harcı Ödemeleri:</h3>
+
+                            <!--begin::Group-->
+                            <div class="form-group row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th title="Taksit Ödeme Tarihi">Ödeme Şekli</th>
+                                                <th title="Taksit Ödeme Tarihi">Ödeme Şekli Adı</th>
+                                                <th title="Taksit Ödeme Tarihi">Sıra</th>
+                                                <th title="Ödeme Tarihi">Ödeme Tarihi</th>
+                                                <th title="Taksit Tutarı">Tutarı</th>
+
+                                                <th title="Islem" colspan="2">Islem</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dataListDriverSequentialDSHFirstPayment">
+                                            @await Html.PartialAsync("/Views/Driver/AddEditDriverSequentialPaymentDSHFirst.cshtml", _sp_getSequentialPaymentsDSHFirst)
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                            <!--end::Group-->
+
                         </div>
-                        <!--end::Group-->
-                        <!--begin::Group-->
-                        <div class="form-group row">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th title="Islem" colspan="2">Taksit Islemi</th>
-
-                                        <th title="Taksit Ödeme Tarihi">Taksit Ödeme Tarihi</th>
-                                        <th title="Taksit Tutarı">Taksit Tutarı</th>
-                                        <th title="Ödeme Tarihi">Ödeme Tarihi</th>
-                                        <th title="Ödeme Türü">Ödeme Türü</th>
-                                        <th title="Kalan Borç">Kalan Borç</th>
-
-                                        <th title="Islem" colspan="2">Ödeme Islemi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dataListDriverPaymentPlusPlan">
-                                    @await Html.PartialAsync("/Views/Driver/AddEditDriverCoursePaymentPlus.cshtml", _sp_getPaymentsPlus)
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--end::Group-->
-
-
-                    </div>
-                </div>
-
-                <div class="col-xl-2"></div>
-
-                <div class="col-lg-12">
-
-                    <div class="separator separator-dashed my-10"></div>
-
-                    <div class="my-5">
-                        <h3 class=" text-dark font-weight-bold mb-10">İlave Direksiyon Sınav Harcı Ödemeleri:</h3>
-
-                        <!--begin::Group-->
-                        <div class="form-group row">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th title="Taksit Ödeme Tarihi">Ödeme Şekli</th>
-                                        <th title="Taksit Ödeme Tarihi">Ödeme Şekli Adı</th>
-                                        <th title="Taksit Ödeme Tarihi">Sıra</th>
-                                        <th title="Ödeme Tarihi">Ödeme Tarihi</th>
-                                        <th title="Taksit Tutarı">Tutarı</th>
-
-                                        <th title="Islem" colspan="2">Islem</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dataListDriverSequentialDSHPlusPayment">
-                                    @await Html.PartialAsync("/Views/Driver/AddEditDriverSequentialPaymentDSHPlus.cshtml", _sp_GetSequentialPaymentsDSHPlus)
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--end::Group-->
 
                     </div>
 
-                </div>
+                    <div class="col-xl-2"></div>
 
-                <div class="col-xl-2"></div>
+                    <div class="col-lg-12">
+                        <div class="separator separator-dashed my-10"></div>
+                        <div class="my-5">
+                            <h3 class=" text-dark font-weight-bold mb-10">İlave 4 Hak Ödeme Planı:</h3>
 
-                <div class="col-lg-12">
+                            <!--begin::Group-->
+                            <div class="form-group row">
+                                <!--begin::Button-->
+                                <a href="javascript:;" class="btn btn-secondary font-weight-bolder" data-toggle="modal" data-target="#NewHirePurchase" onclick="js_newHirePurchase(11)">
+                                    <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
+                                    <span class="svg-icon svg-icon-md">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <circle fill="#000000" cx="9" cy="15" r="6" />
+                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>Taksitlendir
+                                </a>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#NewDriverPaymentPlan" onclick="js_getDriverPaymentPlanById(0,11)">
+                                    <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
+                                    <span class="svg-icon svg-icon-md">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <circle fill="#000000" cx="9" cy="15" r="6" />
+                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>İlave Taksit
+                                </a>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Group-->
+                            <!--begin::Group-->
+                            <div class="form-group row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th title="Islem" colspan="2">Taksit Islemi</th>
 
-                    <div class="separator separator-dashed my-10"></div>
+                                                <th title="Taksit Ödeme Tarihi">Taksit Ödeme Tarihi</th>
+                                                <th title="Taksit Tutarı">Taksit Tutarı</th>
+                                                <th title="Ödeme Tarihi">Ödeme Tarihi</th>
+                                                <th title="Ödeme Türü">Ödeme Türü</th>
+                                                <th title="Kalan Borç">Kalan Borç</th>
 
-                    <div class="my-5">
-                        <h3 class=" text-dark font-weight-bold mb-10">Özel Ders Ödemeleri:</h3>
+                                                <th title="Islem" colspan="2">Ödeme Islemi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dataListDriverPaymentPlusPlan">
+                                            @await Html.PartialAsync("/Views/Driver/AddEditDriverCoursePaymentPlus.cshtml", _sp_getPaymentsPlus)
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                            <!--end::Group-->
 
-                        <!--begin::Group-->
-                        <div class="form-group row">
-                            <!--begin::Button-->
-                            <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#NewDriverCollectionDetail" onclick="js_getDriverCollectionDetailByIdWithDetails(0, '0',@_sp_GetSequentialPaymentsPrivateLesson.FirstOrDefault().CollectionDefinitionId, @_sp_GetSequentialPaymentsPrivateLesson.FirstOrDefault().CollectionDefinitionTypeId)">
-                                <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
-                                <span class="svg-icon svg-icon-md">
-                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24" />
-                                            <circle fill="#000000" cx="9" cy="15" r="6" />
-                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
-                                        </g>
-                                    </svg>
-                                    <!--end::Svg Icon-->
-                                </span>Yeni Özel Ders Ödeme
-                            </a>
-                            <!--end::Button-->
+
                         </div>
-                        <!--end::Group-->
-                        <!--begin::Group-->
-                        <div class="form-group row">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th title="Taksit Ödeme Tarihi">Ödeme Şekli</th>
-                                        <th title="Taksit Ödeme Tarihi">Ödeme Şekli Adı</th>
-                                        <th title="Ödeme Tarihi">Ödeme Tarihi</th>
-                                        <th title="Taksit Tutarı">Tutarı</th>
-                                        <th title="Taksit Tutarı">Saat</th>
+                    </div>
 
-                                        <th title="Islem" colspan="2">Islem</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dataListDriverSequentialPrivateLesson">
-                                    @await Html.PartialAsync("/Views/Driver/AddEditDriverSequentialPaymentPrivateLesson.cshtml", _sp_GetSequentialPaymentsPrivateLesson)
-                                </tbody>
-                            </table>
+                    <div class="col-xl-2"></div>
+
+                    <div class="col-lg-12">
+
+                        <div class="separator separator-dashed my-10"></div>
+
+                        <div class="my-5">
+                            <h3 class=" text-dark font-weight-bold mb-10">İlave Direksiyon Sınav Harcı Ödemeleri:</h3>
+
+                            <!--begin::Group-->
+                            <div class="form-group row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th title="Taksit Ödeme Tarihi">Ödeme Şekli</th>
+                                                <th title="Taksit Ödeme Tarihi">Ödeme Şekli Adı</th>
+                                                <th title="Taksit Ödeme Tarihi">Sıra</th>
+                                                <th title="Ödeme Tarihi">Ödeme Tarihi</th>
+                                                <th title="Taksit Tutarı">Tutarı</th>
+
+                                                <th title="Islem" colspan="2">Islem</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dataListDriverSequentialDSHPlusPayment">
+                                            @await Html.PartialAsync("/Views/Driver/AddEditDriverSequentialPaymentDSHPlus.cshtml", _sp_GetSequentialPaymentsDSHPlus)
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                            <!--end::Group-->
+
                         </div>
-                        <!--end::Group-->
 
                     </div>
 
-                </div>
+                    <div class="col-xl-2"></div>
+
+                    <div class="col-lg-12">
+
+                        <div class="separator separator-dashed my-10"></div>
+
+                        <div class="my-5">
+                            <h3 class=" text-dark font-weight-bold mb-10">Özel Ders Ödemeleri:</h3>
+                            <!--begin::Group-->
+                            <div class="form-group row">
+                                <!--begin::Button-->
+                                <a href="javascript:;" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#NewDriverCollectionDetail" onclick="js_getDriverCollectionDetailByIdWithDetails(0, '0',@_sp_GetSequentialPaymentsPrivateLesson.FirstOrDefault().CollectionDefinitionId, @_sp_GetSequentialPaymentsPrivateLesson.FirstOrDefault().CollectionDefinitionTypeId)">
+                                    <!--data-toggle="modal" data-target="#NewCollection" onclick="js_getCollectionByIdWithDetails(0)"-->
+                                    <span class="svg-icon svg-icon-md">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <circle fill="#000000" cx="9" cy="15" r="6" />
+                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>Yeni Özel Ders Ödeme
+                                </a>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Group-->
+                            <!--begin::Group-->
+                            <div class="form-group row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th title="Taksit Ödeme Tarihi">Ödeme Şekli</th>
+                                                <th title="Taksit Ödeme Tarihi">Ödeme Şekli Adı</th>
+                                                <th title="Ödeme Tarihi">Ödeme Tarihi</th>
+                                                <th title="Taksit Tutarı">Tutarı</th>
+                                                <th title="Taksit Tutarı">Saat</th>
+
+                                                <th title="Islem" colspan="2">Islem</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dataListDriverSequentialPrivateLesson">
+                                            @await Html.PartialAsync("/Views/Driver/AddEditDriverSequentialPaymentPrivateLesson.cshtml", _sp_GetSequentialPaymentsPrivateLesson)
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                            <!--end::Group-->
+
+                        </div>
+
+                    </div>
                 }
 
 
@@ -675,7 +707,6 @@
     </div>
 </div>
 <!--end::Modal-->
-
 <!--begin: Modal-->
 <div class="modal fade" id="CollectionDetailList" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -694,7 +725,6 @@
     </div>
 </div>
 <!--end::Modal-->
-
 <!--begin: Modal-->
 <div class="modal fade" id="CollectionDetailListOfDriver" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
