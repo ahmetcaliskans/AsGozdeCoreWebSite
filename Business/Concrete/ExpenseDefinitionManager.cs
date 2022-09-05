@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -21,6 +22,7 @@ namespace Business.Concrete
             _expenseDefinitionDal = expenseDefinitionDal;
         }
 
+        [RoleOperation("ExpenseDefinition.Insert")]
         [ValidationAspect(typeof(ExpenseDefinitionValidator))]
         public IResult Add(ExpenseDefinition expenseDefinition)
         {
@@ -32,22 +34,26 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [RoleOperation("ExpenseDefinition.Delete")]
         public IResult Delete(ExpenseDefinition expenseDefinition)
         {
             _expenseDefinitionDal.Delete(expenseDefinition);
             return new SuccessResult(Messages.Deleted);
         }
 
+        
         public IDataResult<ExpenseDefinition> GetById(int expenseDefinitionId)
         {
             return new SuccessDataResult<ExpenseDefinition>(_expenseDefinitionDal.Get(p => p.Id == expenseDefinitionId));
         }
 
+        
         public IDataResult<List<ExpenseDefinition>> GetList()
         {
             return new SuccessDataResult<List<ExpenseDefinition>>(_expenseDefinitionDal.GetList().ToList());
         }
 
+        [RoleOperation("ExpenseDefinition.Update")]
         [ValidationAspect(typeof(ExpenseDefinitionValidator))]
         public IResult Update(ExpenseDefinition expenseDefinition)
         {

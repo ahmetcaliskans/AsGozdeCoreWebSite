@@ -9,18 +9,31 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Globalization;
+using DevExpress.AspNetCore;
+using DevExpress.DashboardAspNetCore;
+using DevExpress.DashboardCommon;
+using DevExpress.DashboardWeb;
+using SaveDashboardDB;
+using Core.Utilities.IoC;
+using Core.Extensions;
+using Core.DependencyResolvers;
 
 namespace AsGozdeCoreWebSite
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment hostingEnvironment)
         {
             Configuration = configuration;
+            FileProvider = hostingEnvironment.ContentRootFileProvider;
+            DashboardExportSettings.CompatibilityMode = DashboardExportCompatibilityMode.Restricted;
         }
+
+        public IFileProvider FileProvider { get; }
 
         public IConfiguration Configuration { get; }
         
@@ -75,7 +88,32 @@ namespace AsGozdeCoreWebSite
 
             });
 
+            // Configures services to use the Web Dashboard Control.
+            services
+                .AddDevExpressControls()
+                .AddControllersWithViews();
+            services.AddScoped<DashboardConfigurator>((System.IServiceProvider serviceProvider) => {
+                
+                DashboardConfigurator configurator = new DashboardConfigurator();
+                configurator.SetConnectionStringsProvider(new DashboardConnectionStringsProvider(Configuration));
 
+                var dataBaseDashboardStorage = new DataBaseEditaleDashboardStorage(
+                    Configuration.GetConnectionString("AsGozdeDatabase"));
+                configurator.SetDashboardStorage(dataBaseDashboardStorage);
+
+                DataSourceInMemoryStorage dataSourceStorage = new DataSourceInMemoryStorage();
+                configurator.SetDataSourceStorage(dataSourceStorage);
+
+                configurator.ConfigureDataReloadingTimeout += (s, e) => { e.DataReloadingTimeout = TimeSpan.FromSeconds(5); };
+
+
+                return configurator;
+            });
+
+            services.AddDependencyResolvers(new ICoreModule[]
+            {
+                new CoreModule(),
+            });
 
         }
 
@@ -103,9 +141,11 @@ namespace AsGozdeCoreWebSite
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseDevExpressControls();
 
             app.UseEndpoints(endpoints =>
             {
+                EndpointRouteBuilderExtension.MapDashboardRoute(endpoints, "dashboardControl", "DefaultDashboard");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Login}/{action=Index}/{id?}");

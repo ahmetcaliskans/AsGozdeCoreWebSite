@@ -118,8 +118,10 @@
     }
 
 <tr>
-    <td colspan="6"></td>
-    <td><b>@string.Format("Toplam: {0:n2}", Model.Sum(x => x.Debit))</b> </td>
+    <td colspan="3"></td>
+    <td><b>@string.Format("Toplam Taksit Tutarı: {0:n2}", Model.Sum(x => x.PaymentPlanAmount))</b> </td>
+    <td colspan="2"></td>
+    <td><b>@string.Format("Toplam Borç: {0:n2}", Model.Sum(x => x.Debit))</b> </td>
     <td colspan="2"></td>
 </tr>
 

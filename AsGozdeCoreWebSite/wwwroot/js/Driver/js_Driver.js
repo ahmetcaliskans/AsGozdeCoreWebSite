@@ -16,7 +16,7 @@ function js_getDriverByIdWithDetails(Id) {
 			//$('#dataDriver').html(result);
 		},
 		error: function (err) {
-			mesajBox('mesaj', 'UYARI', err.html, 'warning');
+			mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
 		}
 	});
 }
@@ -55,17 +55,74 @@ function js_deleteDriverById(Id) {
 
 		},
 		error: function (err) {
-			if (err.responseText.indexOf('FK_') > -1)
-				mesajBox('mesaj', 'UYARI', 'Bu Tanım Kullanılıyor !', 'warning');
-			else
-				mesajBox('mesaj', 'UYARI', err.responseText, 'danger');
+			mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
 		}
 	});
 
 }
 
+function js_checkDriverForAdd(islem) {
+	var imgDriver = $('#imgDriver').css('background-image');
+	imgDriver = imgDriver.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+
+	if (imgDriver.indexOf('data') < 0) {
+		imgDriver = null;
+	}
+
+	var id = $('#txtId').val();
+
+	let driverInformation = {
+		Id: $('#txtId').val(),
+		SessionId: $('#selectSession option:selected').val(),
+		Name: $('#txtName').val(),
+		Surname: $('#txtSurname').val(),
+		IdentityNo: $('#txtIdentityNo').val(),
+		BranchId: $('#selectBranch option:selected').val(),
+		CourseFee: $('#txtCourseFee').val(),
+		CourseFeePlus: $('#txtCourseFeePlus').val(),
+		Email: $('#txtEmail').val(),
+		Phone1: $('#txtPhone1').val(),
+		Phone2: $('#txtPhone2').val(),
+		City: $('#txtCity').val(),
+		County: $('#txtCounty').val(),
+		Address1: $('#txtAddress1').val(),
+		Address2: $('#txtAddress2').val(),
+		Image: imgDriver,
+		Note: $('#txtNote').val(),
+		RecordDate: $('input[name="txtRecordDate"]').val(),
+		IsCertificateDelivered: chkKontrol('chkIsCertificateDelivered'),
+		CertificateDeliveredDate: $('input[name="txtCertificateDeliveredDate"]').val()
+	};
+
+	var saveState = true;
+	if (id != 0) {
+
+		saveState = js_checkDebitForCourseFeeAndCourseFeePlus(driverInformation);
+		if (!saveState)
+			return;
+
+		saveState = js_checkPaymentPlantTotalAmounts(driverInformation,islem);
+		if (!saveState)
+			return;	
+
+	}
+
+	if (driverInformation.IsCertificateDelivered) {
+		saveState = js_checkDebitForCertificate(driverInformation);
+		if (!saveState)
+			return;	
+
+	}
+
+	
+	
+
+	js_addDriver(islem);
+
+}
+
 /** Kullanıcı tanımı ekleme yada güncelleme işlemi yapılır. */
-function js_addDriver(islem) {
+function js_addDriver(islem) {	
 
 	var imgDriver = $('#imgDriver').css('background-image');
 	imgDriver = imgDriver.replace('url(', '').replace(')', '').replace(/\"/gi, "");
@@ -127,15 +184,104 @@ function js_addDriver(islem) {
 
 		},
 		error: function (err) {
-			mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+			mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
+		}
+	});
+}
+
+function js_checkPaymentPlantTotalAmounts(driverInformation, islem) {
+
+	var state = true;
+
+	$.ajax({
+		async: false,
+		type: "POST",
+		url: "/Driver/CheckPaymentPlanTotalAmounts",
+		data: driverInformation,
+		success: function (data) {
+			var result = data;
+			if (result != null && result!='')
+			{				
+				mesajBox_confirm('UYARI', 'UYARI', result, 'DEVAM ET', 'warning', 'js_addDriver(' + islem + ')');
+				state = false;
+				return state;
+            }
+			else {
+				state = true;
+				return state;
+            }
+		},
+		error: function (err) {
+
+			mesajBox('mesaj', 'UYARI', err.html, 'warning');
+			state = true;
+			return state;
 		}
 	});
 
+	return state;
+}
 
+function js_checkDebitForCourseFeeAndCourseFeePlus(driverInformation) {
+	var state = true;
 
+	$.ajax({
+		async: false,
+		type: "POST",
+		url: "/Driver/CheckDebitForCourseFeeAndCourseFeePlus",
+		data: driverInformation,
+		success: function (data) {
+			var result = data;
+			if (result != null && result != '') {
+				mesajBox('mesaj', 'UYARI', result, 'warning');
+				state = false;
+				return state;
+			}
+			else {
+				state = true;
+				return state;
+			}
+		},
+		error: function (err) {
 
+			mesajBox('mesaj', 'UYARI', err.html, 'warning');
+			state = true;
+			return state;
+		}
+	});
 
+	return state;
+}
 
+function js_checkDebitForCertificate(driverInformation) {
+	var state = true;
+
+	$.ajax({
+		async: false,
+		type: "POST",
+		url: "/Driver/CheckDebitForCertificate",
+		data: driverInformation,
+		success: function (data) {
+			var result = data;
+			if (result != null && result != '') {
+				mesajBox('mesaj', 'UYARI', result, 'warning');
+				state = false;
+				return state;
+			}
+			else {
+				state = true;
+				return state;
+			}
+		},
+		error: function (err) {
+
+			mesajBox('mesaj', 'UYARI', err.html, 'warning');
+			state = true;
+			return state;
+		}
+	});
+
+	return state;
 }
 
 
@@ -216,10 +362,7 @@ function js_deleteDriverPaymentPlanById(Id, CollectionDefinitionType) {
 						
 		},
 		error: function (err) {
-			if (err.responseText.indexOf('FK_') > -1)
-				mesajBox('mesaj', 'UYARI', 'Bu Tanım Kullanılıyor !', 'warning');
-			else
-				mesajBox('mesaj', 'UYARI', err.responseText, 'danger');
+			mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
 		}
 	});
 
@@ -323,7 +466,7 @@ function js_newHirePurchase(CollectionDefinitionType) {
 			$('#dataHirePurchase').html(result);
 		},
 		error: function (err) {
-			mesajBox('mesaj', 'UYARI', err.html, 'warning');
+			mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
 		}
 	});
 

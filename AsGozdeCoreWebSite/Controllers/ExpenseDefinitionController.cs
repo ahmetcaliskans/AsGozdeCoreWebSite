@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,8 @@ namespace AsGozdeCoreWebSite.Controllers
         }
         public IActionResult Index()
         {
+            RoleOperation roleOperation = new RoleOperation("ExpenseDefinition.Show");
+            roleOperation.fn_checkRole();
             var result = _expenseDefinitionService.GetList();
             return View(result.Data);
         }

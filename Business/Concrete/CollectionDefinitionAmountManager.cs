@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
@@ -20,7 +21,7 @@ namespace Business.Concrete
             _collectionDefinitionAmountDal = collectionDefinitionAmountDal;
         }
 
-        
+        [RoleOperation("CollectionDefinitionAmount.Insert")]
         public IResult Add(CollectionDefinitionAmount collectionDefinitionAmount)
         {
             IResult result = BusinessRules.Run(CheckIfCollectionDefinitionAmountExists(collectionDefinitionAmount.Id, collectionDefinitionAmount.CollectionDefinitionId, collectionDefinitionAmount.Year));
@@ -31,27 +32,32 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [RoleOperation("CollectionDefinitionAmount.Delete")]
         public IResult Delete(CollectionDefinitionAmount collectionDefinitionAmount)
         {
             _collectionDefinitionAmountDal.Delete(collectionDefinitionAmount);
             return new SuccessResult(Messages.Deleted);
         }
 
+        
         public IDataResult<CollectionDefinitionAmount> GetById(int collectionDefinitionAmountId)
         {
             return new SuccessDataResult<CollectionDefinitionAmount>(_collectionDefinitionAmountDal.Get(p => p.Id == collectionDefinitionAmountId));
         }
 
+        
         public IDataResult<List<CollectionDefinitionAmount>> GetList()
         {
             return new SuccessDataResult<List<CollectionDefinitionAmount>>(_collectionDefinitionAmountDal.GetList().ToList());
         }
 
+        
         public IDataResult<List<CollectionDefinitionAmount>> GetListWithDetails()
         {
             return new SuccessDataResult<List<CollectionDefinitionAmount>>(_collectionDefinitionAmountDal.GetListWithDetails().ToList());
         }
 
+        [RoleOperation("CollectionDefinitionAmount.Update")]
         public IResult Update(CollectionDefinitionAmount collectionDefinitionAmount)
         {
             IResult result = BusinessRules.Run(CheckIfCollectionDefinitionAmountExists(collectionDefinitionAmount.Id, collectionDefinitionAmount.CollectionDefinitionId, collectionDefinitionAmount.Year));

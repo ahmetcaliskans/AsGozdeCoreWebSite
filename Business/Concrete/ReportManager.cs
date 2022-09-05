@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Dtos;
@@ -15,6 +16,7 @@ namespace Business.Concrete
         {
             _reportDal = reportDal;
         }
+        [RoleOperation("Report/CashReport.Show")]
         public IDataResult<List<sp_rCashReport1>> sp_rCashReport1GetListByParameters(int officeId, DateTime? startDate, DateTime? endDate, int paymentTypeId, int collecitonDefinitionId, int collectionDefinitionTypeId,
             int sessionId, int branchId, int expenseDefinitionId, int fixtureDefinitionId, int personnelDefinitionId)
         {
@@ -22,6 +24,7 @@ namespace Business.Concrete
                 sessionId, branchId, expenseDefinitionId, fixtureDefinitionId, personnelDefinitionId));
         }
 
+        [RoleOperation("Report/CashReport.Show")]
         public IDataResult<List<sp_rCashReport1DetailCollection>> sp_rCashReport1DetailCollectionGetListByParameters(int officeId, DateTime? startDate, DateTime? endDate, int paymentTypeId, int collecitonDefinitionId, int collectionDefinitionTypeId,
             int sessionId, int branchId)
         {
@@ -29,6 +32,7 @@ namespace Business.Concrete
                 sessionId, branchId));
         }
 
+        [RoleOperation("Report/CashReport.Show")]
         public IDataResult<List<sp_rCashReport1DetailExpense>> sp_rCashReport1DetailExpenseGetListByParameters(int officeId, DateTime? startDate, DateTime? endDate, int paymentTypeId, int expenseDefinitionId, int fixtureDefinitionId, 
             int personnelDefinitionId)
         {

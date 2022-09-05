@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -21,6 +22,7 @@ namespace Business.Concrete
             _personnelDefinitionDal = personnelDefinitionDal;
         }
 
+        [RoleOperation("PersonnelDefinition.Insert")]
         [ValidationAspect(typeof(PersonnelDefinitionValidator))]
         public IResult Add(PersonnelDefinition personnelDefinition)
         {
@@ -32,6 +34,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [RoleOperation("PersonnelDefinition.Delete")]
         public IResult Delete(PersonnelDefinition personnelDefinition)
         {
             _personnelDefinitionDal.Delete(personnelDefinition);
@@ -48,6 +51,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<PersonnelDefinition>>(_personnelDefinitionDal.GetList().ToList());
         }
 
+        [RoleOperation("PersonnelDefinition.Update")]
         [ValidationAspect(typeof(PersonnelDefinitionValidator))]
         public IResult Update(PersonnelDefinition personnelDefinition)
         {

@@ -1,0 +1,30 @@
+﻿@model dynamic
+
+@{
+    var _roleTypes = Model.RoleTypes as List<Core.Entities.Concrete.RoleType>;
+    var _selectedId = Model.SelectedId;
+}
+
+<div class="col-md-4 my-2 my-md-0">
+    <div class="d-flex align-items-center">
+        <label class="mr-3 mb-0 d-none d-md-block">Yetki Tipi:</label>
+        <select class="form-control" name="selectRoleType" id="selectRoleType" onchange="js_search_datatableAjax_Role()">
+            @if (_roleTypes != null)
+            {
+                @foreach (var roletype in _roleTypes)
+                {
+                    if (_selectedId != null && _selectedId == roletype.Id)
+                    {
+                        <option selected="" value="@roletype.Id">@roletype.Name</option>
+                    }
+
+                    else
+                    {
+                        <option value="@roletype.Id">@roletype.Name</option>
+                    }
+                 }
+
+             }
+        </select>
+    </div>
+</div>

@@ -21,7 +21,8 @@
         public static string PasswordDoesnotMatchWithAgain = "Yeni Şifre ve Tekrarı Uyuşmuyor !";
 
 
-        public static string AuthorizationDenied = "Yetkiniz Yok !";        
+        public static string AuthorizationDenied = "Yetkiniz Yok !";
+        public static string CannotDeleteAdmin = "Admin Kullanıcısı Silinemez !";
 
     }
 }

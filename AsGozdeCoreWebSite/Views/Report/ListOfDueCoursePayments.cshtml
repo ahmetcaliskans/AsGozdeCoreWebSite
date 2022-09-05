@@ -1,21 +1,21 @@
 ﻿@{
-    ViewData["Title"] = "Rapor";
+    ViewData["Title"] = "Vade Günü Raporu";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <!--begin::Card-->
 <div class="card card-custom">
-    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+    <div class="card-header py-3">
         <div class="card-title">
-            <h3 class="card-label">
-                @ViewData["Title"]
-                <span class="d-block text-muted pt-2 font-size-sm">Vade Günü Gelmiş veya Geçmiş Kurs Ücretleri Listesi</span>
-            </h3>
+            <span class="card-icon">
+                <i class="flaticon2-shopping-cart text-primary"></i>
+            </span>
+            <h3 class="card-label">Vade Günü Geçmiş veya Gelecek Kurs Ücretleri Listesi</h3>
         </div>
         <div class="card-toolbar">
             <!--begin::Dropdown-->
-            <div class="dropdown dropdown-inline mr-2" style="visibility:visible">
+            <div class="dropdown dropdown-inline mr-2">
                 <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="svg-icon svg-icon-md">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
@@ -33,9 +33,8 @@
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                     <!--begin::Navigation-->
                     <ul class="navi flex-column navi-hover py-2">
-                        <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">Seçenekler:</li>
                         <li class="navi-item">
-                            <a href="#" class="navi-link">
+                            <a class="navi-link" id="export_print">
                                 <span class="navi-icon">
                                     <i class="la la-print"></i>
                                 </span>
@@ -43,7 +42,7 @@
                             </a>
                         </li>
                         <li class="navi-item">
-                            <a href="#" class="navi-link">
+                            <a class="navi-link" id="export_copy">
                                 <span class="navi-icon">
                                     <i class="la la-copy"></i>
                                 </span>
@@ -59,7 +58,7 @@
                             </a>
                         </li>
                         <li class="navi-item">
-                            <a href="#" class="navi-link">
+                            <a class="navi-link" id="export_csv">
                                 <span class="navi-icon">
                                     <i class="la la-file-text-o"></i>
                                 </span>
@@ -67,7 +66,7 @@
                             </a>
                         </li>
                         <li class="navi-item">
-                            <a href="#" class="navi-link">
+                            <a class="navi-link" id="export_pdf">
                                 <span class="navi-icon">
                                     <i class="la la-file-pdf-o"></i>
                                 </span>
@@ -79,36 +78,106 @@
                 </div>
                 <!--end::Dropdown Menu-->
             </div>
-            <!--end::Dropdown-->
+            <!--end::Dropdown-->            
+
         </div>
     </div>
     <div class="card-body">
-        <!--begin: Search Form-->
-        <!--begin::Search Form-->
-        <div class="mb-7">
-            <div class="row align-items-center">
-                <div class="col-lg-9 col-xl-8">
-                    <div class="row align-items-center">
-                        <div class="col-md-4 my-2 my-md-0">
-                            <div class="input-icon">
-                                <input type="text" class="form-control" oninput="this.value = this.value.replace('i','İ').replace('ö','Ö').replace('ü','Ü').replace('ç','Ç').replace('ş','Ş').toUpperCase()" placeholder="Ara..." id="datatableAjaxListOfDueCoursePayment_search_query" />
-                                <span>
-                                    <i class="flaticon2-search-1 text-muted"></i>
-                                </span>
-                            </div>
-                        </div>
-
-                        @await Component.InvokeAsync("SessionSearchList", new { id = "kt_datatable_search_listOfDueCoursePaymentSessionName" })
-
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-3 col-xl-3">Vade Tipi</label>
+                    <div class="col-lg-9 col-xl-9">
+                        <select class="form-control selectpicker" name="selectDueType" id="selectDueType" onchange="js_search_ListOfDueCoursePaymentsReport()">
+                            <option selected="" value="0">Vade Günü Geçmiş</option>
+                            <option value="1">Vade Günü Gelecek</option>
+                            <option value="2">Hepsi</option>
+                        </select>
                     </div>
                 </div>
-            </div>
+            </div>            
+
         </div>
-        <!--end::Search Form-->
-        <!--end: Search Form-->
+
+        <!--begin: Search Form-->
+        @*<form>
+            <div class="row mt-8">
+                <div class="col-lg-12">
+                    <a class="btn btn-primary btn-primary--icon" onclick="js_search_ListOfDueCoursePaymentsReport()" id="btn_Search_ListOfDueCoursePaymentsReport">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>SORGULA</span>
+                        </span>
+                    </a>&#160;&#160;
+                    <button class="btn btn-secondary btn-secondary--icon">
+                        <span>
+                            <i class="la la-close"></i>
+                            <span>SIFIRLA</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>*@
+        <!--end: Search Form-->        
+
         <!--begin: Datatable-->
-        <div class="datatable datatable-bordered datatable-head-custom" id="datatableAjax_ListOfDueCoursePayment"></div>
+        <table class="table table-separate table-head-custom table-checkable" id="datatable_ListOfDueCoursePaymentsReport">
+            <thead>
+                <tr>
+                    <th>ADI SOYADI</th>
+                    <th>TC KİMLİK NO</th>
+                    <th>TELEFON 1</th>
+                    <th>KURS ÜCRETİ</th>
+                    <th>İLAVE 4 HAK KURS ÜCRETİ</th>
+                    <th>ÖDEME PLANI ADI</th>
+                    <th>ÖDEME PLANI TARİHİ</th>
+                    <th>ÖDEME PLANI TUTARI</th>
+                    <th>KALAN BORÇ</th>
+                    <th>DÖNEM</th>
+                    <th>BRANŞ</th>
+                    <th>ŞUBE</th>
+                    <th>İŞLEM</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
         <!--end: Datatable-->
+
+        <div class="col-lg-12">
+            <div class="separator separator-dashed my-10"></div>
+        </div>
+        
     </div>
 </div>
 <!--end::Card-->
+
+<script>
+    function js_search_ListOfDueCoursePaymentsReport() {
+
+        var dueType = $('#selectDueType option:selected').val();     
+        
+
+        var tableListOfDueCoursePaymentsReport = $('#datatable_ListOfDueCoursePaymentsReport').DataTable();
+        tableListOfDueCoursePaymentsReport.ajax.url(window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/Report/GetListOfDueCoursePayments?'+        
+            'dueType=' + dueType + '').load();       
+
+        
+    };   
+
+</script>

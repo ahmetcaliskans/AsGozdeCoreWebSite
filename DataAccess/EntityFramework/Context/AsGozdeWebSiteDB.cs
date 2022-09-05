@@ -24,7 +24,7 @@ namespace DataAccess.EntityFramework.Context
 
         public DbSet<User> Users { get; set; }
         public DbSet<RoleType> RoleTypes { get; set; }
-        public DbSet<RoleDefinition> RoleDefinitions { get; set; }
+        public DbSet<RoleFormDefinition> RoleFormDefinitions { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<sp_GetRole> Sp_GetRoles { get; set; }
 
@@ -62,6 +62,7 @@ namespace DataAccess.EntityFramework.Context
 
             modelBuilder.HasDbFunction(() => fn_GetDriverBalance(default(int)));
 
+            modelBuilder.Entity<sp_GetRole>().HasNoKey();
             modelBuilder.Entity<sp_GetListOfDueCoursePayment>().HasNoKey();
             modelBuilder.Entity<sp_GetPayment>().HasNoKey();
             modelBuilder.Entity<sp_GetSequentialPayment>().HasNoKey();
@@ -83,36 +84,33 @@ namespace DataAccess.EntityFramework.Context
 
 
 
-            ///AuthorizationType
+            ///RoleType
             modelBuilder.Entity<RoleType>().HasKey(e => e.Id);
             modelBuilder.Entity<RoleType>().Property(e => e.Name).IsRequired().HasMaxLength(50);
             modelBuilder.Entity<RoleType>().Property(e => e.Description).HasMaxLength(150);
             modelBuilder.Entity<RoleType>().HasMany(e => e.Users).WithOne(e => e.RoleType).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
-            modelBuilder.Entity<RoleType>().HasMany(e => e.Roles).WithOne(e => e.RoleType).OnDelete(DeleteBehavior.Cascade); // <= This entity has cascade behaviour on deletion
+            modelBuilder.Entity<RoleType>().HasMany(e => e.Roles).WithOne(e => e.RoleType).OnDelete(DeleteBehavior.Restrict); // <= This entity has cascade behaviour on deletion
 
 
 
-            ///AuthorizationDefinition
-            modelBuilder.Entity<RoleDefinition>().HasKey(e => e.Id);
-            modelBuilder.Entity<RoleDefinition>().Property(e => e.FormName).IsRequired().HasMaxLength(100);
-            modelBuilder.Entity<RoleDefinition>().Property(e => e.FormSubName).HasMaxLength(100);
-            modelBuilder.Entity<RoleDefinition>().Property(e => e.SpecialRole1Description).HasMaxLength(150);
-            modelBuilder.Entity<RoleDefinition>().Property(e => e.SpecialRole2Description).HasMaxLength(150);
-            modelBuilder.Entity<RoleDefinition>().Property(e => e.SpecialRole3Description).HasMaxLength(150);
-            modelBuilder.Entity<RoleDefinition>().Property(e => e.SpecialRole4Description).HasMaxLength(150);
-            modelBuilder.Entity<RoleDefinition>().Property(e => e.SpecialRole5Description).HasMaxLength(150);
+
+            ///RoleDefinition
+            modelBuilder.Entity<RoleFormDefinition>().HasKey(e => e.Id);
+            modelBuilder.Entity<RoleFormDefinition>().Property(e => e.FormName).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<RoleFormDefinition>().Property(e => e.FormSubName).HasMaxLength(100);
+            modelBuilder.Entity<RoleFormDefinition>().Property(e => e.Description).IsRequired().HasMaxLength(200);
+            modelBuilder.Entity<RoleFormDefinition>().Property(e => e.SpecialRole1Description).HasMaxLength(150);
+            modelBuilder.Entity<RoleFormDefinition>().Property(e => e.SpecialRole2Description).HasMaxLength(150);
+            modelBuilder.Entity<RoleFormDefinition>().Property(e => e.SpecialRole3Description).HasMaxLength(150);
+            modelBuilder.Entity<RoleFormDefinition>().Property(e => e.SpecialRole4Description).HasMaxLength(150);
+            modelBuilder.Entity<RoleFormDefinition>().Property(e => e.SpecialRole5Description).HasMaxLength(150);
+            modelBuilder.Entity<RoleFormDefinition>().HasMany(e => e.Roles).WithOne(e => e.RoleFormDefinition).OnDelete(DeleteBehavior.Restrict); // <= This entity has cascade behaviour on deletion
 
 
 
-            ///Authorization
+            ///Role
             modelBuilder.Entity<Role>().HasKey(e => e.Id);
-            modelBuilder.Entity<Role>().Property(e => e.FormName).IsRequired().HasMaxLength(100);
-            modelBuilder.Entity<Role>().Property(e => e.FormSubName).HasMaxLength(100);
-            modelBuilder.Entity<Role>().Property(e => e.SpecialRole1Description).HasMaxLength(150);
-            modelBuilder.Entity<Role>().Property(e => e.SpecialRole2Description).HasMaxLength(150);
-            modelBuilder.Entity<Role>().Property(e => e.SpecialRole3Description).HasMaxLength(150);
-            modelBuilder.Entity<Role>().Property(e => e.SpecialRole4Description).HasMaxLength(150);
-            modelBuilder.Entity<Role>().Property(e => e.SpecialRole5Description).HasMaxLength(150);
+
 
 
 

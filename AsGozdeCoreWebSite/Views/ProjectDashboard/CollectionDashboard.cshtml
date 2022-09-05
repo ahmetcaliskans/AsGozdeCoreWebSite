@@ -1,0 +1,39 @@
+﻿@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+<!-- Add the following namespace usages: -->
+
+@model DashboardControlModel
+
+<link href="~/css/devexpress/site.min.css" rel="stylesheet" />
+<script src="~/js/devexpress/site.min.js"></script>
+@*<script src="~/js/devexpress/GridHyperlinkOptionsExtension.js"></script>*@
+
+<script type="text/javascript">function onBeforeRender(dashboardControl) {
+            /*dashboardControl.GetDashboardControl().reloadData();*/
+            //alert("");
+            //dashboardControl.refresh();
+            /*dashboardControl.registerExtension(new GridHyperlinkOptionsExtension(dashboardControl));*/
+        }</script>
+
+
+<div style="position: center; left:0;top:0;right:0;bottom:0; height:100%">
+    @(Html.DevExpress().Dashboard("cliestdashboardControlCollection")
+            .ControllerName("DefaultDashboard")
+            .Width("100%")
+            .Height("100%")
+            .WorkingMode(@Model.WorkingMode)
+            .InitialDashboardId(@Model.DashboardId.ToString())
+            .InitialDashboardState(@Model.DashboardState.SaveToJson())
+            .Extensions(ext =>
+            {
+                ext.DataInspector(options =>
+                {
+                    options.AllowInspectAggregatedData(true);
+                    options.AllowInspectRawData(true);
+                });
+            })
+        //.OnBeforeRender("onBeforeRender")
+
+        )
+</div>
+
+

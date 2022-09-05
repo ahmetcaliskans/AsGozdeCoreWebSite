@@ -15,9 +15,9 @@ namespace Business.Concrete
         {
             _sp_GetListOfDueCoursePaymentDal = sp_GetListOfDueCoursePaymentDal;
         }
-        public IDataResult<List<sp_GetListOfDueCoursePayment>> GetList(DateTime dueDate, int officeId)
+        public IDataResult<List<sp_GetListOfDueCoursePayment>> GetList(int dueType, int officeId)
         {
-            return new SuccessDataResult<List<sp_GetListOfDueCoursePayment>>(_sp_GetListOfDueCoursePaymentDal.GetList(dueDate,officeId));
+            return new SuccessDataResult<List<sp_GetListOfDueCoursePayment>>(_sp_GetListOfDueCoursePaymentDal.GetList(dueType, officeId));
         }
     }
 }

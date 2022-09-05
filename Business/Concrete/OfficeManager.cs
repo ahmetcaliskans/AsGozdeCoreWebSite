@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -32,6 +33,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Office>>(_officeDal.GetList().ToList());
         }
 
+        [RoleOperation("Office.Insert")]
         [ValidationAspect(typeof(OfficeValidator))]
         public IResult Add(Office office)
         {
@@ -43,12 +45,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [RoleOperation("Office.Delete")]
         public IResult Delete(Office office)
         {
             _officeDal.Delete(office);
             return new SuccessResult(Messages.Deleted);
         }
 
+        [RoleOperation("Office.Update")]
         [ValidationAspect(typeof(OfficeValidator))]
         public IResult Update(Office office)
         {

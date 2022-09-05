@@ -20,7 +20,7 @@ namespace Business.Concrete
         {
             _collectionDefinitionTypeDal = collectionDefinitionTypeDal;
         }
-
+        
         //[ValidationAspect(typeof(CollectionDefinitionTypeValidator))]
         public IResult Add(CollectionDefinitionType collectionDefinitionType)
         {

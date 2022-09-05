@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -19,6 +20,7 @@ namespace Business.Concrete
             _driverPaymentPlanDal = driverPaymentPlanDal;
         }
 
+        [RoleOperation("DriverPaymentPlan.Insert")]
         public IResult Add(DriverPaymentPlan driverPaymentPlan)
         {
             IResult result = BusinessRules.Run(CheckIfdriverPaymentPlanNameExists(driverPaymentPlan.Id, driverPaymentPlan.DriverInformationId, driverPaymentPlan.PaymentDate, driverPaymentPlan.CollectionDefinitionType));
@@ -29,27 +31,29 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [RoleOperation("DriverPaymentPlan.Delete")]
         public IResult Delete(DriverPaymentPlan driverPaymentPlan)
         {
             _driverPaymentPlanDal.Delete(driverPaymentPlan);
             return new SuccessResult(Messages.Deleted);
         }
-
+        
         public IDataResult<DriverPaymentPlan> GetById(int driverPaymentPlanId)
         {
             return new SuccessDataResult<DriverPaymentPlan>(_driverPaymentPlanDal.Get(p => p.Id == driverPaymentPlanId));
         }
-
+        
         public IDataResult<List<DriverPaymentPlan>> GetList()
         {
             return new SuccessDataResult<List<DriverPaymentPlan>>(_driverPaymentPlanDal.GetList().ToList());
         }
-
+        
         public IDataResult<List<DriverPaymentPlan>> GetListByDriverInformationId(int driverInformationId, int collectionDefinitionType)
         {
             return new SuccessDataResult<List<DriverPaymentPlan>>(_driverPaymentPlanDal.GetList(x=>x.DriverInformationId == driverInformationId && x.CollectionDefinitionType == collectionDefinitionType).ToList());
         }
 
+        [RoleOperation("DriverPaymentPlan.Update")]
         public IResult Update(DriverPaymentPlan driverPaymentPlan)
         {
             IResult result = BusinessRules.Run(CheckIfdriverPaymentPlanNameExists(driverPaymentPlan.Id, driverPaymentPlan.DriverInformationId, driverPaymentPlan.PaymentDate, driverPaymentPlan.CollectionDefinitionType));

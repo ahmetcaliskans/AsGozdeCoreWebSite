@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using Entities.Concrete;
@@ -42,6 +43,8 @@ namespace AsGozdeCoreWebSite.Controllers
             //    return View(result.Data.OrderByDescending(x => x.CollectionDate).ThenByDescending(x=>x.Id).ToList());
             //}
 
+            RoleOperation roleOperation = new RoleOperation("Collection.Show");
+            roleOperation.fn_checkRole();
             return View();
         }
 
@@ -210,6 +213,8 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpPost]
         public IActionResult PrintCollection(int id)
         {
+            RoleOperation roleOperation = new RoleOperation("Collection.Print");
+            roleOperation.fn_checkRole();
             dynamic dynamicResult = new System.Dynamic.ExpandoObject();
             var result = _collectionService.GetByIdWithDetails(id);
             if (result.Success && result.Data != null)

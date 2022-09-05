@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,8 @@ namespace AsGozdeCoreWebSite.Controllers
         }
         public IActionResult Index()
         {
+            RoleOperation roleOperation = new RoleOperation("PersonnelDefinition.Show");
+            roleOperation.fn_checkRole();
             var result = _personnelDefinitionService.GetListWithDetails(Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
             return View(result.Data);
         }

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,8 @@ namespace AsGozdeCoreWebSite.Controllers
         }
         public IActionResult Index()
         {
+            RoleOperation roleOperation = new RoleOperation("Expense.Show");
+            roleOperation.fn_checkRole();
             return View();
         }
 

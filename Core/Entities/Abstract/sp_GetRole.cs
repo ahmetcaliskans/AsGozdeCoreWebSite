@@ -6,13 +6,14 @@ namespace Core.Entities.Abstract
 {
     public class sp_GetRole : IDto
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int RoleTypeId { get; set; }
         public string RoleTypeName { get; set; }
         public string RoleTypeDescription { get; set; }
-        public int RoleDefinitionId { get; set; }
-        public int FormName { get; set; }
+        public int RoleFormDefinitionId { get; set; }
+        public string FormName { get; set; }
         public string FormSubName { get; set; }
+        public string Description { get; set; }
         public bool Show { get; set; }
         public bool Insert { get; set; }
         public bool Update { get; set; }

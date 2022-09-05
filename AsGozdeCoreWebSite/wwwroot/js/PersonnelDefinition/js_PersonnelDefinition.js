@@ -94,7 +94,7 @@ function js_addPersonnelDefinition() {
 			location.reload();
 		},
 		error: function (err) {
-			mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+			mesajBox('mesaj', 'UYARI', messageParse(err.responseText), 'warning');
 		}
 	});
 

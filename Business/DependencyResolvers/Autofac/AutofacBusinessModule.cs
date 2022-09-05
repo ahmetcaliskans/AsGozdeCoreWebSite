@@ -68,6 +68,18 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<PersonnelDefinitionManager>().As<IPersonnelDefinitionService>();
             builder.RegisterType<EfPersonnelDefinitionDal>().As<IPersonnelDefinitionDal>();
 
+            builder.RegisterType<RoleTypeManager>().As<IRoleTypeService>();
+            builder.RegisterType<EfRoleTypeDal>().As<IRoleTypeDal>();
+
+            builder.RegisterType<RoleFormDefinitionManager>().As<IRoleFormDefinitionService>();
+            builder.RegisterType<EfRoleFormDefinitionDal>().As<IRoleFormDefinitionDal>();
+
+            builder.RegisterType<RoleManager>().As<IRoleService>();
+            builder.RegisterType<EfRoleDal>().As<IRoleDal>();
+
+            builder.RegisterType<Sp_GetRoleManager>().As<Isp_GetRoleService>();
+            builder.RegisterType<Efsp_GetRoleDal>().As<Isp_GetRoleDal>();
+
             builder.RegisterType<Sp_GetListOfDueCoursePaymentManager>().As<Isp_GetListOfDueCoursePaymentService>();
             builder.RegisterType<Efsp_GetListOfDueCoursePaymentDal>().As<Isp_GetListOfDueCoursePaymentDal>();
 

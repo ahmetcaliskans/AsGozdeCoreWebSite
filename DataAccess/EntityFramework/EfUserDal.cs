@@ -25,6 +25,9 @@ namespace DataAccess.EntityFramework
                              join o in context.Offices
                              on u.OfficeId equals o.Id into tmp
                              from o in tmp.DefaultIfEmpty()
+                             join r in context.RoleTypes
+                             on u.RoleTypeId equals r.Id into tmp2 
+                             from r in tmp2.DefaultIfEmpty()
                              select new UserForRegisterDto
                              {
                                  UserId = u.UserId,
@@ -35,7 +38,7 @@ namespace DataAccess.EntityFramework
                                  OfficeId = u.OfficeId,
                                  OfficeName = o.Name,
                                  RoleId = u.RoleTypeId,
-                                 RoleName = "Deneme",
+                                 RoleName = r.Name,
                                  Title = u.Title
                              };
                 return result.ToList();

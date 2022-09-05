@@ -8,6 +8,6 @@ namespace Business.Abstract
 {
     public interface Isp_GetListOfDueCoursePaymentService
     {
-        IDataResult<List<sp_GetListOfDueCoursePayment>> GetList(DateTime dueDate, int officeId);
+        IDataResult<List<sp_GetListOfDueCoursePayment>> GetList(int dueType, int officeId);
     }
 }

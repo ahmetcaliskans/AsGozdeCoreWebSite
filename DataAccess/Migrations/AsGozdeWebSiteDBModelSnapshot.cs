@@ -21,22 +21,23 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Core.Entities.Abstract.sp_GetRole", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<bool>("Delete")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Export")
                         .HasColumnType("bit");
 
-                    b.Property<int>("FormName")
-                        .HasColumnType("int");
+                    b.Property<string>("FormName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FormSubName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Insert")
                         .HasColumnType("bit");
@@ -45,6 +46,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("RoleDefinitionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleFormDefinitionId")
                         .HasColumnType("int");
 
                     b.Property<string>("RoleTypeDescription")
@@ -92,8 +96,6 @@ namespace DataAccess.Migrations
                     b.Property<bool>("Update")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
-
                     b.ToTable("Sp_GetRoles");
                 });
 
@@ -110,19 +112,14 @@ namespace DataAccess.Migrations
                     b.Property<bool>("Export")
                         .HasColumnType("bit");
 
-                    b.Property<int>("FormName")
-                        .HasMaxLength(100)
-                        .HasColumnType("int");
-
-                    b.Property<string>("FormSubName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<bool>("Insert")
                         .HasColumnType("bit");
 
                     b.Property<bool>("Print")
                         .HasColumnType("bit");
+
+                    b.Property<int>("RoleFormDefinitionId")
+                        .HasColumnType("int");
 
                     b.Property<int>("RoleTypeId")
                         .HasColumnType("int");
@@ -133,119 +130,74 @@ namespace DataAccess.Migrations
                     b.Property<bool>("SpecialRole1")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SpecialRole1Description")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
                     b.Property<bool>("SpecialRole2")
                         .HasColumnType("bit");
-
-                    b.Property<string>("SpecialRole2Description")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("SpecialRole3")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SpecialRole3Description")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
                     b.Property<bool>("SpecialRole4")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SpecialRole4Description")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
                     b.Property<bool>("SpecialRole5")
                         .HasColumnType("bit");
-
-                    b.Property<string>("SpecialRole5Description")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("Update")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleFormDefinitionId");
 
                     b.HasIndex("RoleTypeId");
 
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("Core.Entities.Concrete.RoleDefinition", b =>
+            modelBuilder.Entity("Core.Entities.Concrete.RoleFormDefinition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Delete")
-                        .HasColumnType("bit");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<bool>("Export")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("FormName")
+                    b.Property<string>("FormName")
+                        .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FormSubName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("Insert")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Print")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Show")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("SpecialRole1")
-                        .HasColumnType("bit");
-
                     b.Property<string>("SpecialRole1Description")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<bool>("SpecialRole2")
-                        .HasColumnType("bit");
 
                     b.Property<string>("SpecialRole2Description")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<bool>("SpecialRole3")
-                        .HasColumnType("bit");
-
                     b.Property<string>("SpecialRole3Description")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<bool>("SpecialRole4")
-                        .HasColumnType("bit");
 
                     b.Property<string>("SpecialRole4Description")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<bool>("SpecialRole5")
-                        .HasColumnType("bit");
-
                     b.Property<string>("SpecialRole5Description")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<bool>("Update")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
-                    b.ToTable("RoleDefinitions");
+                    b.ToTable("RoleFormDefinitions");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.RoleType", b =>
@@ -1180,6 +1132,9 @@ namespace DataAccess.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DocumentNo")
                         .HasColumnType("nvarchar(max)");
 
@@ -1410,13 +1365,56 @@ namespace DataAccess.Migrations
                     b.ToTable("Sp_rCashReport1DetailCollections");
                 });
 
+            modelBuilder.Entity("Entities.Dtos.sp_rCashReport1DetailExpense", b =>
+                {
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DocumentNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExpenseDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExpenseDefinitionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FixtureDefinitionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OfficeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentTypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonnelNameSurname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Sp_rCashReport1DetailExpenses");
+                });
+
             modelBuilder.Entity("Core.Entities.Concrete.Role", b =>
                 {
+                    b.HasOne("Core.Entities.Concrete.RoleFormDefinition", "RoleFormDefinition")
+                        .WithMany("Roles")
+                        .HasForeignKey("RoleFormDefinitionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Core.Entities.Concrete.RoleType", "RoleType")
                         .WithMany("Roles")
                         .HasForeignKey("RoleTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("RoleFormDefinition");
 
                     b.Navigation("RoleType");
                 });
@@ -1588,6 +1586,11 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Office");
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.RoleFormDefinition", b =>
+                {
+                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.RoleType", b =>

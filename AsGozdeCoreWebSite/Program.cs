@@ -30,5 +30,6 @@ namespace AsGozdeCoreWebSite
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }

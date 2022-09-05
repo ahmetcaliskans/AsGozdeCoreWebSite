@@ -9,7 +9,7 @@ namespace Entities.Dtos
     {
         public int Id { get; set; }
         public string DocumentNo { get; set; }
-        public string ExpenseDate { get; set; }
+        public DateTime ExpenseDate { get; set; }
         public string Description { get; set; }
         public string PaymentTypeName { get; set; }
         public string ExpenseDefinitionName { get; set; }

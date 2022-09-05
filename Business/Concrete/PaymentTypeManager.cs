@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -20,6 +21,7 @@ namespace Business.Concrete
             _paymentTypeDal = paymentTypeDal;
         }
 
+        [RoleOperation("PaymentType.Insert")]
         public IResult Add(PaymentType paymentType)
         {
             IResult result = BusinessRules.Run(CheckIfpaymentTypeNameExists(paymentType.Id, paymentType.Name));
@@ -30,6 +32,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [RoleOperation("PaymentType.Delete")]
         public IResult Delete(PaymentType paymentType)
         {
             _paymentTypeDal.Delete(paymentType);
@@ -51,6 +54,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<PaymentType>>(_paymentTypeDal.GetList().ToList());
         }
 
+        [RoleOperation("PaymentType.Update")]
         public IResult Update(PaymentType paymentType)
         {
             IResult result = BusinessRules.Run(CheckIfpaymentTypeNameExists(paymentType.Id, paymentType.Name));

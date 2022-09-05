@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,8 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]
         public IActionResult CashReport()
         {
+            RoleOperation roleOperation = new RoleOperation("Report/CashReport.Show");
+            roleOperation.fn_checkRole();
             ViewData["OfficeId"] = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
             return View("CashReport");
         }
@@ -68,12 +71,14 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]
         public IActionResult ListOfDueCoursePayments()
         {
+            RoleOperation roleOperation = new RoleOperation("Report/ListOfDueCoursePayments.Show");
+            roleOperation.fn_checkRole();
             return View("ListOfDueCoursePayments");
         }
 
-        public IActionResult GetListOfDueCoursePayments()
+        public IActionResult GetListOfDueCoursePayments(int dueType)
         {
-            var result = _sp_GetListOfDueCoursePaymentService.GetList(DateTime.Now.Date, Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
+            var result = _sp_GetListOfDueCoursePaymentService.GetList(dueType, Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value));
             if (result.Data != null)
             {
                 return Json(result.Data);

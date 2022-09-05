@@ -21,7 +21,7 @@ namespace Entities.Dtos
         public decimal Amount { get; set; }
         public decimal Hour { get; set; }
         public string DocumentNo { get; set; }
-        public string CollectionDate { get; set; }
+        public DateTime CollectionDate { get; set; }
         public int CollectionId { get; set; }
         public int CollectionDetailId { get; set; }
     }

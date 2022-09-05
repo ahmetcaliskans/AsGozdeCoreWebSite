@@ -1,6 +1,7 @@
 ﻿@{
 
-    string activeController = Url.ActionContext.RouteData.Values["controller"].ToString();    
+    string activeController = Url.ActionContext.RouteData.Values["controller"].ToString();
+    var roles = AsGozdeCoreWebSite.Controllers.HomeController.Roles;
 }
 
 
@@ -112,7 +113,7 @@
                             </li>
 
                             <!--/Sürücü Adayı İşlemleri-->
-                            <li class="@((activeController == "Driver") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
+                            <li id="liDriver" hidden="" class="@((activeController == "Driver") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -136,20 +137,25 @@
                                                 <span class="menu-text">Sürücü Adayı İşlemleri</span>
                                             </span>
                                         </li>
-                                        <li class="@((activeController == "Driver") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/Driver/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Sürücü Adayı Listesi</span>
-                                            </a>
-                                        </li>
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "Driver" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "Driver") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/Driver/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Sürücü Adayı Listesi</span>
+                                                </a>
+                                            </li>
+                                        }
+
                                     </ul>
                                 </div>
                             </li>
                             <!--/Sürücü Adayı İşlemleri-->
                             <!--Ödeme İşlemleri-->
-                            <li class="@((activeController == "Collection" || activeController == "Collection2") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
+                            <li id="liPayment" hidden="" class="@((activeController == "Collection" || activeController == "Expense") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -173,28 +179,39 @@
                                                 <span class="menu-text">Ödeme İşlemleri</span>
                                             </span>
                                         </li>
-                                        <li class="@((activeController == "Collection") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/Collection/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Tahsilat Listesi</span>
-                                            </a>
-                                        </li>
-                                        <li class="@((activeController == "Expense") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/Expense/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Gider Listesi</span>
-                                            </a>
-                                        </li>
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "Collection" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "Collection") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/Collection/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Tahsilat Listesi</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "Expense" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "Expense") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/Expense/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Gider Listesi</span>
+                                                </a>
+                                            </li>
+                                        }
+
                                     </ul>
                                 </div>
                             </li>
                             <!--/Ödeme İşlemleri-->
                             <!--Raporlar-->
-                            <li class="@((activeController == "Report") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
+                            <li id="liReport" hidden="" class="@((activeController == "Report") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -218,28 +235,104 @@
                                                 <span class="menu-text">Raporlar</span>
                                             </span>
                                         </li>
-                                        <li class="menu-item" aria-haspopup="true">
-                                            <a href="/Report/CashReport" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Kasa Raporu</span>
-                                            </a>
-                                        </li>
-                                        <li class="menu-item" aria-haspopup="true">
-                                            <a href="/Report/ListOfDueCoursePayments" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Vade Günü Gelmiş veya Geçmiş Kurs Ücretleri Raporu</span>
-                                            </a>
-                                        </li>
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "Report" && x.FormSubName == "CashReport" && x.Show).Any()))
+                                        {
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="/Report/CashReport" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Kasa Raporu</span>
+                                                </a>
+                                            </li>
+                                        }
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "Report" && x.FormSubName == "ListOfDueCoursePayments" && x.Show).Any()))
+                                        {
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="/Report/ListOfDueCoursePayments" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Vade Günü Gelmiş veya Geçmiş Kurs Ücretleri Raporu</span>
+                                                </a>
+                                            </li>
+                                        }
+
                                     </ul>
                                 </div>
                             </li>
                             <!--/Raporlar-->
+                            <!--Dashboard-->
+                            <li id="liDashboard" hidden="" class="@((activeController == "ProjectDashboard") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <span class="svg-icon menu-icon">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24" />
+                                                <rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5" />
+                                                <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" fill="#000000" opacity="0.3" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-text">Dashboard</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item menu-item-parent" aria-haspopup="true">
+                                            <span class="menu-link">
+                                                <span class="menu-text">Dashboard</span>
+                                            </span>
+                                        </li>
+                                        @if (User.Identity.Name == "admin")
+                                        {
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="/ProjectDashboard/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Design</span>
+                                                </a>
+                                            </li>
+                                        }
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "ProjectDashboard" && x.FormSubName == "Collection" && x.Show).Any()))
+                                        {
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="/ProjectDashboard/Collection" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Tahsilat</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "ProjectDashboard" && x.FormSubName == "Expense" && x.Show).Any()))
+                                        {
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="/ProjectDashboard/Expense" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Gider</span>
+                                                </a>
+                                            </li>
+                                        }
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <!--/Dashboard-->
                             <!--Tanımlar-->
-                            <li class="@((activeController == "User" || activeController == "Office" || activeController == "Session" || activeController == "Branch" || activeController == "CollectionDefinition" || activeController == "CollectionDefinitionAmount" || activeController == "PaymentType" || activeController == "User2" || activeController == "ExpenseDefinition" ||activeController == "FixtureDefinition" || activeController == "PersonnelDefinition") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
+                            <li id="liSettings" hidden="" class="@((activeController == "User" || activeController == "Office" || activeController == "Session" || activeController == "Branch" || activeController == "CollectionDefinition" || activeController == "CollectionDefinitionAmount" || activeController == "PaymentType" || activeController == "User2" || activeController == "ExpenseDefinition" ||activeController == "FixtureDefinition" || activeController == "PersonnelDefinition" || activeController == "RoleType" || activeController == "Role" || activeController == "RoleFormDefinition") ? "menu-item menu-item-submenu menu-item-open menu-item-here" : "menu-item menu-item-submenu")" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="javascript:;" class="menu-link menu-toggle">
                                     <span class="svg-icon menu-icon">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
@@ -263,86 +356,174 @@
                                                 <span class="menu-text">Tanımlar</span>
                                             </span>
                                         </li>
-                                        <li class="@((activeController == "User") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/User/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Kullanıcı Tanımları</span>
-                                            </a>
-                                        </li>
-                                        <li class="@((activeController == "Office") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/Office/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Şube Tanımları</span>
-                                            </a>
-                                        </li>
-                                        <li class="@((activeController == "Session") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/Session/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Dönem Tanımları</span>
-                                            </a>
-                                        </li>
-                                        <li class="@((activeController == "Branch") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/Branch/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Branş Tanımları</span>
-                                            </a>
-                                        </li>
-                                        <li class="@((activeController == "PaymentType") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/PaymentType/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Ödeme Tipi Tanımları</span>
-                                            </a>
-                                        </li>
-                                        <li class="@((activeController == "CollectionDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/CollectionDefinition/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Tahsilat Tanımları</span>
-                                            </a>
-                                        </li>
-                                        <li class="@((activeController == "CollectionDefinitionAmount") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/CollectionDefinitionAmount/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Tahsilat Ücret Tanımları</span>
-                                            </a>
-                                        </li>
-                                        <li class="@((activeController == "ExpenseDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/ExpenseDefinition/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Gider Tanımları</span>
-                                            </a>
-                                        </li>
-                                        <li class="@((activeController == "FixtureDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/FixtureDefinition/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Demirbaş Tanımları</span>
-                                            </a>
-                                        </li>
-                                        <li class="@((activeController == "PersonnelDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
-                                            <a href="/PersonnelDefinition/Index" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Personnel Tanımları</span>
-                                            </a>
-                                        </li>
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "User" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "User") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/User/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Kullanıcı Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "Role" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "Role") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/Role/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Yetkilendirme İşlemleri</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "RoleType" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "RoleType") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/RoleType/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Yetki Tipi Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+                                        @if (User.Identity.Name == "admin")
+                                        {
+                                            <li class="@((activeController == "RoleFormDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/RoleFormDefinition/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Yetki Form Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "Office" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "Office") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/Office/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Şube Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "Session" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "Session") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/Session/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Dönem Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "Branch" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "Branch") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/Branch/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Branş Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "PaymentType" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "PaymentType") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/PaymentType/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Ödeme Tipi Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "CollectionDefinition" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "CollectionDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/CollectionDefinition/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Tahsilat Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "CollectionDefinitionAmount" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "CollectionDefinitionAmount") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/CollectionDefinitionAmount/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Tahsilat Ücret Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "ExpenseDefinition" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "ExpenseDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/ExpenseDefinition/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Gider Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "FixtureDefinition" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "FixtureDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/FixtureDefinition/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Demirbaş Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
+
+                                        @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "PersonnelDefinition" && x.Show).Any()))
+                                        {
+                                            <li class="@((activeController == "PersonnelDefinition") ? "menu-item menu-item-active" : "menu-item")" aria-haspopup="true">
+                                                <a href="/PersonnelDefinition/Index" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Personel Tanımları</span>
+                                                </a>
+                                            </li>
+                                        }
+
                                     </ul>
                                 </div>
                             </li>
@@ -498,6 +679,9 @@
     <script charset="utf-8" type="text/javascript" src="~/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
     <script charset="utf-8" type="text/javascript" src="~/assets/js/scripts.bundle.js"></script>
     <!--end::Global Theme Bundle-->
+
+    <script charset="utf-8" type="text/javascript" src="~/js/site.js"></script>
+
     <!--begin::Page Vendors(used by this page)-->
     <!--<script src="~/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>-->
     <!--end::Page Vendors-->
@@ -514,14 +698,14 @@
     <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js"></script>
     <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/file-upload/image-input.js"></script>
     <!--end::Page Scripts-->
-    <script charset="utf-8" type="text/javascript" src="~/js/site.js"></script>
+
 
     <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
     <script src="~/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="~/assets/js/pages/crud/datatables/extensions/datatables-buttons-custom.js"></script>
 
-
     @RenderSection("Scripts", required: false)
+
 </body>
 <!--end::Body-->
 </html>

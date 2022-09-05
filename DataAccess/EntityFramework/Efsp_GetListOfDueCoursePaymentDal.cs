@@ -13,11 +13,11 @@ namespace DataAccess.EntityFramework
 {
     public class Efsp_GetListOfDueCoursePaymentDal : EfDtoRepositoryBase<sp_GetListOfDueCoursePayment, AsGozdeWebSiteDB>, Isp_GetListOfDueCoursePaymentDal
     {
-        public List<sp_GetListOfDueCoursePayment> GetList(DateTime dueDate, int officeId)
+        public List<sp_GetListOfDueCoursePayment> GetList(int dueType, int officeId)
         {
             using (AsGozdeWebSiteDB context = new AsGozdeWebSiteDB())
             {
-                var result = context.Sp_GetListOfDueCoursePayments.FromSqlRaw("sp_GetListOfDueCoursePayments @p0,@p1",dueDate.Date,officeId);
+                var result = context.Sp_GetListOfDueCoursePayments.FromSqlRaw("sp_GetListOfDueCoursePayments @p0,@p1",dueType,officeId);
                 return result.ToList();
             }
         }

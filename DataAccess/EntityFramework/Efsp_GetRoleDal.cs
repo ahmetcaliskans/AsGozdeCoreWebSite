@@ -20,5 +20,14 @@ namespace DataAccess.EntityFramework
                 return result.ToList();
             }
         }
+
+        public sp_GetRole GetRoleByRoleTypeIdAndRoleFormDefinitionId(int roleTypeId, int roleFormDefinitionId)
+        {
+            using (AsGozdeWebSiteDB context = new AsGozdeWebSiteDB())
+            {
+                var result = context.Sp_GetRoles.FromSqlRaw("sp_GetRoles @p0", roleTypeId);
+                return result.ToList().Where(x=>x.RoleFormDefinitionId == roleFormDefinitionId).FirstOrDefault();
+            }
+        }
     }
 }

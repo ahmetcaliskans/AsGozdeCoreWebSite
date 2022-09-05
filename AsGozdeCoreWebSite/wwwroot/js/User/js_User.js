@@ -61,7 +61,8 @@ function js_addUser() {
 		LastName: $('#txtLastName').val(),
 		Title: $('#txtUnvan').val(),
 		Active: chkKontrol('chkActive'),
-		OfficeId: $('#selectOffice option:selected').val()
+		OfficeId: $('#selectOffice option:selected').val(),
+		RoleTypeId: $('#selectRoleType option:selected').val()
 	};
 
 	$.ajax({
@@ -79,7 +80,7 @@ function js_addUser() {
 				mesajBox('mesaj', 'UYARI', "Bu İşlem İçin Yetkiniz Yok !", 'warning');
 			}
 			else {
-				mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+				mesajBox('mesaj', 'UYARI', messageParse(err.responseText), 'warning');
             }
 
 			
@@ -129,7 +130,7 @@ function js_changePassword(oldPassword, newPassword, againNewPassword) {
 			location.reload();
 		},
 		error: function (err) {
-			mesajBox('mesaj', 'UYARI', fluentValidationMessageParse(err.responseText), 'warning');
+			mesajBox('mesaj', 'UYARI', messageParse(err.responseText), 'warning');
 		}
 	});
 

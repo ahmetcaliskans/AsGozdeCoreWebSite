@@ -1,0 +1,26 @@
+﻿@model dynamic
+
+
+<div class="form-group row">
+    <label class="col-form-label col-xl-3 col-lg-3">Şube</label>
+    <div class="col-lg-9 col-xl-9">
+        <select class="form-control is-valid" name="selectRoleType" id="selectRoleType">
+            @if (Model.RoleTypes != null)
+            {
+
+                @foreach (var roleType in Model.RoleTypes as List<Core.Entities.Concrete.RoleType>)
+                {
+                    if (roleType.Id == (int)Model.SelectedId)
+                    {
+                        <option selected="" value="@roleType.Id">@roleType.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@roleType.Id">@roleType.Name</option>
+                    }
+                }
+
+            }
+        </select>
+    </div>
+</div>

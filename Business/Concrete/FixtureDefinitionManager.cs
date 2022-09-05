@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -21,6 +22,7 @@ namespace Business.Concrete
             _fixtureDefinitionDal = fixtureDefinitionDal;
         }
 
+        [RoleOperation("FixtureDefinition.Insert")]
         [ValidationAspect(typeof(FixtureDefinitionValidator))]
         public IResult Add(FixtureDefinition fixtureDefinition)
         {
@@ -32,6 +34,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [RoleOperation("FixtureDefinition.Delete")]
         public IResult Delete(FixtureDefinition fixtureDefinition)
         {
             _fixtureDefinitionDal.Delete(fixtureDefinition);
@@ -48,6 +51,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<FixtureDefinition>>(_fixtureDefinitionDal.GetList().ToList());
         }
 
+        [RoleOperation("FixtureDefinition.Update")]
         [ValidationAspect(typeof(FixtureDefinitionValidator))]
         public IResult Update(FixtureDefinition fixtureDefinition)
         {

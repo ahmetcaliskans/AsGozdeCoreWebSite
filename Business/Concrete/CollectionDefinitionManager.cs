@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -21,6 +22,7 @@ namespace Business.Concrete
             _collectionDefinitionDal = collectionDefinitionDal;
         }
 
+        [RoleOperation("CollectionDefinition.Insert")]
         [ValidationAspect(typeof(CollectionDefinitionValidator))]
         public IResult Add(CollectionDefinition collectionDefinition)
         {
@@ -32,37 +34,44 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [RoleOperation("CollectionDefinition.Delete")]
         public IResult Delete(CollectionDefinition collectionDefinition)
         {
             _collectionDefinitionDal.Delete(collectionDefinition);
             return new SuccessResult(Messages.Deleted);
         }
 
+        
         public IDataResult<CollectionDefinition> GetById(int collectionDefinitionId)
         {
             return new SuccessDataResult<CollectionDefinition>(_collectionDefinitionDal.Get(p => p.Id == collectionDefinitionId));
         }
 
+        
         public IDataResult<CollectionDefinition> GetByIdWithDetails(int collectionDefinitionId)
         {
             return new SuccessDataResult<CollectionDefinition>(_collectionDefinitionDal.GetByIdWithDetails(collectionDefinitionId));
         }
 
+        
         public IDataResult<CollectionDefinition> GetByName(string collectionDefinitionName)
         {
             return new SuccessDataResult<CollectionDefinition>(_collectionDefinitionDal.Get(p => p.Name == collectionDefinitionName));
         }
 
+        
         public IDataResult<List<CollectionDefinition>> GetList()
         {
             return new SuccessDataResult<List<CollectionDefinition>>(_collectionDefinitionDal.GetList().ToList());
         }
 
+        
         public IDataResult<List<CollectionDefinition>> GetListWithDetails()
         {
             return new SuccessDataResult<List<CollectionDefinition>>(_collectionDefinitionDal.GetListWithDetails());
         }
 
+        [RoleOperation("CollectionDefinition.Update")]
         [ValidationAspect(typeof(CollectionDefinitionValidator))]
         public IResult Update(CollectionDefinition collectionDefinition)
         {

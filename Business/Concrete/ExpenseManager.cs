@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -20,6 +21,7 @@ namespace Business.Concrete
             _expenseDal = expenseDal;
         }
 
+        [RoleOperation("Expense.Insert")]
         [ValidationAspect(typeof(ExpenseValidator))]
         public IResult Add(Expense expense)
         {
@@ -27,17 +29,20 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [RoleOperation("Expense.Delete")]
         public IResult Delete(Expense expense)
         {
             _expenseDal.Delete(expense);
             return new SuccessResult(Messages.Deleted);
         }
 
+        [RoleOperation("Expense.Show")]
         public IDataResult<Expense> GetById(int expenseId)
         {
             return new SuccessDataResult<Expense>(_expenseDal.Get(p => p.Id == expenseId));
         }
 
+        [RoleOperation("Expense.Show")]
         public IDataResult<Expense> GetByIdWithDetails(int expenseId)
         {
             return new SuccessDataResult<Expense>(_expenseDal.GetByIdWithDetails(expenseId));
@@ -48,11 +53,13 @@ namespace Business.Concrete
             return new SuccessDataResult<string>(_expenseDal.GetLastDocumentNo(shortYear));
         }
 
+        [RoleOperation("Expense.Show")]
         public IDataResult<List<sp_GetListOfExpenseByOfficeId>> GetListWithDetailsByOfficeId(int officeId)
         {
             return new SuccessDataResult<List<sp_GetListOfExpenseByOfficeId>>(_expenseDal.GetListWithDetailsByOfficeId(officeId));
         }
 
+        [RoleOperation("Expense.Update")]
         [ValidationAspect(typeof(ExpenseValidator))]
         public IResult Update(Expense expense)
         {

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -21,14 +22,8 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //var result = _officeService.GetList();
-            //if (result.Success)
-            //{
-            //    return Ok(result.Data);
-            //}
-
-            //return BadRequest(result.Message);
-
+            RoleOperation roleOperation = new RoleOperation("Office.Show");
+            roleOperation.fn_checkRole();
             var result = _officeService.GetList();
             return View(result.Data);
         }

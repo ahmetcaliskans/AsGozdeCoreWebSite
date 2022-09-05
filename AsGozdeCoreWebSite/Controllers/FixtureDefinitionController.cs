@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,8 @@ namespace AsGozdeCoreWebSite.Controllers
         }
         public IActionResult Index()
         {
+            RoleOperation roleOperation = new RoleOperation("FixtureDefinition.Show");
+            roleOperation.fn_checkRole();
             var result = _fixtureDefinitionService.GetList();
             return View(result.Data);
         }

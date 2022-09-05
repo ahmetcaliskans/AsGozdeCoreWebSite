@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -37,6 +38,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Session>>(_SessionDal.GetList().ToList().OrderByDescending(x=>x.Year).ThenByDescending(x=>x.Sequence).ToList());
         }
 
+        [RoleOperation("Session.Insert")]
         [ValidationAspect(typeof(SessionValidator))]
         public IResult Add(Session Session)
         {
@@ -52,6 +54,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [RoleOperation("Session.Delete")]
         public IResult Delete(Session Session)
         {
             _SessionDal.Delete(Session);
@@ -59,6 +62,7 @@ namespace Business.Concrete
 
         }
 
+        [RoleOperation("Session.Update")]
         [ValidationAspect(typeof(SessionValidator))]
         public IResult Update(Session Session)
         {

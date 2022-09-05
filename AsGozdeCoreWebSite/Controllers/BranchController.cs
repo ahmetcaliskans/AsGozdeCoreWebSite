@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,8 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            RoleOperation roleOperation = new RoleOperation("Branch.Show");
+            roleOperation.fn_checkRole();
             var result = _branchService.GetList();
             return View(result.Data);
         }

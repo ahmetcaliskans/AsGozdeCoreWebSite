@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Dtos;
@@ -15,6 +16,8 @@ namespace Business.Concrete
         {
             _sp_GetListOfDriverInformationByOfficeIdDal = sp_GetListOfDriverInformationByOfficeIdDal;
         }
+
+        [RoleOperation("Driver.Show")]
         public IDataResult<List<sp_GetListOfDriverInformationByOfficeId>> GetList(int officeId, int certificateState)
         {
             return new SuccessDataResult<List<sp_GetListOfDriverInformationByOfficeId>>(_sp_GetListOfDriverInformationByOfficeIdDal.GetList(officeId,certificateState));

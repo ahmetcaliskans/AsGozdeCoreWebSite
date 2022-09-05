@@ -1,8 +1,10 @@
 ﻿using AsGozdeCoreWebSite.Models.PermissionAuthorization;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,8 +27,17 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var result = _userService.GetListWithDetails();
-            return View(result.Data);
+            RoleOperation roleOperation = new RoleOperation("User.Show");
+            roleOperation.fn_checkRole();
+
+            List<UserForRegisterDto> users;
+
+            if (User.Identity.Name!="admin")
+                users = _userService.GetListWithDetails().Data.Where(x=>x.UserName!="admin").ToList();
+            else
+                users = _userService.GetListWithDetails().Data;
+
+            return View(users);
         }
 
         [HttpGet]
@@ -35,15 +46,19 @@ namespace AsGozdeCoreWebSite.Controllers
             var result = _userService.GetById(id);
             if (result.Success)
             {
-                return PartialView("AddEditUser", result.Data);
+                if (User.Identity.Name!="admin" &&  result.Data!=null && result.Data.UserName=="admin")
+                {
+                    return PartialView("AddEditUser", new UserForRegisterDto());
+                }
+                else
+                    return PartialView("AddEditUser", result.Data);
             }
 
             return PartialView("AddEditUser", result.Data);
 
         }
 
-        [Permission("AddUser")]
-        [Permission("UpdateUser")]
+        
         [HttpPost]
         public IActionResult AddUser(User User)
         {
@@ -73,14 +88,18 @@ namespace AsGozdeCoreWebSite.Controllers
         public IActionResult DeleteUserById(int id)
         {
             var _UserResult = _userService.GetById(id);
-
-            var result = _userService.Delete(_UserResult.Data);
-            if (result.Success)
+            if (_UserResult.Data.UserName!="admin")
             {
-                return Ok(result.Message);
+                var result = _userService.Delete(_UserResult.Data);
+                if (result.Success)
+                {
+                    return Ok(result.Message);
+                }
+                else
+                    return BadRequest(result.Message);
             }
-
-            return BadRequest(result.Message);
+            else    
+                return BadRequest(Messages.CannotDeleteAdmin);
 
 
         }

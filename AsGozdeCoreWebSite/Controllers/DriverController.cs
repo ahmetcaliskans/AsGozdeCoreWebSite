@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using Entities.Concrete;
@@ -37,10 +38,12 @@ namespace AsGozdeCoreWebSite.Controllers
             _collectionDetailService = collectionDetailService;
             _collectionDefinitionService = collectionDefinitionService;
             _sp_GetListOfDriverInformationByOfficeIdService = sp_GetListOfDriverInformationByOfficeIdService;
-        }
-
+        }        
+        
         public IActionResult Index()
         {
+            RoleOperation roleOperation = new RoleOperation("Driver.Show");
+            roleOperation.fn_checkRole();
             return View();
         }
 
@@ -69,6 +72,8 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]
         public IActionResult GetDriverByIdWithDetails(int id)
         {
+            RoleOperation roleOperation = new RoleOperation("Driver.Show");
+            roleOperation.fn_checkRole();
             dynamic dynamicResult = new System.Dynamic.ExpandoObject();
             dynamicResult.DriverInformation = new DriverInformation();
             dynamicResult.Sp_GetPayments = new List<sp_GetPayment>();
@@ -111,24 +116,143 @@ namespace AsGozdeCoreWebSite.Controllers
         }
 
         [HttpPost]
+        public IActionResult CheckPaymentPlanTotalAmounts(DriverInformation driverInformation)
+        {
+            string message = "";
+            var result = _driverInformationService.GetByIdWithDetails(driverInformation.Id);
+            if (result.Success && result.Data != null)
+            {
+                var getPaymentsResult = _sp_GetPaymentService.GetByDriverInformationId(driverInformation.Id, 10);
+                if (getPaymentsResult!=null && getPaymentsResult.Data.Count>0)
+                {
+                    decimal paymentPlanAmount = getPaymentsResult.Data.Sum(x => x.PaymentPlanAmount);
+                    if (driverInformation.CourseFee>paymentPlanAmount)
+                    {
+                        message += "Kurs Ücreti Taksit Tutarı Kurs Ücreti Rakamından Düşük !<br>";
+                    }
+                    else if (driverInformation.CourseFee < paymentPlanAmount)
+                    {
+                        message += "Kurs Ücreti Taksit Tutarı Kurs Ücreti Rakamından Yüksek !<br>";
+                    }
+                }
+
+                var getPaymentsPlusResult = _sp_GetPaymentService.GetByDriverInformationId(driverInformation.Id, 11);
+                if (getPaymentsPlusResult != null && getPaymentsPlusResult.Data.Count > 0)
+                {
+                    decimal paymentPlanPlusAmount = getPaymentsPlusResult.Data.Sum(x => x.PaymentPlanAmount);
+                    if (driverInformation.CourseFee > paymentPlanPlusAmount)
+                    {
+                        message += "İlave 4 Hak Ücreti Taksit Tutarı İlave 4 Hak Ücreti Rakamından Düşük !<br>";
+                    }
+                    else if (driverInformation.CourseFee < paymentPlanPlusAmount)
+                    {
+                        message += "İlave 4 Hak Ücreti Taksit Tutarı İlave 4 Hak Ücreti Rakamından Yüksek !<br>";
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                message += "Yinede Kaydetme İşlemine Devam Etmek İstediğinize Emin misiniz ?<br>";
+            }
+
+            return Ok(message);
+        }
+
+        [HttpPost]
+        public IActionResult CheckDebitForCertificate(DriverInformation driverInformation)
+        {
+            string message = "";
+            var result = _driverInformationService.GetByIdWithDetails(driverInformation.Id);
+            if (result.Success && result.Data != null)
+            {
+                decimal difference = 0M;
+                if (driverInformation.CourseFee+driverInformation.CourseFeePlus != result.Data.CourseFee+result.Data.CourseFeePlus)
+                {
+                    difference = driverInformation.CourseFee + driverInformation.CourseFeePlus - (result.Data.CourseFee + result.Data.CourseFeePlus);
+                }
+
+                if (result.Data.Balance+difference>0)
+                {
+                    message += string.Format("Sürücü Adayının Borcu Bulunmaktadır!<br>Sertifika Verilemez!<br><b>Borç => {0:n2}</b>",(result.Data.Balance+difference));
+                }
+            }            
+
+            return Ok(message);
+        }
+
+        [HttpPost]
+        public IActionResult CheckDebitForCourseFeeAndCourseFeePlus(DriverInformation driverInformation)
+        {
+            string message = "";
+            var result = _driverInformationService.GetByIdWithDetails(driverInformation.Id);
+            if (result.Success && result.Data != null)
+            {
+                decimal totalCollectionOfCourseFee = 0;
+                decimal totalCollectionOfCourseFeePlus = 0;
+                var resultCollectionDetail = _collectionDetailService.GetListWithDetailsByDriverInformationId(driverInformation.Id);
+                if (resultCollectionDetail != null && resultCollectionDetail.Success)
+                {
+                    totalCollectionOfCourseFee = resultCollectionDetail.Data.Where(x => x.CollectionDefinition.CollectionDefinitionTypeId == 10).Sum(x => x.Amount);
+                    if (driverInformation.CourseFee<totalCollectionOfCourseFee)
+                    {
+                        message += string.Format("Kurs Ücretinden Fazla Kurs Ücreti Tahsilatı Mevcut !<br>");
+                        message += string.Format("Kurs Ücreti => {0:n2}   -   Toplam Kurs Ücreti Tahsilatı => {1:n2}<br>", driverInformation.CourseFee, totalCollectionOfCourseFee);
+                    }
+
+                    totalCollectionOfCourseFeePlus = resultCollectionDetail.Data.Where(x => x.CollectionDefinition.CollectionDefinitionTypeId == 11).Sum(x => x.Amount);
+                    if (driverInformation.CourseFeePlus < totalCollectionOfCourseFeePlus)
+                    {
+                        message += string.Format("İlave 4 Hak Ücretinden Fazla İlave 4 Hak Ücreti Tahsilatı Mevcut !<br>");
+                        message += string.Format("İlave 4 Hak Ücreti => {0:n2}   -   Toplam İlave 4 Hak Ücreti Tahsilatı => {1:n2}<br>", driverInformation.CourseFeePlus, totalCollectionOfCourseFeePlus);
+                    }
+                }
+                               
+            }
+
+            return Ok(message);
+        }
+
+        [HttpPost]
         public IActionResult AddDriver(DriverInformation driverInformation)
         {
-            IResult driverInformationResult;
+            IResult result;
 
             driverInformation.OfficeId = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
             if (!driverInformation.IsCertificateDelivered)
                 driverInformation.CertificateDeliveredDate = null;
             if (driverInformation.Id == null || driverInformation.Id <= 0)
-                driverInformationResult = _driverInformationService.Add(driverInformation);
+            {
+                //Yeni kayıtlarda sürücü kaydedilirken eğer ücret bilgisi girildiyse tahsilat olmadığı ve borçlu olacağı için sertifika verildi seçildiyse kaldırıyorum. Borç durumuna göre sertifika verilecek.
+                if (driverInformation.CourseFee!=0)
+                {
+                    driverInformation.IsCertificateDelivered = false;
+                    driverInformation.CertificateDeliveredDate = null;
+                }
+                result = _driverInformationService.Add(driverInformation);
+            }               
             else
-                driverInformationResult = _driverInformationService.Update(driverInformation);
+            {
+                var driverInformationResult = _driverInformationService.GetByIdWithDetails(driverInformation.Id);
+                if (driverInformationResult.Success && driverInformationResult.Data !=null)
+                {
+                    if (driverInformation.IsCertificateDelivered != driverInformationResult.Data.IsCertificateDelivered)
+                    {
+                        RoleOperation roleOperation = new RoleOperation("Driver.SpecialRole1");
+                        roleOperation.fn_checkRole();
+                    }
+                }                
+                
+                result = _driverInformationService.Update(driverInformation);
+            }
+                
 
-            if (driverInformationResult.Success)
+            if (result.Success)
             {
                 return Ok(driverInformation.Id);
             }
 
-            return BadRequest(driverInformationResult.Message);
+            return BadRequest(result.Message);
 
         }
 
@@ -147,7 +271,6 @@ namespace AsGozdeCoreWebSite.Controllers
 
 
         }
-
 
         [HttpGet]
         public IActionResult GetDriverPaymentPlanById(int id, int collectionDefinitionType)
@@ -173,7 +296,7 @@ namespace AsGozdeCoreWebSite.Controllers
 
             var driverPaymentPlanResult = _driverPaymentPlanService.GetById(driverPaymentPlan.Id);
             if (driverPaymentPlanResult.Success && driverPaymentPlanResult.Data!=null)
-            {
+            {                
                 driverPaymentPlanResult.Data.UpdatedDateTime = DateTime.Now;
                 driverPaymentPlanResult.Data.UpdatedUserName = User.Identity.Name;
                 driverPaymentPlanResult.Data.PaymentDate = driverPaymentPlan.PaymentDate;
@@ -381,10 +504,46 @@ namespace AsGozdeCoreWebSite.Controllers
             return PartialView("CollectionDetailListOfDriver", result.Data);
         }
 
-        void fn_AddEditDriverCollectionDetail(CollectionDetail collectionDetail, int driverId, int collectionId)
-        {
+        IResult fn_AddEditDriverCollectionDetail(CollectionDetail collectionDetail, int driverId, int collectionId)
+        {            
+            string message = "";
+            bool state = true;
+            var resultCollectionDefinitionType = _collectionDefinitionService.GetByIdWithDetails(collectionDetail.CollectionDefinitionId);
+
             if (collectionId == 0)
-            {
+            {                
+                if (resultCollectionDefinitionType!=null && resultCollectionDefinitionType.Success && (resultCollectionDefinitionType.Data.CollectionDefinitionTypeId == 10 || resultCollectionDefinitionType.Data.CollectionDefinitionTypeId == 11))
+                {
+                    decimal totalCollectionOfCourseFee = 0;
+                    decimal totalCollectionOfCourseFeePlus = 0;
+                    var resultCollectionDetail = _collectionDetailService.GetListWithDetailsByDriverInformationId(driverId);
+                    if (resultCollectionDetail != null && resultCollectionDetail.Success)
+                    {
+                        var resultDriverInformation = _driverInformationService.GetByIdWithDetails(driverId);
+                        if (resultDriverInformation != null && resultDriverInformation.Success)
+                        {
+                            totalCollectionOfCourseFee = resultCollectionDetail.Data.Where(x => x.CollectionDefinition.CollectionDefinitionTypeId == 10).Sum(x => x.Amount) + (resultCollectionDefinitionType.Data.CollectionDefinitionTypeId==10 ? collectionDetail.Amount : 0M);
+                            if (resultDriverInformation.Data.CourseFee < totalCollectionOfCourseFee)
+                            {
+                                message += string.Format("Kurs Ücretinden Fazla Kurs Ücreti Tahsilatı Girilemez !<br>");
+                                message += string.Format("Kurs Ücreti => {0:n2}   -   Toplam Kurs Ücreti Tahsilatı => {1:n2}<br>", resultDriverInformation.Data.CourseFee, totalCollectionOfCourseFee);
+                            }
+
+                            totalCollectionOfCourseFeePlus = resultCollectionDetail.Data.Where(x => x.CollectionDefinition.CollectionDefinitionTypeId == 11).Sum(x => x.Amount) + (resultCollectionDefinitionType.Data.CollectionDefinitionTypeId == 11 ? collectionDetail.Amount : 0M);
+                            if (resultDriverInformation.Data.CourseFeePlus < totalCollectionOfCourseFeePlus)
+                            {
+                                message += string.Format("İlave 4 Hak Ücretinden Fazla İlave 4 Hak Ücreti Tahsilatı Girilemez !<br>");
+                                message += string.Format("İlave 4 Hak Ücreti => {0:n2}   -   Toplam İlave 4 Hak Ücreti Tahsilatı => {1:n2}<br>", resultDriverInformation.Data.CourseFeePlus, totalCollectionOfCourseFeePlus);
+                            }
+                        }
+
+                    }
+                    if (!string.IsNullOrEmpty(message))
+                    {
+                        return new Result(false, message);
+                    }
+                }                
+
                 Collection collection = new Collection();
                 string documentNo = DateTime.Now.Year.ToString().Substring(2, 2) + "000000";
                 var documentNoResult = _collectionService.GetLastDocumentNo(Convert.ToInt32(DateTime.Now.Year.ToString().Substring(2, 2)));
@@ -419,10 +578,44 @@ namespace AsGozdeCoreWebSite.Controllers
             }
             else
             {
+                var collectionDetailResult = _collectionDetailService.GetByIdWithDetails(collectionDetail.Id);
+
+                if (resultCollectionDefinitionType != null && resultCollectionDefinitionType.Success && (resultCollectionDefinitionType.Data.CollectionDefinitionTypeId == 10 || resultCollectionDefinitionType.Data.CollectionDefinitionTypeId == 11))
+                {
+                    decimal totalCollectionOfCourseFee = 0;
+                    decimal totalCollectionOfCourseFeePlus = 0;
+                    var resultCollectionDetail = _collectionDetailService.GetListWithDetailsByDriverInformationId(driverId);
+                    if (resultCollectionDetail != null && resultCollectionDetail.Success)
+                    {
+                        var resultDriverInformation = _driverInformationService.GetByIdWithDetails(driverId);
+                        if (resultDriverInformation != null && resultDriverInformation.Success)
+                        {
+                            totalCollectionOfCourseFee = resultCollectionDetail.Data.Where(x => x.CollectionDefinition.CollectionDefinitionTypeId == 10).Sum(x => x.Amount) + (resultCollectionDefinitionType.Data.CollectionDefinitionTypeId == 10 ? (collectionDetail.Amount - collectionDetailResult.Data.Amount) : 0M);
+                            if (resultDriverInformation.Data.CourseFee < totalCollectionOfCourseFee)
+                            {
+                                message += string.Format("Kurs Ücretinden Fazla Kurs Ücreti Tahsilatı Girilemez !<br>");
+                                message += string.Format("Kurs Ücreti => {0:n2}   -   Toplam Kurs Ücreti Tahsilatı => {1:n2}<br>", resultDriverInformation.Data.CourseFee, totalCollectionOfCourseFee);
+                            }
+
+                            totalCollectionOfCourseFeePlus = resultCollectionDetail.Data.Where(x => x.CollectionDefinition.CollectionDefinitionTypeId == 11).Sum(x => x.Amount) + (resultCollectionDefinitionType.Data.CollectionDefinitionTypeId == 11 ? (collectionDetail.Amount - collectionDetailResult.Data.Amount) : 0M);
+                            if (resultDriverInformation.Data.CourseFeePlus < totalCollectionOfCourseFeePlus)
+                            {
+                                message += string.Format("İlave 4 Hak Ücretinden Fazla İlave 4 Hak Ücreti Tahsilatı Girilemez !<br>");
+                                message += string.Format("İlave 4 Hak Ücreti => {0:n2}   -   Toplam İlave 4 Hak Ücreti Tahsilatı => {1:n2}<br>", resultDriverInformation.Data.CourseFeePlus, totalCollectionOfCourseFeePlus);
+                            }
+                        }
+
+                    }
+                    if (!string.IsNullOrEmpty(message))
+                    {
+                        return new Result(false, message);
+                    }
+                }
+
+
                 var collectionResult = _collectionService.GetByIdWithDetails(collectionId);
                 if (collectionResult.Success && collectionResult.Data != null)
                 {
-                    var collectionDetailResult = _collectionDetailService.GetByIdWithDetails(collectionDetail.Id);
                     if (collectionDetailResult.Success && collectionDetailResult.Data != null)
                     {
                         collectionResult.Data.TotalAmount -= collectionDetailResult.Data.Amount;
@@ -448,26 +641,31 @@ namespace AsGozdeCoreWebSite.Controllers
                     _collectionService.Update(collectionResult.Data);                    
                 }
             }
+
+            var result = new Result(state, message);
+            return result;
         }
 
         [HttpPost]
         public IActionResult AddEditDriverCollectionDetail(CollectionDetail collectionDetail, int driverId, int collectionId)
         {
-            fn_AddEditDriverCollectionDetail(collectionDetail,driverId,collectionId);
-
-            int collectionDefinitionTypeId = _collectionDefinitionService.GetById(collectionDetail.CollectionDefinitionId).Data.CollectionDefinitionTypeId;
-
-            switch (collectionDefinitionTypeId)
+            var result = fn_AddEditDriverCollectionDetail(collectionDetail, driverId, collectionId);
+            if (result.Success)
             {
-                case 10 : return PartialView("AddEditDriverCoursePayment", _sp_GetPaymentService.GetByDriverInformationId(driverId, collectionDefinitionTypeId).Data);
-                case 11 : return PartialView("AddEditDriverCoursePaymentPlus", _sp_GetPaymentService.GetByDriverInformationId(driverId, collectionDefinitionTypeId).Data);
-                case 30 : return PartialView("AddEditDriverSequentialPaymentYSH", _sp_GetSequentialPaymentService.GetByDriverInformationIdAndCollectionDefinitionTypeId(driverId, collectionDefinitionTypeId).Data);
-                case 40 : return PartialView("AddEditDriverSequentialPaymentDSHFirst", _sp_GetSequentialPaymentService.GetByDriverInformationIdAndCollectionDefinitionTypeId(driverId, collectionDefinitionTypeId).Data);
-                case 41 : return PartialView("AddEditDriverSequentialPaymentDSHPlus", _sp_GetSequentialPaymentService.GetByDriverInformationIdAndCollectionDefinitionTypeId(driverId, collectionDefinitionTypeId).Data);
-                case 50 : return PartialView("AddEditDriverSequentialPaymentPrivateLesson", _sp_GetSequentialPaymentService.GetByDriverInformationIdAndCollectionDefinitionTypeId(driverId, collectionDefinitionTypeId).Data);
-            }
+                int collectionDefinitionTypeId = _collectionDefinitionService.GetById(collectionDetail.CollectionDefinitionId).Data.CollectionDefinitionTypeId;
 
-            return BadRequest("Error");
+                switch (collectionDefinitionTypeId)
+                {
+                    case 10: return PartialView("AddEditDriverCoursePayment", _sp_GetPaymentService.GetByDriverInformationId(driverId, collectionDefinitionTypeId).Data);
+                    case 11: return PartialView("AddEditDriverCoursePaymentPlus", _sp_GetPaymentService.GetByDriverInformationId(driverId, collectionDefinitionTypeId).Data);
+                    case 30: return PartialView("AddEditDriverSequentialPaymentYSH", _sp_GetSequentialPaymentService.GetByDriverInformationIdAndCollectionDefinitionTypeId(driverId, collectionDefinitionTypeId).Data);
+                    case 40: return PartialView("AddEditDriverSequentialPaymentDSHFirst", _sp_GetSequentialPaymentService.GetByDriverInformationIdAndCollectionDefinitionTypeId(driverId, collectionDefinitionTypeId).Data);
+                    case 41: return PartialView("AddEditDriverSequentialPaymentDSHPlus", _sp_GetSequentialPaymentService.GetByDriverInformationIdAndCollectionDefinitionTypeId(driverId, collectionDefinitionTypeId).Data);
+                    case 50: return PartialView("AddEditDriverSequentialPaymentPrivateLesson", _sp_GetSequentialPaymentService.GetByDriverInformationIdAndCollectionDefinitionTypeId(driverId, collectionDefinitionTypeId).Data);
+                }
+            };            
+
+            return BadRequest(result.Message);
         }
 
         void fn_DeleteDriverCollectionDetailById(CollectionDetail collectionDetail)
@@ -521,7 +719,9 @@ namespace AsGozdeCoreWebSite.Controllers
 
         [HttpPost]
         public IActionResult PrintDriverCollectionDetail(int id)
-        { 
+        {
+            RoleOperation roleOperation = new RoleOperation("Collection.Print");
+            roleOperation.fn_checkRole();
             dynamic dynamicResult = new System.Dynamic.ExpandoObject();
             var detailResult = _collectionDetailService.GetByIdWithDetails(id);
             if (detailResult.Success && detailResult.Data != null)
