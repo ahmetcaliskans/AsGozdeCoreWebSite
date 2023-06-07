@@ -35,6 +35,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="DevExpressReports\Certificate.cs">
+      <DependentUpon>Certificate.repx</DependentUpon>
+    </Compile>
+    <Compile Update="DevExpressReports\Certificate.Designer.cs">
+      <DependentUpon>Certificate.repx</DependentUpon>
+    </Compile>
     <Compile Update="DevExpressReports\DesignReport.cs">
       <DependentUpon>DesignReport.repx</DependentUpon>
     </Compile>

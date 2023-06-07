@@ -115,7 +115,8 @@ namespace AsGozdeCoreWebSite
             });
 
             services.AddDevExpressControls();
-            //services.AddScoped<ReportStorageWebExtension, CustomReportStorageWebExtension>();
+            services.AddScoped<ReportStorageWebExtension, CustomReportStorageWebExtension>(connectionString => new CustomReportStorageWebExtension(Configuration.GetConnectionString("AsGozdeDatabase")));
+
             services
                 .AddMvc()
                 .AddNewtonsoftJson()

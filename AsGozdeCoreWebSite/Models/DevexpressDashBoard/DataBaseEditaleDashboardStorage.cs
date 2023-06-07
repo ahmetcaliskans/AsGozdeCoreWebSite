@@ -7,7 +7,8 @@ using System.IO;
 using System.Xml.Linq;
 
 namespace SaveDashboardDB {
-    public class DataBaseEditaleDashboardStorage : IEditableDashboardStorage {
+    public class DataBaseEditaleDashboardStorage : IEditableDashboardStorage 
+    {
         private string connectionString;
 
         public DataBaseEditaleDashboardStorage(string connectionString) {
