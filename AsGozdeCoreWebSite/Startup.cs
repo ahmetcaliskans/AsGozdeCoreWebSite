@@ -21,6 +21,8 @@ using SaveDashboardDB;
 using Core.Utilities.IoC;
 using Core.Extensions;
 using Core.DependencyResolvers;
+using DevExpress.AspNetCore.Reporting;
+using DevExpress.XtraReports.Web.Extensions;
 
 namespace AsGozdeCoreWebSite
 {
@@ -38,7 +40,7 @@ namespace AsGozdeCoreWebSite
         public IConfiguration Configuration { get; }
         
         public void ConfigureServices(IServiceCollection services)
-        {      
+        {           
 
             services.AddControllersWithViews();
 
@@ -88,6 +90,8 @@ namespace AsGozdeCoreWebSite
 
             });
 
+            
+
             // Configures services to use the Web Dashboard Control.
             services
                 .AddDevExpressControls()
@@ -110,6 +114,21 @@ namespace AsGozdeCoreWebSite
                 return configurator;
             });
 
+            services.AddDevExpressControls();
+            //services.AddScoped<ReportStorageWebExtension, CustomReportStorageWebExtension>();
+            services
+                .AddMvc()
+                .AddNewtonsoftJson()
+                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
+            services.ConfigureReportingServices(configurator => {
+                configurator.ConfigureReportDesigner(designerConfigurator => {
+                    designerConfigurator.RegisterDataSourceWizardConfigFileConnectionStringsProvider();
+                });
+                configurator.ConfigureWebDocumentViewer(viewerConfigurator => {
+                    viewerConfigurator.UseCachedReportSourceBuilder();
+                });
+            });
+
             services.AddDependencyResolvers(new ICoreModule[]
             {
                 new CoreModule(),
@@ -119,7 +138,8 @@ namespace AsGozdeCoreWebSite
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        {            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -141,6 +161,8 @@ namespace AsGozdeCoreWebSite
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Expressions;
             app.UseDevExpressControls();
 
             app.UseEndpoints(endpoints =>

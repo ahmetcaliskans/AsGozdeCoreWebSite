@@ -3,6 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script>
+    document.title = document.title + " - Kasa Raporu";
+</script>
 
 <!--begin::Card-->
 <div class="card card-custom">
@@ -11,7 +14,7 @@
             <span class="card-icon">
                 <i class="flaticon2-shopping-cart text-primary"></i>
             </span>
-            <h3 class="card-label">Kasa Raporu</h3>
+            <h3 class="card-label">@ViewData["Title"]</h3>
         </div>
         <div class="card-toolbar">
             <!--begin::Dropdown-->

@@ -21,6 +21,7 @@
     <!--end::Page Custom Styles-->
     <!--begin::Page Vendors Styles(used by this page)-->
     <!--<link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />-->
+    <link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Page Vendors Styles-->
     <!--begin::Global Theme Styles(used by all pages)-->
     <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
@@ -32,8 +33,10 @@
     <link href="~/assets/css/themes/layout/header/menu/light.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/themes/layout/brand/dark.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css" />
+
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="~/assets/media/logos/favicon.png" />
+
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -311,6 +314,15 @@
                                                     <span class="menu-text">Tahsilat</span>
                                                 </a>
                                             </li>
+
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="/ProjectDashboard/CollectionBySession" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Tahsilat - Dönem Bazlı</span>
+                                                </a>
+                                            </li>
                                         }
 
 
@@ -585,7 +597,7 @@
                     <!--begin::Entry-->
                     <div class="d-flex flex-column-fluid">
                         <!--begin::Container-->
-                        <div class="container">
+                        <div class="container-fluid">
                             @RenderBody()
                         </div>
                         <!--end::Container-->

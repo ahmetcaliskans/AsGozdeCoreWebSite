@@ -36,7 +36,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("FormSubName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .HasColumnType("int");
 
                     b.Property<bool>("Insert")
@@ -44,9 +44,6 @@ namespace DataAccess.Migrations
 
                     b.Property<bool>("Print")
                         .HasColumnType("bit");
-
-                    b.Property<int>("RoleDefinitionId")
-                        .HasColumnType("int");
 
                     b.Property<int>("RoleFormDefinitionId")
                         .HasColumnType("int");
@@ -1109,8 +1106,14 @@ namespace DataAccess.Migrations
                     b.Property<string>("OfficeName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PaymentDate")
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentDateMonthName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentDateYear")
+                        .HasColumnType("int");
 
                     b.Property<string>("Phone1")
                         .HasColumnType("nvarchar(max)");
@@ -1317,8 +1320,8 @@ namespace DataAccess.Migrations
                     b.Property<string>("BranchName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CollectionDate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CollectionDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CollectionDefinitionName")
                         .HasColumnType("nvarchar(max)");
@@ -1376,8 +1379,8 @@ namespace DataAccess.Migrations
                     b.Property<string>("DocumentNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ExpenseDate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("ExpenseDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ExpenseDefinitionName")
                         .HasColumnType("nvarchar(max)");

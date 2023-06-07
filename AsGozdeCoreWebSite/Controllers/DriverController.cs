@@ -43,7 +43,7 @@ namespace AsGozdeCoreWebSite.Controllers
         public IActionResult Index()
         {
             RoleOperation roleOperation = new RoleOperation("Driver.Show");
-            roleOperation.fn_checkRole();
+            roleOperation.fn_checkRole();            
             return View();
         }
 
@@ -580,6 +580,13 @@ namespace AsGozdeCoreWebSite.Controllers
             {
                 var collectionDetailResult = _collectionDetailService.GetByIdWithDetails(collectionDetail.Id);
 
+                //Tahsilat İşlemlerinde Tarih Kontrolü
+                if (collectionDetailResult.Data.Collection.CollectionDate.Date!=DateTime.Now.Date)
+                {
+                    RoleOperation roleOperation = new RoleOperation("Collection.SpecialRole1");
+                    roleOperation.fn_checkRole();
+                }
+
                 if (resultCollectionDefinitionType != null && resultCollectionDefinitionType.Success && (resultCollectionDefinitionType.Data.CollectionDefinitionTypeId == 10 || resultCollectionDefinitionType.Data.CollectionDefinitionTypeId == 11))
                 {
                     decimal totalCollectionOfCourseFee = 0;
@@ -673,6 +680,13 @@ namespace AsGozdeCoreWebSite.Controllers
             var collectionResult = _collectionService.GetByIdWithDetails(collectionDetail.Collection.Id);
             if (collectionResult.Success && collectionResult.Data != null)
             {
+                //Tahsilat İşlemlerinde Tarih Kontrolü
+                if (collectionResult.Data.CollectionDate.Date != DateTime.Now.Date)
+                {
+                    RoleOperation roleOperation = new RoleOperation("Collection.SpecialRole1");
+                    roleOperation.fn_checkRole();
+                }
+
                 collectionResult.Data.TotalAmount -= collectionDetail.Amount;
                 collectionResult.Data.UpdatedDateTime = DateTime.Now;
                 collectionResult.Data.UpdatedUserName = User.Identity.Name;
@@ -768,6 +782,11 @@ namespace AsGozdeCoreWebSite.Controllers
 
 
             return PartialView("PrintApplicationForm", dynamicResult);
+        }
+
+        public IActionResult DesignDevExpressReport()
+        {
+            return View("DesignDevExpressReport");
         }
 
     }

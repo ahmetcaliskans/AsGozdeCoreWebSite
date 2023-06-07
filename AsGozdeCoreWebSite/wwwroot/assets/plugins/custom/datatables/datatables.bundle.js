@@ -4178,7 +4178,8 @@
 		var language = settings.oLanguage;
 		var previousSearch = settings.oPreviousSearch;
 		var features = settings.aanFeatures;
-		var input = '<input type="search" class="'+classes.sFilterInput+'"/>';
+		/* style="text-transform: uppercase" i ekleyerek müdahale ettim Ahmet ÇALIŞKAN */
+		var input = '<input type="search" class="' + classes.sFilterInput +'" style="text-transform: uppercase"/>';
 	
 		var str = language.sSearch;
 		str = str.match(/_INPUT_/) ?
@@ -4194,7 +4195,8 @@
 		var searchFn = function() {
 			/* Update all other filter input elements for the new display */
 			var n = features.f;
-			var val = !this.value ? "" : this.value; // mental IE8 fix :-(
+			/* toLocaleUpperCase('TR','tr') Komutu ile müdahale ettim Ahmet ÇALIŞKAN */
+			var val = !this.value ? "" : this.value.toLocaleUpperCase('TR','tr'); // mental IE8 fix :-(
 	
 			/* Now do the filter */
 			if ( val != previousSearch.sSearch ) {

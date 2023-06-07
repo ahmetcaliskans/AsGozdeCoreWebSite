@@ -22,6 +22,8 @@ namespace Entities.Dtos
         public string CollectionDefinitionTypeName { get; set; }
         public int DriverPaymentPlanSequence { get; set; }
         public DateTime PaymentDate { get; set; }
+        public int PaymentDateYear { get; set; }
+        public string PaymentDateMonthName { get; set; }
         public decimal Amount { get; set; }
         public decimal DebitinMonth { get; set; }
     }

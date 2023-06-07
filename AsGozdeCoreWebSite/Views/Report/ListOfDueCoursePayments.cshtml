@@ -1,8 +1,11 @@
 ﻿@{
-    ViewData["Title"] = "Vade Günü Raporu";
+    ViewData["Title"] = "Vade Günü Geçmiş veya Gelecek Kurs Ücretleri Listesi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script>
+    document.title = document.title + " - Vade Günü Geçmiş veya Gelecek Kurs Ücretleri Listesi";
+</script>
 
 <!--begin::Card-->
 <div class="card card-custom">
@@ -11,7 +14,7 @@
             <span class="card-icon">
                 <i class="flaticon2-shopping-cart text-primary"></i>
             </span>
-            <h3 class="card-label">Vade Günü Geçmiş veya Gelecek Kurs Ücretleri Listesi</h3>
+            <h3 class="card-label">@ViewData["Title"]</h3>
         </div>
         <div class="card-toolbar">
             <!--begin::Dropdown-->
@@ -131,6 +134,8 @@
                     <th>İLAVE 4 HAK KURS ÜCRETİ</th>
                     <th>ÖDEME PLANI ADI</th>
                     <th>ÖDEME PLANI TARİHİ</th>
+                    <th>ÖDEME PLANI YILI</th>
+                    <th>ÖDEME PLANI AYI</th>
                     <th>ÖDEME PLANI TUTARI</th>
                     <th>KALAN BORÇ</th>
                     <th>DÖNEM</th>
@@ -154,24 +159,21 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </tfoot>
         </table>
         <!--end: Datatable-->
-
-        <div class="col-lg-12">
-            <div class="separator separator-dashed my-10"></div>
-        </div>
         
     </div>
 </div>
 <!--end::Card-->
 
 <script>
-    function js_search_ListOfDueCoursePaymentsReport() {
+    function js_search_ListOfDueCoursePaymentsReport() {        
 
-        var dueType = $('#selectDueType option:selected').val();     
-        
+        var dueType = $('#selectDueType option:selected').val();       
 
         var tableListOfDueCoursePaymentsReport = $('#datatable_ListOfDueCoursePaymentsReport').DataTable();
         tableListOfDueCoursePaymentsReport.ajax.url(window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/Report/GetListOfDueCoursePayments?'+        
