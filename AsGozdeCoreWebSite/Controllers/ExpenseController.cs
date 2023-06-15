@@ -109,6 +109,18 @@ namespace AsGozdeCoreWebSite.Controllers
             }                
             else
             {
+                //Gider İşlemlerinde Tarih Kontrolü
+                var expenseResultControl = _expenseService.GetByIdWithDetails(expense.Id);
+                if (expenseResultControl.Success && expenseResultControl.Data != null)
+                {
+                    
+                    if (expenseResultControl.Data.ExpenseDate.Date < DateTime.Now.Date || expense.ExpenseDate.Date<DateTime.Now.Date)
+                    {
+                        RoleOperation roleOperation = new RoleOperation("Expense.SpecialRole1");
+                        roleOperation.fn_checkRole();
+                    }
+                }
+
                 var expenseResult = _expenseService.GetByIdWithDetails(expense.Id);
                 if (expenseResult!=null)
                 {
@@ -135,6 +147,13 @@ namespace AsGozdeCoreWebSite.Controllers
         public IActionResult DeleteExpenseById(int id)
         {
             var _expenseResult = _expenseService.GetById(id);
+
+            //Gider İşlemlerinde Tarih Kontrolü
+            if (_expenseResult.Data.ExpenseDate.Date < DateTime.Now.Date)
+            {
+                RoleOperation roleOperation = new RoleOperation("Expense.SpecialRole1");
+                roleOperation.fn_checkRole();
+            }
 
             var result = _expenseService.Delete(_expenseResult.Data);
             if (result.Success)

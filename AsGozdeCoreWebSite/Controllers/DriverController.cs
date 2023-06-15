@@ -581,7 +581,7 @@ namespace AsGozdeCoreWebSite.Controllers
                 var collectionDetailResult = _collectionDetailService.GetByIdWithDetails(collectionDetail.Id);
 
                 //Tahsilat İşlemlerinde Tarih Kontrolü
-                if (collectionDetailResult.Data.Collection.CollectionDate.Date!=DateTime.Now.Date)
+                if (collectionDetailResult.Data.Collection.CollectionDate.Date < DateTime.Now.Date)
                 {
                     RoleOperation roleOperation = new RoleOperation("Collection.SpecialRole1");
                     roleOperation.fn_checkRole();
@@ -681,7 +681,7 @@ namespace AsGozdeCoreWebSite.Controllers
             if (collectionResult.Success && collectionResult.Data != null)
             {
                 //Tahsilat İşlemlerinde Tarih Kontrolü
-                if (collectionResult.Data.CollectionDate.Date != DateTime.Now.Date)
+                if (collectionResult.Data.CollectionDate.Date < DateTime.Now.Date)
                 {
                     RoleOperation roleOperation = new RoleOperation("Collection.SpecialRole1");
                     roleOperation.fn_checkRole();

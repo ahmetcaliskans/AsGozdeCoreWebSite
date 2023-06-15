@@ -80,7 +80,7 @@ function js_addExpense(islem) {
 		data: expense,
 		success: function (data) {
 			var result = data;
-			mesajBox('mesaj', 'DURUM', result[0], 'success');
+			mesajBox('mesaj', 'DURUM', result, 'success');
 			location.reload();
 
 		},

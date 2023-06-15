@@ -140,11 +140,22 @@ namespace AsGozdeCoreWebSite.Controllers
                 }
             }                
             else
-            {        
+            {
+                //Tahsilat İşlemlerinde Tarih Kontrolü
+                var collectionResultControl = _collectionService.GetByIdWithDetails(collectionSession.Id);
+                if (collectionResultControl.Success && collectionResultControl.Data != null)
+                {                    
+                    if (collectionResultControl.Data.CollectionDate.Date < DateTime.Now.Date || collectionSession.CollectionDate.Date < DateTime.Now.Date)
+                    {
+                        RoleOperation roleOperation = new RoleOperation("Collection.SpecialRole1");
+                        roleOperation.fn_checkRole();
+                    }
+                }
 
                 var collectionDetailsFromDB = _collectionDetailService.GetListWithDetailsByCollectionId(collectionSession.Id);
                 if (collectionDetailsFromDB.Success)
-                {
+                {                  
+
                     List<CollectionDetail> deletedCollectionDetails = new List<CollectionDetail>();
                     foreach (var dt in collectionDetailsFromDB.Data)
                     {
@@ -199,6 +210,13 @@ namespace AsGozdeCoreWebSite.Controllers
         public IActionResult DeleteCollectionById(int id)
         {
             var _collectionResult = _collectionService.GetById(id);
+
+            //Tahsilat İşlemlerinde Tarih Kontrolü
+            if (_collectionResult.Data.CollectionDate.Date < DateTime.Now.Date)
+            {
+                RoleOperation roleOperation = new RoleOperation("Collection.SpecialRole1");
+                roleOperation.fn_checkRole();
+            }
 
             var result = _collectionService.Delete(_collectionResult.Data);
             if (result.Success)
