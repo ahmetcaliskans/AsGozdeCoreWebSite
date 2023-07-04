@@ -22,6 +22,7 @@ namespace Entities.Dtos
         public int SessionSequence { get; set; }
         public string BranchName { get; set; }
         public bool IsCertificateDelivered { get; set; }
+        public DateTime RecordDate { get; set; }
 
     }
 }

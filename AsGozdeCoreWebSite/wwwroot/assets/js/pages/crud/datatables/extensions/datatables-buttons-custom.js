@@ -29,7 +29,7 @@ var DatatablesButtonsDriverInformations = function () {
 							page: 'all',
 							search: 'applied'
 						},
-						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+						columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
 						format: {
 							body: function (data, row, column, node) {
 								data = $('<p>' + data + '</p>').text();
@@ -142,6 +142,7 @@ var DatatablesButtonsDriverInformations = function () {
 				{ data: 'sessionName' },
 				{ data: 'branchName' },
 				{ data: 'officeName' },
+				{ data: 'recordDate' },
 				{ data: 'id', responsivePriority: -1 },
 			],
 			columnDefs: [
@@ -167,7 +168,18 @@ var DatatablesButtonsDriverInformations = function () {
 					//},
 				},
 				{
+					targets: 8,
+					visible: false,
+				},
+				{
 					targets: 9,
+					type: 'datetime',
+					render: function (data, type, full, meta) {
+						return moment(data).format("YYYY-MM-DD");
+					},
+				},
+				{
+					targets: 10,
 					autoHide: false,
 					orderable: false,
 					render: function (data, type, full, meta) {
