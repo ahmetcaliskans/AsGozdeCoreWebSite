@@ -41,7 +41,6 @@ var DatatablesButtonsDriverInformations = function () {
 				'csvHtml5',
 				'pdfHtml5',
 			],
-
 			
 			processing: false,
 			serverSide: false,
