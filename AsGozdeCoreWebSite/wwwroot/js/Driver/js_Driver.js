@@ -50,7 +50,13 @@ function js_deleteDriverById(Id) {
 			}
 
 			setTimeout(function () {
-				location.replace(href.replace('GetDriverByIdWithDetails/', 'GetDriverByIdWithDetails/0'));
+				if (href.indexOf("GetDriverByIdWithDetails") > 0) {
+					location.replace(href.replace('GetDriverByIdWithDetails/', 'GetDriverByIdWithDetails/0'));
+				}
+				else {
+					location.reload();
+                }
+				
 			}, 200);
 
 		},
