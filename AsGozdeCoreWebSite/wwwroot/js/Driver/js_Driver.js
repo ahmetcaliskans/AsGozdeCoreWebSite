@@ -793,12 +793,14 @@ function js_getAllCollectionDetailsByDriverInformationId(Id) {
 
 ///***** Sürücü Adayı K sınıfı Sürücü Aday Belgesi Yazdırılır *****/
 //function js_printKFile(Id) {
+
 //	$.ajax({
 //		async: true,
-//		type: "GET",
+//		type: "POST",
 //		url: "/Report/KFileReport",
 //		data: { driverInformationId: Id },
 //		contentType: "application/json; charset=utf-8",
+//		dataType:"html",
 //		success: function (data) {
 //			var result = data;
 //			//$('#dataDriver').html("");
