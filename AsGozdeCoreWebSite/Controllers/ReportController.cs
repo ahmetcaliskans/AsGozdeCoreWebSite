@@ -103,10 +103,10 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]
         public IActionResult KFileReport(int driverInformationId)
         {
-            RoleOperation roleOperation = new RoleOperation("Report/KFileReport.Show");
-            roleOperation.fn_checkRole();
+            //RoleOperation roleOperation = new RoleOperation("Report/KFileReport.Show");
+            //roleOperation.fn_checkRole();
 
-            ViewData["OfficeId"] = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
+            int officeId = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
             //ViewData["DriverInformationId"] = Convert.ToInt32(driverInformationId);
             //ViewData["Report"] = "KFileReport"+"?driverInformationId="+driverInformationId.ToString();
 
@@ -119,6 +119,7 @@ namespace AsGozdeCoreWebSite.Controllers
             }
 
             report.Parameters["driverInformationId"].Value = driverInformationId;
+            report.Parameters["officeId"].Value = officeId;
 
             //report.ShowPrintStatusDialog = true;
             //report.Print();
