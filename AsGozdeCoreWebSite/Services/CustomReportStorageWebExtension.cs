@@ -12,24 +12,25 @@ using System.Linq;
 
 public class CustomReportStorageWebExtension : DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension
 {
-    private string connectionString;
+    private string _connectionString;
 
     private DataTable reportsTable = new DataTable();
     private SqlDataAdapter reportsTableAdapter;
     //string connectionString = "Data Source=localhost;Initial Catalog=Reports;Integrated Security=True";
     public CustomReportStorageWebExtension(string connectionString)
     {
-        this.connectionString = connectionString;
+        _connectionString = connectionString;
 
-        //reportsTableAdapter = new SqlDataAdapter("Select * from ReportLayout", new SqlConnection(connectionString));
-        //SqlCommandBuilder builder = new SqlCommandBuilder(reportsTableAdapter);
-        //reportsTableAdapter.InsertCommand = builder.GetInsertCommand();
+        reportsTableAdapter = new SqlDataAdapter("Select * from ReportLayouts", new SqlConnection(connectionString));
+        SqlCommandBuilder builder = new SqlCommandBuilder(reportsTableAdapter);
+        reportsTableAdapter.InsertCommand = builder.GetInsertCommand();
         //reportsTableAdapter.UpdateCommand = builder.GetUpdateCommand();
         //reportsTableAdapter.DeleteCommand = builder.GetDeleteCommand();
-        //reportsTableAdapter.Fill(reportsTable);
-        //DataColumn[] keyColumns = new DataColumn[1];
-        //keyColumns[0] = reportsTable.Columns[0];
-        //reportsTable.PrimaryKey = keyColumns;
+        reportsTableAdapter.Fill(reportsTable);
+        DataColumn[] keyColumns = new DataColumn[2];
+        keyColumns[0] = reportsTable.Columns[0];
+        keyColumns[1] = reportsTable.Columns[1];
+        reportsTable.PrimaryKey = keyColumns;
     }
     public override bool CanSetData(string url)
     {
@@ -37,12 +38,41 @@ public class CustomReportStorageWebExtension : DevExpress.XtraReports.Web.Extens
     }
     public override byte[] GetData(string url)
     {
+        DataRow row;
+        try
+        {
+            DataColumn[] keyColumns = new DataColumn[1];
+            keyColumns[0] = reportsTable.Columns[0];
+            reportsTable.PrimaryKey = keyColumns;
+            
+            row = reportsTable.Rows.Find(int.Parse(url));
+        }
+        catch (Exception)
+        {
+            DataColumn[] keyColumns = new DataColumn[1];
+            keyColumns[0] = reportsTable.Columns[1];
+            reportsTable.PrimaryKey = keyColumns;
+            
+            row = reportsTable.Rows.Find(url);            
+        }
+
         // Get the report data from the storage.
-        DataRow row = reportsTable.Rows.Find(int.Parse(url));
+        //DataRow row = reportsTable.Rows.Find(url);
         if (row == null) return null;
+        if (row["LayoutData"] == null || row["LayoutData"] == DBNull.Value)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                var report = new AsGozdeCoreWebSite.DevExpressReports.DesignReport();
+                report.SaveLayoutToXml(ms);
+                row["LayoutData"] = ms.GetBuffer();
+            }
+        }
+
 
         byte[] reportData = (Byte[])row["LayoutData"];
         return reportData;
+
     }
     public override Dictionary<string, string> GetUrls()
     {
@@ -61,7 +91,25 @@ public class CustomReportStorageWebExtension : DevExpress.XtraReports.Web.Extens
     public override void SetData(XtraReport report, string url)
     {
         // Write a report to the storage under the specified URL.
-        DataRow row = reportsTable.Rows.Find(int.Parse(url));
+        DataRow row;
+        try
+        {
+            DataColumn[] keyColumns = new DataColumn[1];
+            keyColumns[0] = reportsTable.Columns[0];
+            reportsTable.PrimaryKey = keyColumns;
+
+            row = reportsTable.Rows.Find(int.Parse(url));
+        }
+        catch (Exception)
+        {
+            DataColumn[] keyColumns = new DataColumn[1];
+            keyColumns[0] = reportsTable.Columns[1];
+            reportsTable.PrimaryKey = keyColumns;
+
+            row = reportsTable.Rows.Find(url);
+        }
+
+        //DataRow row = reportsTable.Rows.Find(url);
         if (row != null)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -95,7 +143,7 @@ public class CustomReportStorageWebExtension : DevExpress.XtraReports.Web.Extens
         return reportsTable.AsEnumerable().
             FirstOrDefault(x => x["DisplayName"].ToString() == defaultUrl)["ReportId"].ToString();
     }
-    
+
 }
 
 //public class CustomReportStorageWebExtension : DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension

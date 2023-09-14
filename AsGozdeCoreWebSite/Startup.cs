@@ -23,6 +23,7 @@ using Core.Extensions;
 using Core.DependencyResolvers;
 using DevExpress.AspNetCore.Reporting;
 using DevExpress.XtraReports.Web.Extensions;
+using DevExpress.XtraReports.Security;
 
 namespace AsGozdeCoreWebSite
 {
@@ -33,6 +34,7 @@ namespace AsGozdeCoreWebSite
             Configuration = configuration;
             FileProvider = hostingEnvironment.ContentRootFileProvider;
             DashboardExportSettings.CompatibilityMode = DashboardExportCompatibilityMode.Restricted;
+            ScriptPermissionManager.GlobalInstance = new ScriptPermissionManager(ExecutionMode.Unrestricted);
         }
 
         public IFileProvider FileProvider { get; }
@@ -114,6 +116,7 @@ namespace AsGozdeCoreWebSite
                 return configurator;
             });
 
+            
             services.AddDevExpressControls();
             services.AddScoped<ReportStorageWebExtension, CustomReportStorageWebExtension>(connectionString => new CustomReportStorageWebExtension(Configuration.GetConnectionString("AsGozdeDatabase")));
 
@@ -139,7 +142,11 @@ namespace AsGozdeCoreWebSite
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {            
+        {
+            DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Expressions;
+            app.UseDevExpressControls();
+
+            System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
 
             if (env.IsDevelopment())
             {
@@ -163,8 +170,8 @@ namespace AsGozdeCoreWebSite
             app.UseAuthentication();
             app.UseAuthorization();
             
-            DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Expressions;
-            app.UseDevExpressControls();
+            //DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Expressions;
+            //app.UseDevExpressControls();
 
             app.UseEndpoints(endpoints =>
             {

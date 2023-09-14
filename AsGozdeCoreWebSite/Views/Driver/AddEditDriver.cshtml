@@ -70,6 +70,13 @@
                                         <span class="nav-text">Adres Beyan Formu</span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a  class="nav-link" asp-controller="Report" asp-action="KFileReport" asp-route-id=@_driverInformation.Id target="_blank">                                        
+                                        <!--Öncesinde Kaydetme İşlemi Yapılacak-->
+                                        <i class="nav-icon flaticon2-print"></i>
+                                        <span class="nav-text">"K" Sınıfı Sürücü Aday Belgesi</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -751,5 +758,5 @@
 <!--end::Modal-->
 
 
-<script src="~/js/Driver/js_Driver.js"></script>
-<script src="~/js/Collection/js_Collection.js"></script>
+<script src="~/js/Driver/js_Driver.js" asp-append-version="true"></script>
+<script src="~/js/Collection/js_Collection.js" asp-append-version="true"></script>

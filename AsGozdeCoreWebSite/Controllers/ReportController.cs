@@ -1,22 +1,25 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
+using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AsGozdeCoreWebSite.Controllers
 {
     public class ReportController : Controller
-    {
+    {        
         private IReportService _sp_rCashReport1Service;
         private Isp_GetListOfDueCoursePaymentService _sp_GetListOfDueCoursePaymentService;
+        private IReportLayoutService _reportLayoutService;
         public ReportController(IReportService sp_rCashReport1Service,
-            Isp_GetListOfDueCoursePaymentService sp_GetListOfDueCoursePaymentService)
+            Isp_GetListOfDueCoursePaymentService sp_GetListOfDueCoursePaymentService,
+            IReportLayoutService reportLayoutService)
         {
             _sp_rCashReport1Service = sp_rCashReport1Service;
             _sp_GetListOfDueCoursePaymentService = sp_GetListOfDueCoursePaymentService;
+            _reportLayoutService = reportLayoutService;
         }
         public IActionResult Index()
         {
@@ -86,8 +89,46 @@ namespace AsGozdeCoreWebSite.Controllers
             return Ok(result.Data);
         }
 
-        
 
-        
+        [HttpGet]
+        public IActionResult DesignReport()
+        {
+            RoleOperation roleOperation = new RoleOperation("Report/DesignReport.Show");
+            roleOperation.fn_checkRole();
+            //ViewData["OfficeId"] = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
+            return View(@"Dev\Design");
+        }
+
+
+        [HttpGet]
+        public IActionResult KFileReport(int driverInformationId)
+        {
+            RoleOperation roleOperation = new RoleOperation("Report/KFileReport.Show");
+            roleOperation.fn_checkRole();
+
+            ViewData["OfficeId"] = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
+            //ViewData["DriverInformationId"] = Convert.ToInt32(driverInformationId);
+            //ViewData["Report"] = "KFileReport"+"?driverInformationId="+driverInformationId.ToString();
+
+            XtraReport report = new XtraReport();
+            var reportResult = _reportLayoutService.GetByDisplayName("KFileReport");
+            if (reportResult.Success)
+            {
+                MemoryStream ms = new MemoryStream(reportResult.Data.LayoutData);
+                report.LoadLayout(ms);
+            }
+
+            report.Parameters["driverInformationId"].Value = driverInformationId;
+
+            //report.ShowPrintStatusDialog = true;
+            //report.Print();
+            //return Ok();
+            return View(@"Dev\KFileReport",report);
+
+        }
+
+
+
+
     }
 }

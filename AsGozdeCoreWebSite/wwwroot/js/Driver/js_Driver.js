@@ -791,6 +791,26 @@ function js_getAllCollectionDetailsByDriverInformationId(Id) {
 	});
 }
 
+///***** Sürücü Adayı K sınıfı Sürücü Aday Belgesi Yazdırılır *****/
+//function js_printKFile(Id) {
+//	$.ajax({
+//		async: true,
+//		type: "GET",
+//		url: "/Report/KFileReport",
+//		data: { driverInformationId: Id },
+//		contentType: "application/json; charset=utf-8",
+//		success: function (data) {
+//			var result = data;
+//			//$('#dataDriver').html("");
+//			//$('#dataDriver').html(result);
+//		},
+//		error: function (err) {
+//			mesajBox('mesaj', 'UYARI', err.responseText, 'warning');
+//		}
+//	});
+
+//}
+
 
 
 

@@ -98,6 +98,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<ReportManager>().As<IReportService>();
             builder.RegisterType<EfReportDal>().As<IReportDal>();
 
+            builder.RegisterType<ReportLayoutManager>().As<IReportLayoutService>();
+            builder.RegisterType<EfReportLayoutDal>().As<IReportLayoutDal>();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

@@ -43,6 +43,7 @@ namespace DataAccess.EntityFramework.Context
         public DbSet<ExpenseDefinition> ExpenseDefinitions { get; set; }
         public DbSet<FixtureDefinition> FixtureDefinitions { get; set; }
         public DbSet<PersonnelDefinition> PersonnelDefinitions { get; set; }
+        public DbSet<ReportLayout> ReportLayouts { get; set; }
         public virtual DbSet<sp_GetListOfDueCoursePayment> Sp_GetListOfDueCoursePayments { get; set; }
         public virtual DbSet<sp_GetPayment> Sp_GetPayments { get; set; }
         public virtual DbSet<sp_GetSequentialPayment> Sp_GetSequentialPayments { get; set; }
@@ -290,6 +291,12 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<PersonnelDefinition>().Property(e => e.Note).HasMaxLength(200);
             modelBuilder.Entity<PersonnelDefinition>().HasMany(e => e.Expenses).WithOne(e => e.PersonnelDefinition).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
 
+
+
+
+            ////ReportLayout
+            modelBuilder.Entity<ReportLayout>().HasKey(e => e.ReportId);
+            modelBuilder.Entity<ReportLayout>().Property(e => e.DisplayName).IsRequired().HasMaxLength(250);
 
         }
 
