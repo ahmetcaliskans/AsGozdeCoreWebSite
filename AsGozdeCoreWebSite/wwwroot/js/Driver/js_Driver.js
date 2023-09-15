@@ -97,7 +97,13 @@ function js_checkDriverForAdd(islem) {
 		Note: $('#txtNote').val(),
 		RecordDate: $('input[name="txtRecordDate"]').val(),
 		IsCertificateDelivered: chkKontrol('chkIsCertificateDelivered'),
-		CertificateDeliveredDate: $('input[name="txtCertificateDeliveredDate"]').val()
+		CertificateDeliveredDate: $('input[name="txtCertificateDeliveredDate"]').val(),
+		BirthDate: $('input[name="txtBirthDate"]').val(),
+		RecordNumber: $('#txtRecordNumber').val(),
+		SessionDate: $('input[name="txtSessionDate"]').val(),
+		CourseStartDate: $('input[name="txtCourseStartDate"]').val(),
+		CourseEndDate: $('input[name="txtCourseEndDate"]').val(),
+		PersonnelDefinitionId: $('#selectPersonnelDefinition option:selected').val()
 	};
 
 	var saveState = true;
@@ -159,7 +165,13 @@ function js_addDriver(islem) {
 		Note: $('#txtNote').val(),
 		RecordDate: $('input[name="txtRecordDate"]').val(),
 		IsCertificateDelivered: chkKontrol('chkIsCertificateDelivered'),
-		CertificateDeliveredDate: $('input[name="txtCertificateDeliveredDate"]').val()
+		CertificateDeliveredDate: $('input[name="txtCertificateDeliveredDate"]').val(),
+		BirthDate: $('input[name="txtBirthDate"]').val(),
+		RecordNumber: $('#txtRecordNumber').val(),
+		SessionDate: $('input[name="txtSessionDate"]').val(),
+		CourseStartDate: $('input[name="txtCourseStartDate"]').val(),
+		CourseEndDate: $('input[name="txtCourseEndDate"]').val(),
+		PersonnelDefinitionId: $('#selectPersonnelDefinition option:selected').val()
 	};
 
 

@@ -4,14 +4,16 @@ using DataAccess.EntityFramework.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AsGozdeWebSiteDB))]
-    partial class AsGozdeWebSiteDBModelSnapshot : ModelSnapshot
+    [Migration("20230915064341_driverinfirmationtableupdated")]
+    partial class driverinfirmationtableupdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -569,9 +571,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("OfficeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PersonnelDefinitionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Phone1")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -605,8 +604,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("BranchId");
 
                     b.HasIndex("OfficeId");
-
-                    b.HasIndex("PersonnelDefinitionId");
 
                     b.HasIndex("SessionId");
 
@@ -900,9 +897,6 @@ namespace DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("BranchId")
-                        .HasColumnType("int");
-
                     b.Property<string>("City")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -924,9 +918,6 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsMasterTrainer")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Job")
                         .HasMaxLength(100)
@@ -968,8 +959,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
 
                     b.HasIndex("OfficeId");
 
@@ -1567,11 +1556,6 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Entities.Concrete.PersonnelDefinition", "PersonnelDefinition")
-                        .WithMany("DriverInformations")
-                        .HasForeignKey("PersonnelDefinitionId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Entities.Concrete.Session", "Session")
                         .WithMany("DriverInformations")
                         .HasForeignKey("SessionId")
@@ -1581,8 +1565,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Branch");
 
                     b.Navigation("Office");
-
-                    b.Navigation("PersonnelDefinition");
 
                     b.Navigation("Session");
                 });
@@ -1641,18 +1623,11 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.PersonnelDefinition", b =>
                 {
-                    b.HasOne("Entities.Concrete.Branch", "Branch")
-                        .WithMany("PersonnelDefinitions")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Entities.Concrete.Office", "Office")
                         .WithMany("PersonnelDefinitions")
                         .HasForeignKey("OfficeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Branch");
 
                     b.Navigation("Office");
                 });
@@ -1672,8 +1647,6 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Branch", b =>
                 {
                     b.Navigation("DriverInformations");
-
-                    b.Navigation("PersonnelDefinitions");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Collection", b =>
@@ -1730,8 +1703,6 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.PersonnelDefinition", b =>
                 {
-                    b.Navigation("DriverInformations");
-
                     b.Navigation("Expenses");
                 });
 

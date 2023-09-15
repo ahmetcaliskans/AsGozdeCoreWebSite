@@ -27,7 +27,6 @@ namespace DataAccess.EntityFramework.Context
         public DbSet<RoleFormDefinition> RoleFormDefinitions { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<sp_GetRole> Sp_GetRoles { get; set; }
-
         public DbSet<Office> Offices { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Branch> Branches { get; set; }        
@@ -143,6 +142,7 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<Branch>().Property(e => e.Name).IsRequired().HasMaxLength(50);
             modelBuilder.Entity<Branch>().Property(e => e.Description).HasMaxLength(150);
             modelBuilder.Entity<Branch>().HasMany(e => e.DriverInformations).WithOne(e => e.Branch).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
+            modelBuilder.Entity<Branch>().HasMany(e => e.PersonnelDefinitions).WithOne(e => e.Branch).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
 
 
 
@@ -227,6 +227,11 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<DriverInformation>().Property(e => e.RecordDate).IsRequired().HasColumnType("datetime");
             modelBuilder.Entity<DriverInformation>().Property(e => e.Note).HasMaxLength(200);
             modelBuilder.Entity<DriverInformation>().Property(e => e.CertificateDeliveredDate).HasColumnType("datetime");
+            modelBuilder.Entity<DriverInformation>().Property(e => e.BirthDate).HasColumnType("datetime");
+            modelBuilder.Entity<DriverInformation>().Property(e => e.RecordNumber).HasMaxLength(50);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.SessionDate).HasColumnType("datetime");
+            modelBuilder.Entity<DriverInformation>().Property(e => e.CourseStartDate).HasColumnType("datetime");
+            modelBuilder.Entity<DriverInformation>().Property(e => e.CourseEndDate).HasColumnType("datetime");
             modelBuilder.Entity<DriverInformation>().HasMany(e => e.Collections).WithOne(e => e.DriverInformation).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
             modelBuilder.Entity<DriverInformation>().HasMany(e => e.DriverPaymentPlans).WithOne(e => e.DriverInformation).OnDelete(DeleteBehavior.Cascade);  // <= This entity has cascade behaviour on deletion
 
@@ -290,6 +295,7 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<PersonnelDefinition>().Property(e => e.EndDate).HasColumnType("datetime");
             modelBuilder.Entity<PersonnelDefinition>().Property(e => e.Note).HasMaxLength(200);
             modelBuilder.Entity<PersonnelDefinition>().HasMany(e => e.Expenses).WithOne(e => e.PersonnelDefinition).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
+            modelBuilder.Entity<PersonnelDefinition>().HasMany(e => e.DriverInformations).WithOne(e => e.PersonnelDefinition).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
 
 
 

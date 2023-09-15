@@ -74,6 +74,7 @@ namespace AsGozdeCoreWebSite.Controllers
         {
             RoleOperation roleOperation = new RoleOperation("Driver.Show");
             roleOperation.fn_checkRole();
+            ViewData["OfficeId"] = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
             dynamic dynamicResult = new System.Dynamic.ExpandoObject();
             dynamicResult.DriverInformation = new DriverInformation();
             dynamicResult.Sp_GetPayments = new List<sp_GetPayment>();
@@ -221,6 +222,7 @@ namespace AsGozdeCoreWebSite.Controllers
             driverInformation.OfficeId = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
             if (!driverInformation.IsCertificateDelivered)
                 driverInformation.CertificateDeliveredDate = null;
+            driverInformation.PersonnelDefinitionId = driverInformation.PersonnelDefinitionId == 0 ? null : driverInformation.PersonnelDefinitionId;
             if (driverInformation.Id == null || driverInformation.Id <= 0)
             {
                 //Yeni kayıtlarda sürücü kaydedilirken eğer ücret bilgisi girildiyse tahsilat olmadığı ve borçlu olacağı için sertifika verildi seçildiyse kaldırıyorum. Borç durumuna göre sertifika verilecek.

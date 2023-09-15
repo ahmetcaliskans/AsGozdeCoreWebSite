@@ -57,6 +57,20 @@
                 </div>
             </div>
             <!--end::Group-->
+
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 col-xl-9">
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkIsMasterTrainer" @Html.Raw((Model != null) ? (((Model.IsMasterTrainer) ? "checked" : "")) : "checked")>
+                        <span></span> Usta Öğretici
+                    </label>
+                </div>
+            </div>
+
+            @await Component.InvokeAsync("BranchListWithNonSelect", new { branchId = ((Model == null || Model.BranchId == null) ? (int)-99 : (int)Model.BranchId) })
+
+
             <!--begin::Group-->
             <div class="form-group row">
                 <label class="col-xl-3 col-lg-3 col-form-label">Giriş Tarihi</label>
@@ -69,7 +83,7 @@
             <div class="form-group row">
                 <label class="col-xl-3 col-lg-3 col-form-label">Çıkış Tarihi</label>
                 <div class="col-lg-9 col-xl-9 date">
-                    <input type="text" class="form-control"  value="@if (Model == null || Model.Id == 0 || Model.EndDate == null) @string.Format("") else @(((DateTime)Model.EndDate).Date.ToShortDateString())" id="kt_datepicker_3_1" name="txtEndDate" />
+                    <input type="text" class="form-control" value="@if (Model == null || Model.Id == 0 || Model.EndDate == null) @string.Format("") else @(((DateTime)Model.EndDate).Date.ToShortDateString())" id="kt_datepicker_3_1" name="txtEndDate" />
                 </div>
             </div>
             <!--end::Group-->
@@ -195,6 +209,6 @@
     </div>
 </div>
 
-<script src="~/assets/js/pages/crud/forms/widgets/input-mask.js"></script>
+<script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/input-mask.js"></script>
 <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js"></script>
 <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/file-upload/image-input.js"></script>

@@ -239,6 +239,19 @@
                                             </span>
                                         </li>
 
+
+                                        @if (User.Identity.Name == "admin")
+                                        {
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="/Report/DesignReport" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Design Report</span>
+                                                </a>
+                                            </li>
+                                        }
+
                                         @if (User.Identity.Name == "admin" || (roles != null && roles.Where(x => x.FormName == "Report" && x.FormSubName == "CashReport" && x.Show).Any()))
                                         {
                                             <li class="menu-item" aria-haspopup="true">
@@ -707,7 +720,7 @@
     @*<script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/ktdatatable/base/html-table2.js"></script>*@
     <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/bootstrap-select.js"></script>
     <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/features/cards/tools.js"></script>
-    <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js"></script>
+    <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js" asp-append-version="true"></script>
     <script charset="utf-8" type="text/javascript" src="~/assets/js/pages/crud/file-upload/image-input.js"></script>
     <!--end::Page Scripts-->
 

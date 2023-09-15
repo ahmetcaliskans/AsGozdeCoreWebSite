@@ -4,14 +4,16 @@ using DataAccess.EntityFramework.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AsGozdeWebSiteDB))]
-    partial class AsGozdeWebSiteDBModelSnapshot : ModelSnapshot
+    [Migration("20230915111318_PersonnelDefinitionUpdate")]
+    partial class PersonnelDefinitionUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -569,9 +571,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("OfficeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PersonnelDefinitionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Phone1")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -605,8 +604,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("BranchId");
 
                     b.HasIndex("OfficeId");
-
-                    b.HasIndex("PersonnelDefinitionId");
 
                     b.HasIndex("SessionId");
 
@@ -1567,11 +1564,6 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Entities.Concrete.PersonnelDefinition", "PersonnelDefinition")
-                        .WithMany("DriverInformations")
-                        .HasForeignKey("PersonnelDefinitionId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Entities.Concrete.Session", "Session")
                         .WithMany("DriverInformations")
                         .HasForeignKey("SessionId")
@@ -1581,8 +1573,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Branch");
 
                     b.Navigation("Office");
-
-                    b.Navigation("PersonnelDefinition");
 
                     b.Navigation("Session");
                 });
@@ -1730,8 +1720,6 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.PersonnelDefinition", b =>
                 {
-                    b.Navigation("DriverInformations");
-
                     b.Navigation("Expenses");
                 });
 

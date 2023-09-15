@@ -31,6 +31,13 @@ namespace Entities.Concrete
         public string Note { get; set; }
         public bool IsCertificateDelivered { get; set; }
         public DateTime? CertificateDeliveredDate { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string RecordNumber { get; set; }
+        public DateTime? SessionDate { get; set; }
+        public DateTime? CourseStartDate { get; set; }
+        public DateTime? CourseEndDate { get; set; }
+        public int? PersonnelDefinitionId { get; set; }
+        public PersonnelDefinition? PersonnelDefinition { get; set; }
         public virtual List<Collection> Collections { get; set; }       
         public virtual decimal Balance { get; set; }
         public virtual List<DriverPaymentPlan> DriverPaymentPlans { get; set; }

@@ -28,6 +28,10 @@ namespace Entities.Concrete
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public bool Active { get; set; }
+        public bool IsMasterTrainer { get; set; }
+        public int? BranchId { get; set; }
+        public Branch? Branch { get; set; }
         public virtual List<Expense> Expenses { get; set; }
+        public virtual List<DriverInformation> DriverInformations { get; set; }
     }
 }

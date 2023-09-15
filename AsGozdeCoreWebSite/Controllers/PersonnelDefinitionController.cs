@@ -43,6 +43,7 @@ namespace AsGozdeCoreWebSite.Controllers
         {
             IResult result;
             personnelDefinition.OfficeId = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
+            personnelDefinition.BranchId = personnelDefinition.BranchId == 0 || !personnelDefinition.IsMasterTrainer ? null : personnelDefinition.BranchId;
             if (personnelDefinition.Id == null || personnelDefinition.Id <= 0)
                 result = _personnelDefinitionService.Add(personnelDefinition);
             else

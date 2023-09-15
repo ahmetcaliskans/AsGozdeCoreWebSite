@@ -181,6 +181,14 @@
                                 <!--end::Group-->
                                 <!--begin::Group-->
                                 <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Doğum Tarihi</label>
+                                    <div class="col-lg-9 col-xl-9 date">
+                                        <input type="text" class="form-control form-control-solid form-control-lg" value="@if (_driverInformation == null || _driverInformation.Id == 0 || _driverInformation.BirthDate == null) @string.Format("") else @(((DateTime)_driverInformation.BirthDate).Date.ToShortDateString())" id="kt_datepicker_3_2" name="txtBirthDate" />
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label">Telefon 1</label>
                                     <div class="col-lg-9 col-xl-9">
                                         <div class="input-group input-group-solid input-group-lg">
@@ -336,6 +344,49 @@
                                     </div>
                                 </div>
                                 <!--end::Group-->
+
+                            </div>
+
+
+                            <div class="my-5">
+
+                                <h3 class=" text-dark font-weight-bold mb-10">Diğer Bilgiler:</h3>
+
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Kayıt Numarası</label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <input type="text" class="form-control" name="txtRecordNumber" id="txtRecordNumber" placeholder="Kayıt Numarası" value="@if(_driverInformation != null) @_driverInformation.RecordNumber" />
+                                    </div>
+
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Dönem Tarihi</label>
+                                    <div class="col-lg-9 col-xl-9 date">
+                                        <input type="text" class="form-control" value="@if (_driverInformation == null || _driverInformation.Id == 0 || _driverInformation.SessionDate == null) @string.Format("") else @(((DateTime)_driverInformation.SessionDate).Date.ToShortDateString())" id="kt_datepicker_3_3" name="txtSessionDate" />
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Ders Giriş Tarihi</label>
+                                    <div class="col-lg-9 col-xl-9 date">
+                                        <input type="text" class="form-control" value="@if (_driverInformation == null || _driverInformation.Id == 0 || _driverInformation.CourseStartDate == null) @string.Format("") else @(((DateTime)_driverInformation.CourseStartDate).Date.ToShortDateString())" id="kt_datepicker_3_4" name="txtCourseStartDate" />
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Ders Bitiş Tarihi</label>
+                                    <div class="col-lg-9 col-xl-9 date">
+                                        <input type="text" class="form-control" value="@if (_driverInformation == null || _driverInformation.Id == 0 || _driverInformation.CourseEndDate == null) @string.Format("") else @(((DateTime)_driverInformation.CourseEndDate).Date.ToShortDateString())" id="kt_datepicker_3_5" name="txtCourseEndDate" />
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+
+                                @await Component.InvokeAsync("PersonnelDefinitionMasterTrainerList", new { personnelDefinitionId = ((_driverInformation == null || _driverInformation.PersonnelDefinitionId == null) ? (int)0 : (int)_driverInformation.PersonnelDefinitionId), officeId = (int)ViewData["OfficeId"] })
 
                             </div>
 

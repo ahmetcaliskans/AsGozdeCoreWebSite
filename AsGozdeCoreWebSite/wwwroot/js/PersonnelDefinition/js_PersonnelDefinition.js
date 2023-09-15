@@ -1,6 +1,4 @@
-﻿const { Alert } = require("bootstrap");
-
-/***** Id ile personel tanımları tanımı getirilir *****/
+﻿/***** Id ile personel tanımları tanımı getirilir *****/
 function js_getPersonnelDefinitionById(Id) {
 	$('#dataPersonnelDefinition').html("");
 
@@ -66,6 +64,8 @@ function js_addPersonnelDefinition() {
 		Name: $('#txtName').val(),
 		Surname: $('#txtSurname').val(),		
 		IdentityNo: $('#txtIdentityNo').val(),
+		IsMasterTrainer: chkKontrol('chkIsMasterTrainer'),
+		BranchId: $('#selectBranch option:selected').val(),
 		Job: $('#txtJob').val(),
 		Position: $('#txtPosition').val(),
 		Salary: $('#txtSalary').val(),
