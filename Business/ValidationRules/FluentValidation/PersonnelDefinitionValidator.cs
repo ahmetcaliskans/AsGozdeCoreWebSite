@@ -21,6 +21,15 @@ namespace Business.ValidationRules.FluentValidation
             /*IdentityNo*/
             RuleFor(b => b.IdentityNo).NotEmpty().WithMessage("Tc Kimlik No Boş Olamaz !");
             RuleFor(b => b.IdentityNo).MaximumLength(11).WithMessage("Tc Kimlik No En Fazla {MaxLength} Karakter Olmalı !");
+
+            /*BranchsName*/
+            RuleFor(b => b.BranchsName).MaximumLength(200).WithMessage("Sürücü Belgesi Bilgileri En Fazla {MaxLength} Karakter Olmalı !");
+
+            /*BranchFileNo*/
+            RuleFor(b => b.BranchFileNo).MaximumLength(200).WithMessage("Sürücü Belge No En Fazla {MaxLength} Karakter Olmalı !");
+
+            /*PlaceofBranchFileGiven*/
+            RuleFor(b => b.PlaceofBranchFileGiven).MaximumLength(200).WithMessage("Sürücü Belgesi Verildiği Yer En Fazla {MaxLength} Karakter Olmalı !");
         }
     }
 }

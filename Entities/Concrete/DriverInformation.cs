@@ -15,6 +15,9 @@ namespace Entities.Concrete
         public string Name { get; set; }
         public string Surname { get; set; }
         public string IdentityNo { get; set; }
+        public string FatherName { get; set; }
+        public string BirthPlace { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string Image { get; set; }
         public int BranchId { get; set; }
         public Branch Branch { get; set; }
@@ -30,8 +33,7 @@ namespace Entities.Concrete
         public DateTime RecordDate { get; set; }
         public string Note { get; set; }
         public bool IsCertificateDelivered { get; set; }
-        public DateTime? CertificateDeliveredDate { get; set; }
-        public DateTime? BirthDate { get; set; }
+        public DateTime? CertificateDeliveredDate { get; set; }        
         public string RecordNumber { get; set; }
         public DateTime? SessionDate { get; set; }
         public DateTime? CourseStartDate { get; set; }

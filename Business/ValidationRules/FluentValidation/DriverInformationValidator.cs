@@ -22,6 +22,12 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(b => b.IdentityNo).NotEmpty().WithMessage("Tc Kimlik No Boş Olamaz !");
             RuleFor(b => b.IdentityNo).MaximumLength(11).WithMessage("Tc Kimlik No En Fazla {MaxLength} Karakter Olmalı !");
 
+            /*FatherName*/
+            RuleFor(b => b.FatherName).MaximumLength(150).WithMessage("Baba Adı En Fazla {MaxLength} Karakter Olmalı !");
+
+            /*BirthPlace*/
+            RuleFor(b => b.BirthPlace).MaximumLength(150).WithMessage("Doğum Yeri En Fazla {MaxLength} Karakter Olmalı !");
+
             /*Email*/
             RuleFor(b => b.Email).MaximumLength(50).WithMessage("Email En Fazla {MaxLength} Karakter Olmalı !");
 

@@ -68,7 +68,29 @@
                 </div>
             </div>
 
-            @await Component.InvokeAsync("BranchListWithNonSelect", new { branchId = ((Model == null || Model.BranchId == null) ? (int)-99 : (int)Model.BranchId) })
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Sürücü Belgesi Sınıfı</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtBranchsName" type="text" placeholder="Sürücü Belgesi Sınıfı" value="@if (Model != null) @Model.BranchsName">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Sürücü Belgesi No</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtBranchFileNo" type="text" placeholder="Sürücü Belgesi No" value="@if (Model != null) @Model.BranchFileNo">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+
+            <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Sürücü Belgesinin Verildiği Yer</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtPlaceofBranchFileGiven" type="text" placeholder="Sürücü Belgesinin Verildiği Yer" value="@if (Model != null) @Model.PlaceofBranchFileGiven">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
 
 
             <!--begin::Group-->

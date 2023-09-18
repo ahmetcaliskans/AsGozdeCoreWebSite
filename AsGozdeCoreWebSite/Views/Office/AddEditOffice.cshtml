@@ -27,6 +27,13 @@
                 </div>
             </div>
             <div class="form-group row fv-plugins-icon-container">
+                <label class="col-xl-3 col-lg-3 col-form-label">Ünvan</label>
+                <div class="col-lg-9 col-xl-9">
+                    <input class="form-control" id="txtTitle" type="text" placeholder="Ünvan" value="@if (Model != null) @Model.Title">
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <div class="form-group row fv-plugins-icon-container">
                 <label class="col-xl-3 col-lg-3 col-form-label">Web Adresi</label>
                 <div class="col-lg-9 col-xl-9">
                     <input class="form-control" id="txtWebAddress" type="text" placeholder="Web Adresi" value="@if (Model != null) @Model.WebAddress">

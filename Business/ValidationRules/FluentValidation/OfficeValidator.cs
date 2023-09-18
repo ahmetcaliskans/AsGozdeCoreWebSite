@@ -17,6 +17,9 @@ namespace Business.ValidationRules.FluentValidation
             /*Description*/
             RuleFor(o => o.Description).MaximumLength(150).WithMessage("Açıklama En Fazla {MaxLength} Karakter Olmalı !");
 
+            /*Title*/
+            RuleFor(o => o.Title).MaximumLength(150).WithMessage("Ünvan En Fazla {MaxLength} Karakter Olmalı !");
+
             /*WebAddress*/
             RuleFor(o => o.WebAddress).MaximumLength(50).WithMessage("Web Adresi En Fazla {MaxLength} Karakter Olmalı !");
 

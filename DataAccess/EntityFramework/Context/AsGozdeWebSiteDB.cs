@@ -113,11 +113,11 @@ namespace DataAccess.EntityFramework.Context
 
 
 
-
             ///Office
             modelBuilder.Entity<Office>().HasKey(e => e.Id);
             modelBuilder.Entity<Office>().Property(e => e.Name).IsRequired().HasMaxLength(100);
             modelBuilder.Entity<Office>().Property(e => e.Description).HasMaxLength(150);
+            modelBuilder.Entity<Office>().Property(e => e.Title).HasMaxLength(150);
             modelBuilder.Entity<Office>().Property(e => e.WebAddress).HasMaxLength(50);
             modelBuilder.Entity<Office>().Property(e => e.Email).HasMaxLength(50);
             modelBuilder.Entity<Office>().Property(e => e.Phone1).HasMaxLength(15);
@@ -142,7 +142,6 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<Branch>().Property(e => e.Name).IsRequired().HasMaxLength(50);
             modelBuilder.Entity<Branch>().Property(e => e.Description).HasMaxLength(150);
             modelBuilder.Entity<Branch>().HasMany(e => e.DriverInformations).WithOne(e => e.Branch).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
-            modelBuilder.Entity<Branch>().HasMany(e => e.PersonnelDefinitions).WithOne(e => e.Branch).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
 
 
 
@@ -217,6 +216,9 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<DriverInformation>().Property(e => e.Name).IsRequired().HasMaxLength(70);
             modelBuilder.Entity<DriverInformation>().Property(e => e.Surname).IsRequired().HasMaxLength(100);
             modelBuilder.Entity<DriverInformation>().Property(e => e.IdentityNo).IsRequired().HasMaxLength(11);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.FatherName).HasMaxLength(150);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.BirthPlace).HasMaxLength(150);
+            modelBuilder.Entity<DriverInformation>().Property(e => e.BirthDate).HasColumnType("datetime");
             modelBuilder.Entity<DriverInformation>().Property(e => e.Email).HasMaxLength(50);
             modelBuilder.Entity<DriverInformation>().Property(e => e.Phone1).IsRequired().HasMaxLength(15);
             modelBuilder.Entity<DriverInformation>().Property(e => e.Phone2).IsRequired().HasMaxLength(15);
@@ -226,8 +228,7 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<DriverInformation>().Property(e => e.Address2).HasMaxLength(100);
             modelBuilder.Entity<DriverInformation>().Property(e => e.RecordDate).IsRequired().HasColumnType("datetime");
             modelBuilder.Entity<DriverInformation>().Property(e => e.Note).HasMaxLength(200);
-            modelBuilder.Entity<DriverInformation>().Property(e => e.CertificateDeliveredDate).HasColumnType("datetime");
-            modelBuilder.Entity<DriverInformation>().Property(e => e.BirthDate).HasColumnType("datetime");
+            modelBuilder.Entity<DriverInformation>().Property(e => e.CertificateDeliveredDate).HasColumnType("datetime");            
             modelBuilder.Entity<DriverInformation>().Property(e => e.RecordNumber).HasMaxLength(50);
             modelBuilder.Entity<DriverInformation>().Property(e => e.SessionDate).HasColumnType("datetime");
             modelBuilder.Entity<DriverInformation>().Property(e => e.CourseStartDate).HasColumnType("datetime");
@@ -294,6 +295,9 @@ namespace DataAccess.EntityFramework.Context
             modelBuilder.Entity<PersonnelDefinition>().Property(e => e.StartDate).HasColumnType("datetime");
             modelBuilder.Entity<PersonnelDefinition>().Property(e => e.EndDate).HasColumnType("datetime");
             modelBuilder.Entity<PersonnelDefinition>().Property(e => e.Note).HasMaxLength(200);
+            modelBuilder.Entity<PersonnelDefinition>().Property(e => e.BranchsName).HasMaxLength(200);
+            modelBuilder.Entity<PersonnelDefinition>().Property(e => e.BranchFileNo).HasMaxLength(200);
+            modelBuilder.Entity<PersonnelDefinition>().Property(e => e.PlaceofBranchFileGiven).HasMaxLength(200);
             modelBuilder.Entity<PersonnelDefinition>().HasMany(e => e.Expenses).WithOne(e => e.PersonnelDefinition).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
             modelBuilder.Entity<PersonnelDefinition>().HasMany(e => e.DriverInformations).WithOne(e => e.PersonnelDefinition).OnDelete(DeleteBehavior.Restrict); // <= This entity has restricted behaviour on deletion
 

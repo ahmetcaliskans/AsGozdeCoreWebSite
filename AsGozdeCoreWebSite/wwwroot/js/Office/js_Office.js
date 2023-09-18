@@ -58,6 +58,7 @@ function js_addOffice() {
 		Id: $('#txtId').val(),
 		Name: $('#txtName').val(),
 		Description: $('#txtDescription').val(),
+		Title: $('#txtTitle').val(),
 		WebAddress: $('#txtWebAddress').val(),
 		Email: $('#txtEmail').val(),
 		Phone1: $('#txtPhone1').val(),
