@@ -28,36 +28,47 @@ namespace AsGozdeCoreWebSite.Controllers
         [HttpGet]        
         public IActionResult Index()
         {
-            var result = _officeService.GetList();
-            return View(result.Data);
+            if (User==null || User.Identity==null || User.Identity.Name==null)
+            {
+                var result = _officeService.GetList();
+                return View(result.Data);
+            }
+            else
+                return RedirectToAction("Index", "Home");
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password, int officeId)
         {
-            UserForLoginDto userForLoginDto = new UserForLoginDto{ UserName = username, Password = password, OfficeId = officeId };
-            var userToLogin = _authService.Login(userForLoginDto);
-            if (userToLogin.Success)
+            if (User == null || User.Identity == null || User.Identity.Name == null)
             {
-                var officeResult = _officeService.GetById(officeId);
-                
-                var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, userToLogin.Data.UserName), }, "a", ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.Role, userToLogin.Data.RoleTypeId.ToString()));
-                identity.AddClaim(new Claim(ClaimTypes.GivenName, userToLogin.Data.FirstName==null ? "" : userToLogin.Data.FirstName));
-                identity.AddClaim(new Claim(ClaimTypes.Surname, userToLogin.Data.LastName==null ? "" : userToLogin.Data.LastName));
-                identity.AddClaim(new Claim(ClaimTypes.GroupSid, (officeResult!=null && officeResult.Data!=null) ? officeResult.Data.Name : ""));
-                identity.AddClaim(new Claim(ClaimTypes.PrimaryGroupSid, userForLoginDto.OfficeId.ToString()));
-                identity.AddClaim(new Claim(ClaimTypes.StateOrProvince, userToLogin.Data.Title==null ? "" : userToLogin.Data.Title));
-                
-                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(principal);
+                UserForLoginDto userForLoginDto = new UserForLoginDto { UserName = username, Password = password, OfficeId = officeId };
+                var userToLogin = _authService.Login(userForLoginDto);
+                if (userToLogin.Success)
+                {
+                    var officeResult = _officeService.GetById(officeId);
 
-                return Json("Success");
+                    var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, userToLogin.Data.UserName), }, "a", ClaimTypes.Name, ClaimTypes.Role);
+                    identity.AddClaim(new Claim(ClaimTypes.Role, userToLogin.Data.RoleTypeId.ToString()));
+                    identity.AddClaim(new Claim(ClaimTypes.GivenName, userToLogin.Data.FirstName == null ? "" : userToLogin.Data.FirstName));
+                    identity.AddClaim(new Claim(ClaimTypes.Surname, userToLogin.Data.LastName == null ? "" : userToLogin.Data.LastName));
+                    identity.AddClaim(new Claim(ClaimTypes.GroupSid, (officeResult != null && officeResult.Data != null) ? officeResult.Data.Name : ""));
+                    identity.AddClaim(new Claim(ClaimTypes.PrimaryGroupSid, userForLoginDto.OfficeId.ToString()));
+                    identity.AddClaim(new Claim(ClaimTypes.StateOrProvince, userToLogin.Data.Title == null ? "" : userToLogin.Data.Title));
 
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(principal);
+
+                    return Json("Success");
+
+                }
+                else
+                    return Json(userToLogin.Message);
             }
             else
-                return Json(userToLogin.Message);
-            
+                return Json("Zaten Giriş Yapılmış !");
+
         }
 
         [HttpGet]

@@ -75,6 +75,7 @@ namespace AsGozdeCoreWebSite.Controllers
             RoleOperation roleOperation = new RoleOperation("Driver.Show");
             roleOperation.fn_checkRole();
             ViewData["OfficeId"] = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
+            HttpContext.Session.SetString("OfficeId", Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value).ToString());
             dynamic dynamicResult = new System.Dynamic.ExpandoObject();
             dynamicResult.DriverInformation = new DriverInformation();
             dynamicResult.Sp_GetPayments = new List<sp_GetPayment>();
@@ -219,7 +220,7 @@ namespace AsGozdeCoreWebSite.Controllers
         {
             IResult result;
 
-            driverInformation.OfficeId = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
+            driverInformation.OfficeId = driverInformation.OfficeId == null || driverInformation.OfficeId == 0 ? Convert.ToInt32(HttpContext.Session.GetString("OfficeId")) : driverInformation.OfficeId;
             if (!driverInformation.IsCertificateDelivered)
                 driverInformation.CertificateDeliveredDate = null;
             driverInformation.PersonnelDefinitionId = driverInformation.PersonnelDefinitionId == 0 ? null : driverInformation.PersonnelDefinitionId;
@@ -560,7 +561,7 @@ namespace AsGozdeCoreWebSite.Controllers
 
                 collection.DocumentNo = documentNo;
                 collection.DriverInformationId = driverId;
-                collection.OfficeId = Convert.ToInt32(User.Claims.Where(x => x.Type.Contains("primarygroupsid")).FirstOrDefault().Value);
+                collection.OfficeId = Convert.ToInt32(HttpContext.Session.GetString("OfficeId"));
                 collection.CollectionDate = DateTime.Now.Date;
                 collection.TotalAmount = collectionDetail.Amount;
                 collection.AddedDateTime = DateTime.Now;
